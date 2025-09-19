@@ -8,7 +8,7 @@ tags:
   - tutorial
 categories:
   - technology
-draft: false
+draft: true
 summary: Learn how to set up and use Hugo, the fast and flexible static site generator written in Go.
 ---
 
