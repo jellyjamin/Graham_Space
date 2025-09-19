@@ -4,6 +4,6 @@ date: 2025-09-18
 tags:
   - obsidian
   - blog
-draft: true
+draft: false
 ---
 Hi, this is a test.
