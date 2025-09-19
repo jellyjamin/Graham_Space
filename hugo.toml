@@ -1,0 +1,152 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Graham Space'
+theme = "stack"
+
+# Pagination
+[pagination]
+    pagerSize = 3
+
+# Permalinks
+[permalinks]
+    post = "/p/:slug/"
+    page = "/:slug/"
+
+# Main configuration
+[params]
+    mainSections = ["post"]
+    featuredImageField = "image"
+    rssFullContent = true
+    
+    # Footer
+    [params.footer]
+        since = 2025
+        customText = "Built with Hugo and Stack theme"
+    
+    # Date format
+    [params.dateFormat]
+        published = "Jan 02, 2006"
+        lastUpdated = "Jan 02, 2006 15:04 MST"
+    
+    # Sidebar
+    [params.sidebar]
+        emoji = "🚀"
+        subtitle = ""
+        [params.sidebar.avatar]
+            enabled = true
+            local = true
+            src = "img/avatar.png"
+    
+    # Article settings
+    [params.article]
+        math = false
+        toc = true
+        readingTime = true
+        [params.article.license]
+            enabled = true
+            default = "Licensed under CC BY-NC-SA 4.0"
+    
+    # Comments (disabled for now)
+    [params.comments]
+        enabled = false
+    
+    # Widgets
+    [params.widgets]
+        homepage = [
+            {type = "search"},
+            {type = "archives", params = {limit = 5}},
+            {type = "categories", params = {limit = 10}},
+            {type = "tag-cloud", params = {limit = 10}}
+        ]
+        page = [
+            {type = "toc"}
+        ]
+    
+    # Color scheme
+    [params.colorScheme]
+        toggle = true
+        default = "auto"
+    
+    # Image processing
+    [params.imageProcessing]
+        [params.imageProcessing.cover]
+            enabled = true
+        [params.imageProcessing.content]
+            enabled = true
+
+# Menu configuration
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    name = "Posts"
+    url = "/post/"
+    weight = 2
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 3
+
+[[menu.main]]
+    name = "Search"
+    url = "/search/"
+    weight = 4
+
+[[menu.main]]
+    name = "Archives"
+    url = "/archives/"
+    weight = 5
+
+# Social links
+[[menu.social]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/yourusername"
+    [menu.social.params]
+        icon = "brand-github"
+
+[[menu.social]]
+    identifier = "twitter"
+    name = "Twitter"
+    url = "https://twitter.com/yourusername"
+    [menu.social.params]
+        icon = "brand-twitter"
+
+# Related content
+[related]
+    includeNewer = true
+    threshold = 60
+    toLower = false
+    [[related.indices]]
+        name = "tags"
+        weight = 100
+    [[related.indices]]
+        name = "categories"
+        weight = 200
+
+# Markup configuration
+[markup]
+    [markup.goldmark]
+        [markup.goldmark.extensions]
+            [markup.goldmark.extensions.passthrough]
+                enable = true
+                [markup.goldmark.extensions.passthrough.delimiters]
+                    block = [["[", "]"], ["$$", "$$"]]
+                    inline = [["(", ")"]]
+        [markup.goldmark.renderer]
+            unsafe = true
+    [markup.tableOfContents]
+        endLevel = 4
+        ordered = true
+        startLevel = 2
+    [markup.highlight]
+        noClasses = false
+        codeFences = true
+        guessSyntax = true
+        lineNoStart = 1
+        lineNos = true
+        lineNumbersInTable = true
+        tabWidth = 4
