@@ -3,6 +3,9 @@ languageCode = 'en-us'
 title = 'Graham Space'
 theme = "stack"
 
+[build]
+    writeStats = true
+
 # Pagination
 [pagination]
     pagerSize = 3
