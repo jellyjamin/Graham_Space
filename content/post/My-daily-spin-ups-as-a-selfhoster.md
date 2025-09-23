@@ -37,7 +37,7 @@ I found [Yt-dlp](https://github.com/yt-dlp/yt-dlp) in a reddit post, which I lea
 ### My start up script
 
 I didn't feel like being a terminal logger every time I added a new hardstyle track executing ```
-yt-dlp --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --yes-playlist --output -o -o "download me here"...```  so I did the classic substack "debuggery". 
+yt-dlp --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --yes-playlist --output -o -o "download me here"...```  so I did the classic Substack *debuggery*. 
 
 With these packages: 
 
