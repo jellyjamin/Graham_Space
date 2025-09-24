@@ -19,7 +19,7 @@ description: From Yt-dlp to Syncthing, Immich, and custom backup scripts — a s
 
 ## **S**elf hosting for many of us starts just as a one-off project that, through the first search, gives a wall www's that may do what you want for a fee or even may be free through an ad-filled webpage advertising your Amazon search history in the sidebars. 
 
-### Yt-dlp
+## Yt-dlp
 
 - https://github.com/yt-dlp/yt-dlp
 
@@ -32,7 +32,7 @@ This is where I found myself two years ago when looking for how to simply downlo
 I found [Yt-dlp](https://github.com/yt-dlp/yt-dlp) in a Reddit post, which I learned not only did what I wanted (download videos but whole playlists) but how I wanted it to (in nearly any audio or video format) except one part....be as hands off as Youtube premium. 
 
 
-### My start-up script
+## My start-up script
 
 - https://github.com/jellyjamin/Scripts/blob/main/startup-script/startup-script-template.py
 
