@@ -20,6 +20,7 @@ image: "/img/posts/headers/ "
 - [ ] add date
 - [ ] delete placeholder photos
 	- [ ] upload my basic startup script to github as a template
+- [ ] add notable mentions section
 
 ## **S**elf hosting for many of us starts just as a one off project that through the first search gives a wall www's that may do what you want for a fee or even may be free through a ad filled webpage advertising your amazon search history in the sidebars. 
 
