@@ -1,11 +1,13 @@
 ---
-title: My essential daily spin ups as a selfhoster
+title: My daily spin ups as a selfhoster
 date: 2025-09-24
 tags:
-  - docker
-  - python
-  - My-scripts
-  - Selfhost
+  - self-hosting
+  - automation
+  - yt-dlp
+  - syncthing
+  - immich
+  - backups
 categories:
   - technology
 draft: false
