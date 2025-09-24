@@ -84,7 +84,20 @@ To this day I have synced my:
 
 - https://immich.app/
 
- [immich](https://immich.app/) is essentially a self hosted google photos app, that gives me a 
+<img src="/img/posts/Inlines/My-daily-spin-ups-as-a-selfhoster/Immich-site.png" 
+     alt="Immich" 
+     style="max-width: 100%; height: auto;">
+![[Pasted image 20250924144927.png]]
+
+ [immich](https://immich.app/) is essentially a self hosted google photos app, that gives you all of the luxuries of google photos or Icloud but on your machine with features like:
+
+- Duplicate cleanup
+- automated backups
+- search 
+- photo gallery
+- even people matching
+
+That's as easy to spin up as any other docker and devices an app download away from just working.
 
 
 
@@ -94,5 +107,7 @@ To this day I have synced my:
 
 ### The beauty of a being *self-hoster* is that you can choose your pros and your cons or even better, only your pros. 
 
-I like having my own cloud, which still has one major downfall to *big-drive* and that's redundancy so I made my solution. My back up script compresses watched folders using pyzipper which has upgraded AES encryption compared to legacy zippers then uploads them to my vps in neat and dated. I also added a file size checks, just to avoid wasting bandwidth and time so that it only backs up what's new. 
+I like having my own cloud, which still has one major downfall to *big-drive* and that's redundancy so I made my solution. My back up script compresses watched folders using pyzipper which has upgraded AES encryption compared to legacy zippers then uploads them to my vps in neat and dated. The tricky back up was immich, which has a three part back up for easy restoring which so it required specific code (but you can just set it to false). I also added a file size checks, just to avoid wasting bandwidth and time so that it only backs up what's new. Its certainly not the most secure method but I double encrypt my sensitive back ups anyways using [keypassxc](https://keepassxc.org/).
+
+
 
