@@ -54,7 +54,7 @@ theme = "stack"
         subtitle = ""
         [params.sidebar.avatar]
             enabled = true
-            local = true
+            local = false
             src = "img/avatar.png"
     
     # Article settings
