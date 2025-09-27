@@ -8,6 +8,7 @@ tags:
   - syncthing
   - immich
   - backups
+  - featured
 categories:
   - technology
 draft: false

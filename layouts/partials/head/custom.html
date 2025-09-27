@@ -1,0 +1,6 @@
+{{/* Custom CSS for featured gallery */}}
+{{ $featuredCSS := resources.Get "css/featured-gallery.css" }}
+{{ if $featuredCSS }}
+    {{ $featuredStyle := $featuredCSS | minify | resources.Fingerprint "sha256" }}
+    <link rel="stylesheet" href="{{ $featuredStyle.RelPermalink }}">
+{{ end }}

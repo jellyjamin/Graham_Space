@@ -33,7 +33,6 @@ theme = "stack"
     
     # Sidebar
     [params.sidebar]
-        emoji = "🚀"
         subtitle = ""
         [params.sidebar.avatar]
             enabled = true
@@ -107,16 +106,16 @@ theme = "stack"
 [[menu.social]]
     identifier = "github"
     name = "GitHub"
-    url = "https://github.com/yourusername"
+    url = "https://github.com/jellyjamin"
     [menu.social.params]
         icon = "brand-github"
 
 [[menu.social]]
-    identifier = "twitter"
-    name = "Twitter"
-    url = "https://twitter.com/yourusername"
+    identifier = "linkedin"
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/jake-graham-76b78b1a7/"
     [menu.social.params]
-        icon = "brand-twitter"
+        icon = "brand-linkedin"
 
 # Related content
 [related]

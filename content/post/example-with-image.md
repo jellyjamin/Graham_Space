@@ -5,6 +5,7 @@ tags:
   - example
   - images
   - tutorial
+  - featured
 categories:
   - general
 draft: true
