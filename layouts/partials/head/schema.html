@@ -1,0 +1,108 @@
+{{/* Structured Data for SEO */}}
+{{- $title := partial "data/title" . -}}
+{{- $description := partialCached "data/description" . .RelPermalink -}}
+{{- $author := .Params.author | default .Site.Params.seo.author | default .Site.Title -}}
+{{- $image := .Params.image | default .Site.Params.seo.image | default "/img/avatar.png" -}}
+
+{{ if .IsHome }}
+{{/* Organization Schema for Homepage */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ $author }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ $description }}",
+  "image": "{{ $image | absURL }}",
+  "sameAs": [
+    {{ range $index, $social := .Site.Menus.social }}
+      {{ if $index }},{{ end }}
+      "{{ $social.URL }}"
+    {{ end }}
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebSite",
+    "@id": "{{ .Site.BaseURL }}",
+    "name": "{{ .Site.Title }}",
+    "description": "{{ $description }}",
+    "url": "{{ .Site.BaseURL }}",
+    "publisher": {
+      "@type": "Person",
+      "name": "{{ $author }}"
+    }
+  }
+}
+</script>
+{{ end }}
+
+{{ if .IsPage }}
+{{/* Article Schema for Blog Posts */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ $title }}",
+  "description": "{{ $description }}",
+  "image": "{{ $image | absURL }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ $author }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ $author }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  {{ if .Lastmod }}
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  {{ end }}
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  },
+  "url": "{{ .Permalink }}",
+  {{ with .Params.tags }}
+  "keywords": "{{ delimit . ", " }}",
+  {{ end }}
+  {{ with .Params.categories }}
+  "articleSection": "{{ delimit . ", " }}",
+  {{ end }}
+  "wordCount": "{{ .WordCount }}",
+  "timeRequired": "PT{{ .ReadingTime }}M"
+}
+</script>
+{{ end }}
+
+{{ if .IsSection }}
+{{/* CollectionPage Schema for Category/Tag Pages */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ $title }}",
+  "description": "{{ $description }}",
+  "url": "{{ .Permalink }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": "{{ len .Pages }}",
+    "itemListElement": [
+      {{ range $index, $page := .Pages }}
+        {{ if $index }},{{ end }}
+        {
+          "@type": "ListItem",
+          "position": {{ add $index 1 }},
+          "item": {
+            "@type": "BlogPosting",
+            "headline": "{{ $page.Title }}",
+            "url": "{{ $page.Permalink }}",
+            "datePublished": "{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}"
+          }
+        }
+      {{ end }}
+    ]
+  }
+}
+</script>
+{{ end }}

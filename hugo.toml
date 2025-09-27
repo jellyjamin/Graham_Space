@@ -3,6 +3,20 @@ languageCode = 'en-us'
 title = 'Graham Space'
 theme = "stack"
 
+# SEO Configuration
+[params.seo]
+    description = "Graham Space - A blog about technology, self-hosting, and software development. Sharing insights on programming, automation, and digital tools."
+    keywords = ["technology", "programming", "self-hosting", "software development", "automation", "blog", "tutorials"]
+    author = "Jake Graham"
+    twitter = "@jellyjamin"
+    image = "/img/avatar.png"
+    favicon = "/img/avatar.png"
+    
+    # Additional SEO settings
+    noindex = false
+    nofollow = false
+    canonical = true
+
 [build]
     writeStats = true
 
@@ -75,6 +89,12 @@ theme = "stack"
             enabled = true
         [params.imageProcessing.content]
             enabled = true
+    
+    # Performance optimizations
+    [params.performance]
+        minify = true
+        compress = true
+        preload = true
 
 # Menu configuration
 [[menu.main]]
@@ -128,6 +148,12 @@ theme = "stack"
     [[related.indices]]
         name = "categories"
         weight = 200
+
+# Sitemap configuration
+[sitemap]
+    changefreq = "monthly"
+    priority = 0.5
+    filename = "sitemap.xml"
 
 # Markup configuration
 [markup]
