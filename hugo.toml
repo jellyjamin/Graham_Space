@@ -12,6 +12,10 @@ theme = "stack"
     image = "/img/avatar.png"
     favicon = "/img/avatar.png"
     
+    # Google Search Console Verification
+    # Get this from: https://search.google.com/search-console/
+    googleSiteVerification = "a3CVdK-6K5Xj2hXj0lpVGCyHoSW0EYKK9qngRlR3m5Y"
+    
     # Additional SEO settings
     noindex = false
     nofollow = false

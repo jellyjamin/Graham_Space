@@ -53,6 +53,11 @@
 <meta name="msapplication-TileColor" content="#34495e">
 <meta name="application-name" content="{{ .Site.Title }}">
 
+{{/* Google Search Console Verification */}}
+{{ with .Site.Params.seo.googleSiteVerification }}
+<meta name="google-site-verification" content="{{ . }}" />
+{{ end }}
+
 {{/* Language and Geo */}}
 <meta name="language" content="{{ .Site.LanguageCode }}">
 <meta name="geo.region" content="US">
