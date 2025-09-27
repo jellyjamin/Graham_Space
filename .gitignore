@@ -34,10 +34,6 @@ Thumbs.db
 # Node modules (if using any Node.js tools)
 node_modules/
 
-# personal stuff
-POST_TEMPLATE_GUIDE.md
-SEO_CHECKLIST.md
-
 # Environment files (keep these for Cloudflare Pages build settings)
 # .env files are typically used for build-time environment variables
 # Uncomment the lines below if you want to exclude them:
