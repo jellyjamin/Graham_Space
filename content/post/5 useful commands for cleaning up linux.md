@@ -39,7 +39,7 @@ Run:
 systemd-analyze blame
 ```
 
-<img src="/img/posts/Inlines/My-daily-spin-ups-as-a-selfhoster/systemd.gif" 
+<img src="/img/posts/Inlines/5-commands-to-cleanup-linux/systemd.gif" 
      alt="Gif of the systemd-analyze blame" 
      style="max-width: 100%; height: auto;">
 
@@ -48,7 +48,7 @@ It will list out all of your services so you know who to... well *blame*!
 
 ## ncdu
 
-<img src="/img/posts/Inlines/My-daily-spin-ups-as-a-selfhoster/ncdu.gif" 
+<img src="/img/posts/Inlines/5-commands-to-cleanup-linux/ncdu.gif" 
      alt="Gif of ncdu tool running and navigating" 
      style="max-width: 100%; height: auto;">
 
@@ -120,7 +120,7 @@ It will overwrite a file or directory multiple times, making it unrecoverable, i
 
 Lazydocker makes managing your containers and volumes simple, without using brute force commands or digging through terminal entries. 
 
-<img src="/img/posts/Inlines/5-commands-to-cleanup-linux\lazydocker.gif" 
+<img src="/img/posts/Inlines/5-commands-to-cleanup-linux/lazydocker.gif" 
      alt="Gif of lazydocker running " 
      style="max-width: 100%; height: auto;">
 
