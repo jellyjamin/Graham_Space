@@ -10,7 +10,9 @@ Run:
 systemd-analyze blame
 ```
 
-# place gif here
+<img src="/img/posts/Inlines/My-daily-spin-ups-as-a-selfhoster/systemd.gif" 
+     alt="Gif of the systemd-analyze blame" 
+     style="max-width: 100%; height: auto;">
 
 It will list out all of your services so you know who to....well *blame*!
 
@@ -69,7 +71,74 @@ When you have been a windows user, you would always forget after hitting delete 
 The solution:
 
 ```
-shred # please/delete/me
+shred # please/corrupt/me
 ```
 
+- This just overwrites the file
+
+```
+shred -u
+```
+
+- Overwrites it AND deletes it
+
 It will overwrite a file or directory multiple times making it unrecoverable, in a age of kali Linux MCP servers for all ages...this might save you.
+
+
+## lazydocker
+
+Lazydocker makes managing your containers and volumes simple, without using a brute force command or digging through terminal entries. 
+
+### lazy docker installation 
+
+There are many ways to install lazydocker:
+
+#### homebrew
+
+```
+brew install lazydocker
+```
+
+#### docker (my preferred method)
+
+```
+docker run --rm -it -v \
+/var/run/docker.sock:/var/run/docker.sock \
+-v /yourpath:/.config/jesseduffield/lazydocker \
+lazyteam/lazydocker
+```
+
+- make sure to set your `-v` path for the actual config 
+
+- set deployment as an alias: 
+	- make sure to change alias and `-v` like above
+
+```
+echo "alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /yourpath/config:/.config/jesseduffield/lazydocker lazyteam/lazydocker'" >> ~/.zshrc
+```
+
+#### usage
+
+- set an alias to run it 
+
+```
+echo "alias lzd='lazydocker'" >> ~/.zshrc
+```
+
+
+## Command clean ups
+
+I personally use these in my startup script to clean up my systems old updates files or to trim my docker images that aren't used/update them. 
+
+Clean up old package files:
+
+```
+sudo apt autoremove --purge && sudo apt autoclean && sudo apt clean
+```
+
+This deletes unused images (so if they aren't running) while not touching their volumes. 
+
+```
+docker system prune -af
+```
+
