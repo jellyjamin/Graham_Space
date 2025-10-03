@@ -1,7 +1,7 @@
-<ol id="breadcrumbs" class="breadcrumb-list">
+<ul id="breadcrumbs" class="breadcrumb-list">
     <li><a href="{{ "/" | relURL }}">Home</a></li>
     {{- range .Ancestors.Reverse }}
       <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
     {{- end }}
     <li class="current"><span>{{ .Title }}</span></li>
-  </ol>
+  </ul>

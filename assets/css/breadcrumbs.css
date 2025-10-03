@@ -1,31 +1,38 @@
 .breadcrumb-list {
     margin: 1rem 0;
     font-size: 0.875rem;
-    color: var(--primary);
-    list-style: none;
+    color: #FF6B35;
+    list-style: none; /* No bullets or numbers */
     padding: 0;
-    display: flex;
+    display: flex; /* Horizontal layout */
     flex-wrap: wrap;
     gap: 0;
     align-items: center;
   }
-
-  .breadcrumb-list li:not(:last-child)::after {
-    content: " / ";
-    margin: 0 0.25rem;
-    color: var(--secondary);
+  
+  .breadcrumb-list li {
+    display: inline; /* Ensure list items are inline, not block */
+    margin: 0;
   }
-
+  
+  .breadcrumb-list li:not(:last-child)::after {
+    content: "/ "; /* Slash immediately, followed by space (no leading space before /) */
+    margin: 0 0.125rem; /* Reduced for tighter spacing */
+    color: #FF6B35;
+  }
+  
   .breadcrumb-list a {
     text-decoration: none;
-    color: var(--primary);
+    color: #FF6B35;
   }
-
+  
   .breadcrumb-list a:hover {
     text-decoration: underline;
+    color: #E55A2B;
   }
-
+  
   .breadcrumb-list .current {
-    color: var(--secondary);
+    color: #FF6B35;
     font-weight: 500;
   }
+  
