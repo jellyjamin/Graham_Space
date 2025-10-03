@@ -5,6 +5,13 @@
     <link rel="stylesheet" href="{{ $featuredStyle.RelPermalink }}">
 {{ end }}
 
+{{/* Custom CSS for breadcrumbs */}}
+{{ $breadcrumbCSS := resources.Get "css/breadcrumbs.css" }}
+{{ if $breadcrumbCSS }}
+    {{ $breadcrumbStyle := $breadcrumbCSS | minify | resources.Fingerprint "sha256" }}
+    <link rel="stylesheet" href="{{ $breadcrumbStyle.RelPermalink }}">
+{{ end }}
+
 <!-- Google AdSense Global Script -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1767224303832332"
      crossorigin="anonymous"></script>
