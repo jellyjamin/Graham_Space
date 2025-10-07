@@ -126,6 +126,16 @@ theme = "stack"
     url = "/archives/"
     weight = 5
 
+[[menu.main]]
+    name = "Terms"
+    url = "/terms/"
+    weight = 6
+
+[[menu.main]]
+    name = "Privacy"
+    url = "/privacy/"
+    weight = 7
+
 # Social links
 [[menu.social]]
     identifier = "github"

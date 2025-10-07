@@ -1,0 +1,15 @@
+{{/* Custom footer links section */}}
+<section class="footer-links">
+    <div class="footer-links-container">
+        <span class="footer-links-label">{{ i18n "footer.legal" | default "Legal" }}:</span>
+        <div class="footer-links-items">
+            <a href="{{ "/terms/" | relURL }}" class="footer-link" rel="noopener">
+                {{ i18n "footer.terms" | default "Terms & Conditions" }}
+            </a>
+            <span class="footer-link-separator">•</span>
+            <a href="{{ "/privacy/" | relURL }}" class="footer-link" rel="noopener">
+                {{ i18n "footer.privacy" | default "Privacy Policy" }}
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,7 +1,22 @@
-<ul id="breadcrumbs" class="breadcrumb-list">
-    <li><a href="{{ "/" | relURL }}">Home</a></li>
-    {{- range .Ancestors.Reverse }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+<div id="breadcrumbs" class="breadcrumb-list">
+    <a href="{{ "/" | relURL }}">Home</a>
+    {{- if eq .Type "post" }}
+        <span class="separator">›</span>
+        <a href="{{ "/post/" | relURL }}">Posts</a>
+    {{- else if eq .Type "page" }}
+        {{- $currentPage := . }}
+        {{- range .Ancestors.Reverse }}
+            {{- if ne .Title "Home" }}
+                <span class="separator">›</span>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            {{- end }}
+        {{- end }}
+    {{- else }}
+        {{- range .Ancestors.Reverse }}
+            <span class="separator">›</span>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{- end }}
     {{- end }}
-    <li class="current"><span>{{ .Title }}</span></li>
-  </ul>
+    <span class="separator">›</span>
+    <span class="current">{{ .Title }}</span>
+</div>

@@ -1,18 +1,8 @@
-{{/* Custom CSS for featured gallery */}}
-{{ $featuredCSS := resources.Get "css/featured-gallery.css" }}
-{{ if $featuredCSS }}
-    {{ $featuredStyle := $featuredCSS | minify | resources.Fingerprint "sha256" }}
-    <link rel="stylesheet" href="{{ $featuredStyle.RelPermalink }}">
-{{ end }}
+{{/* Custom CSS for footer links and breadcrumbs */}}
+{{ $footerCSS := resources.Get "css/footer-links.css" }}
+{{ $footerCSS := $footerCSS | resources.Fingerprint "sha256" }}
+<link rel="stylesheet" href="{{ $footerCSS.RelPermalink }}">
 
-{{/* Custom CSS for breadcrumbs */}}
-{{ $breadcrumbCSS := resources.Get "css/breadcrumbs.css" }}
-{{ if $breadcrumbCSS }}
-    {{ $breadcrumbStyle := $breadcrumbCSS | minify | resources.Fingerprint "sha256" }}
-    <link rel="stylesheet" href="{{ $breadcrumbStyle.RelPermalink }}">
-{{ end }}
-
-<!-- Google AdSense Global Script -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1767224303832332"
-     crossorigin="anonymous"></script>
-<!-- End Google AdSense Global Script -->
+{{ $breadcrumbsCSS := resources.Get "css/breadcrumbs.css" }}
+{{ $breadcrumbsCSS := $breadcrumbsCSS | resources.Fingerprint "sha256" }}
+<link rel="stylesheet" href="{{ $breadcrumbsCSS.RelPermalink }}">
