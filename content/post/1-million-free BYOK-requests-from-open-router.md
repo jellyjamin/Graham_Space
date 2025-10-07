@@ -19,7 +19,7 @@ categories:
   - Agents
 draft: false
 featured: true
-image: /img/posts/headers/your-post-name/featured.jpg
+image: /img/posts/headers/1-million-free BYOK-requests-from-open-router/or-annou.png
 image_alt: "OpenRouter BYOK: Connect your OpenAI and Anthropic keys for 1 million free LLM requests."
 toc: true
 reading_time: true
