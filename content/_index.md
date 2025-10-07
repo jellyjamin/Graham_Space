@@ -4,7 +4,7 @@ date: 2025-01-27
 type: "page"
 ---
 
-# Welcome to Graham Space! 🚀
+# Welcome to Graham Space! 
 
 Hello and welcome to my digital space! I'm Graham, and this is where I share my thoughts, projects, and discoveries with the world.
 

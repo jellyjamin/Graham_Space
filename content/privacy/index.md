@@ -6,7 +6,7 @@ type: "page"
 
 # Privacy Policy
 
-**Effective Date:** [Effective Date]  
+**Effective Date:** 2025-01-27
 **Blog Name:** Graham_space  
 **Jurisdiction:** United States of America
 
