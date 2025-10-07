@@ -22,6 +22,17 @@ This slashes their standard platform fee of 5%, allowing users to still use thei
 
 You'll have your API key!
 
+#### How to get free 250k daily chat-gpt 5 tokens per day!
+
+
 
 ## how to get an anthropic API key
 
+- Go to [anthropics developer console](https://console.anthropic.com/) and sign in. 
+
+- clicking the expansion arrow at the top left, click API keys which is under the manage section:
+
+<img src="/img/posts/Inlines/1-million-free BYOK-requests-from-open-router/anthropic-api.png" 
+     alt="Where to find anthropics API keys in the settings." 
+     style="max-width: 100%; height: auto;">
+![[anthropic-api.png]]
