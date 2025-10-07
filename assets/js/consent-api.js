@@ -125,18 +125,20 @@
     window.consentData = consentData;
     
     // Create a mock API endpoint
-    window.fetch = window.fetch || function(url) {
-      return new Promise(function(resolve, reject) {
-        if (url === '/api/consent-data') {
-          resolve({
-            json: function() {
-              return consentData;
-            }
-          });
-        } else {
-          reject(new Error('Not found'));
-        }
-      });
-    };
+    if (!window.fetch) {
+      window.fetch = function(url) {
+        return new Promise(function(resolve, reject) {
+          if (url === '/api/consent-data') {
+            resolve({
+              json: function() {
+                return consentData;
+              }
+            });
+          } else {
+            reject(new Error('Not found'));
+          }
+        });
+      };
+    }
   });
 })();

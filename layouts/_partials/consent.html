@@ -2,66 +2,131 @@
 <div id="consent-banner" class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title" aria-describedby="consent-description">
   <div class="consent-banner__content">
     <div class="consent-banner__header">
-      <h2 id="consent-title" class="consent-banner__title">{{ .Site.Params.consent.title | default "We Value Your Privacy" }}</h2>
+      <h2 id="consent-title" class="consent-banner__title">We Value Your Privacy</h2>
       <p id="consent-description" class="consent-banner__description">
-        {{ .Site.Params.consent.description | default "We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking 'Accept All', you consent to our use of cookies." }}
+        We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking 'Accept All', you consent to our use of cookies.
       </p>
     </div>
 
     <div class="consent-banner__preferences" id="consent-preferences">
-      <h3 class="consent-banner__preferences-title">{{ .Site.Params.consent.preferencesTitle | default "Cookie Preferences" }}</h3>
+      <h3 class="consent-banner__preferences-title">Cookie Preferences</h3>
       <div class="consent-categories">
-        {{- range $category := .Site.Params.consent.categories | default (slice "essential" "analytics" "marketing" "social") -}}
-        <div class="consent-category" data-category="{{ $category }}">
+        <div class="consent-category" data-category="essential">
           <div class="consent-category__header">
-            <input type="checkbox" id="category-{{ $category }}" class="consent-category__toggle" 
-                   data-category="{{ $category }}" {{ if eq $category "essential" }}checked disabled{{ end }}>
-            <label for="category-{{ $category }}" class="consent-category__label">
-              <span class="consent-category__name">{{ $category | title }}</span>
-              <span class="consent-category__description">{{- if index .Site.Params.consent.descriptions (printf "category_%s" $category) -}}{{ index .Site.Params.consent.descriptions (printf "category_%s" $category) }}{{- else -}}Manage {{ $category }} cookies{{- end -}}</span>
+            <input type="checkbox" id="category-essential" class="consent-category__toggle"
+                   data-category="essential" checked disabled>
+            <label for="category-essential" class="consent-category__label">
+              <span class="consent-category__name">Essential</span>
+              <span class="consent-category__description">Manage essential cookies</span>
             </label>
           </div>
-          <div class="consent-category__details" id="details-{{ $category }}">
-            {{- range $index, $item := .Site.Data.consent.items -}}
-              {{- if or (eq $category "essential" and $item.is_functional) (eq $category "analytics" and not $item.is_functional) (eq $category "marketing" and not $item.is_functional) (eq $category "social" and not $item.is_functional) -}}
+          <div class="consent-category__details" id="details-essential">
+{{ range .Site.Data.consent.items }}
+{{ if or .is_functional (eq .script_file "recaptcha.js") }}
             <div class="consent-item">
-              <input type="checkbox" id="item-{{ $item.script_file }}" class="consent-item__toggle" 
-                     data-script="{{ $item.script_file }}" data-category="{{ $category }}" 
-                     {{ if eq $category "essential" }}checked disabled{{ end }}>
-              <label for="item-{{ $item.script_file }}" class="consent-item__label">
-                <span class="consent-item__title">{{ $item.title }}</span>
-                <span class="consent-item__description">{{ $item.description }}</span>
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}" {{ if or .is_functional (eq .script_file "recaptcha.js") }}checked disabled{{ end }}>
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
               </label>
             </div>
-              {{- end -}}
-            {{- end -}}
+{{ end }}
+{{ end }}
           </div>
         </div>
-        {{- end -}}
+        <div class="consent-category" data-category="analytics">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-analytics" class="consent-category__toggle"
+                   data-category="analytics">
+            <label for="category-analytics" class="consent-category__label">
+              <span class="consent-category__name">Analytics</span>
+              <span class="consent-category__description">Manage analytics cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-analytics">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "google-analytics.js") (eq .script_file "google-tag-manager.js") (eq .script_file "hotjar.js") (eq .script_file "cloudflare-analytics.js") (eq .script_file "microsoft-clarity.js")) }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="consent-category" data-category="marketing">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-marketing" class="consent-category__toggle"
+                   data-category="marketing">
+            <label for="category-marketing" class="consent-category__label">
+              <span class="consent-category__name">Marketing</span>
+              <span class="consent-category__description">Manage marketing cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-marketing">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "facebook-pixel.js") (eq .script_file "linkedin-insight.js") (eq .script_file "google-ads-tracking.js")) }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="consent-category" data-category="social">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-social" class="consent-category__toggle"
+                   data-category="social">
+            <label for="category-social" class="consent-category__label">
+              <span class="consent-category__name">Social</span>
+              <span class="consent-category__description">Manage social cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-social">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "twitter.js") (eq .script_file "facebook-social.js") (eq .script_file "youtube-embeds.js") (eq .script_file "crisp-chat.js") (eq .script_file "intercom.js") (eq .script_file "zendesk.js")) }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="consent-banner__actions">
       <button id="accept-all" class="btn btn--primary" aria-label="Accept all cookies">
-        {{ .Site.Params.concept.acceptAll | default "Accept All" }}
+        Accept All
       </button>
       <button id="accept-essential" class="btn btn--secondary" aria-label="Accept essential cookies only">
-        {{ .Site.Params.concept.acceptEssential | default "Accept Essential Only" }}
+        Accept Essential Only
       </button>
       <button id="reject-all" class="btn btn--secondary" aria-label="Reject all non-essential cookies">
-        {{ .Site.Params.concept.rejectAll | default "Reject All" }}
+        Reject All
       </button>
       <button id="save-preferences" class="btn btn--primary" style="display: none;" aria-label="Save cookie preferences">
-        {{ .Site.Params.concept.savePreferences | default "Save Preferences" }}
+        Save Preferences
       </button>
     </div>
 
     <div class="consent-banner__footer">
-      <a href="{{ .Site.BaseURL }}privacy/" class="consent-banner__link" rel="noopener noreferrer">
-        {{ .Site.Params.concept.privacyPolicy | default "Privacy Policy" }}
+      <a href="/privacy/" class="consent-banner__link" rel="noopener noreferrer">
+        Privacy Policy
       </a>
-      <a href="{{ .Site.BaseURL }}terms/" class="consent-banner__link" rel="noopener noreferrer">
-        {{ .Site.Params.concept.termsOfUse | default "Terms of Use" }}
+      <a href="/terms/" class="consent-banner__link" rel="noopener noreferrer">
+        Terms of Use
       </a>
     </div>
   </div>
@@ -77,7 +142,7 @@
 <div id="cookie-settings-modal" class="cookie-settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
   <div class="cookie-settings-modal__content">
     <div class="cookie-settings-modal__header">
-      <h2 id="settings-title" class="cookie-settings-modal__title">{{ .Site.Params.concept.cookieSettings | default "Cookie Settings" }}</h2>
+      <h2 id="settings-title" class="cookie-settings-modal__title">Cookie Settings</h2>
       <button id="close-settings" class="cookie-settings-modal__close" aria-label="Close settings">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -88,42 +153,107 @@
 
     <div class="cookie-settings-modal__body">
       <div class="cookie-settings-modal__preferences">
-        {{- range $category := .Site.Params.consent.categories | default (slice "essential" "analytics" "marketing" "social") -}}
-        <div class="settings-category" data-category="{{ $category }}">
+        <div class="settings-category" data-category="essential">
           <div class="settings-category__header">
-            <input type="checkbox" id="settings-category-{{ $category }}" class="settings-category__toggle" 
-                   data-category="{{ $category }}" {{ if eq $category "essential" }}checked disabled{{ end }}>
-            <label for="settings-category-{{ $category }}" class="settings-category__label">
-              <span class="settings-category__name">{{ $category | title }}</span>
-              <span class="settings-category__description">{{- if index .Site.Params.consent.descriptions (printf "category_%s" $category) -}}{{ index .Site.Params.consent.descriptions (printf "category_%s" $category) }}{{- else -}}Manage {{ $category }} cookies{{- end -}}</span>
+            <input type="checkbox" id="settings-category-essential" class="settings-category__toggle"
+                   data-category="essential" checked disabled>
+            <label for="settings-category-essential" class="settings-category__label">
+              <span class="settings-category__name">Essential</span>
+              <span class="settings-category__description">Manage essential cookies</span>
             </label>
           </div>
-          <div class="settings-category__details" id="settings-details-{{ $category }}">
-            {{- range $index, $item := .Site.Data.consent.items -}}
-              {{- if or (eq $category "essential" and $item.is_functional) (eq $category "analytics" and not $item.is_functional) (eq $category "marketing" and not $item.is_functional) (eq $category "social" and not $item.is_functional) -}}
+          <div class="settings-category__details" id="settings-details-essential">
+{{ range .Site.Data.consent.items }}
+{{ if or .is_functional (eq .script_file "recaptcha.js") }}
             <div class="settings-item">
-              <input type="checkbox" id="settings-item-{{ $item.script_file }}" class="settings-item__toggle" 
-                     data-script="{{ $item.script_file }}" data-category="{{ $category }}" 
-                     {{ if eq $category "essential" }}checked disabled{{ end }}>
-              <label for="settings-item-{{ $item.script_file }}" class="settings-item__label">
-                <span class="settings-item__title">{{ $item.title }}</span>
-                <span class="settings-item__description">{{ $item.description }}</span>
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}" {{ if or .is_functional (eq .script_file "recaptcha.js") }}checked disabled{{ end }}>
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
               </label>
             </div>
-              {{- end -}}
-            {{- end -}}
+{{ end }}
+{{ end }}
           </div>
         </div>
-        {{- end -}}
+        <div class="settings-category" data-category="analytics">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-analytics" class="settings-category__toggle"
+                   data-category="analytics">
+            <label for="settings-category-analytics" class="settings-category__label">
+              <span class="settings-category__name">Analytics</span>
+              <span class="settings-category__description">Manage analytics cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-analytics">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "google-analytics.js") (eq .script_file "google-tag-manager.js") (eq .script_file "hotjar.js") (eq .script_file "cloudflare-analytics.js") (eq .script_file "microsoft-clarity.js")) }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="settings-category" data-category="marketing">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-marketing" class="settings-category__toggle"
+                   data-category="marketing">
+            <label for="settings-category-marketing" class="settings-category__label">
+              <span class="settings-category__name">Marketing</span>
+              <span class="settings-category__description">Manage marketing cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-marketing">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "facebook-pixel.js") (eq .script_file "linkedin-insight.js") (eq .script_file "google-ads-tracking.js")) }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="settings-category" data-category="social">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-social" class="settings-category__toggle"
+                   data-category="social">
+            <label for="settings-category-social" class="settings-category__label">
+              <span class="settings-category__name">Social</span>
+              <span class="settings-category__description">Manage social cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-social">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "twitter.js") (eq .script_file "facebook-social.js") (eq .script_file "youtube-embeds.js") (eq .script_file "crisp-chat.js") (eq .script_file "intercom.js") (eq .script_file "zendesk.js")) }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="cookie-settings-modal__actions">
       <button id="save-settings" class="btn btn--primary" aria-label="Save cookie settings">
-        {{ .Site.Params.concept.saveSettings | default "Save Settings" }}
+        Save Settings
       </button>
       <button id="reset-settings" class="btn btn--secondary" aria-label="Reset to default settings">
-        {{ .Site.Params.concept.resetSettings | default "Reset to Default" }}
+        Reset to Default
       </button>
     </div>
   </div>
@@ -135,7 +265,7 @@
     <circle cx="12" cy="12" r="3"></circle>
     <path d="M12 1v6m0 6v6m4.22-10.22l4.24-4.24m-4.24 12.68l4.24 4.24M20 12h-6m-6 0H2m10.22-4.22L7.98 3.54m12.68 4.24l4.24 4.24"></path>
   </svg>
-  <span class="cookie-settings-btn__text">{{ .Site.Params.concept.settings | default "Settings" }}</span>
+  <span class="cookie-settings-btn__text">Settings</span>
 </button>
 
 {{- /* CSS Styles */ -}}
@@ -730,5 +860,8 @@
 </style>
 
 {{- /* JavaScript */ -}}
+<script>
+window.consentData = {{ .Site.Data.consent | jsonify }};
+</script>
 <script src="{{ "js/consent-api.js" | relURL }}" defer></script>
 <script src="{{ "js/cookie-consent.js" | relURL }}" defer></script>

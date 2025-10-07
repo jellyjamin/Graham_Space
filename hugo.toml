@@ -105,21 +105,17 @@ theme = "stack"
         title = "We Value Your Privacy"
         description = "We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic."
         categories = ["essential", "analytics", "marketing", "social"]
-        descriptions = {
-            category_essential = "Essential cookies for basic website functionality"
-            category_analytics = "Analytics cookies for understanding website usage"
-            category_marketing = "Marketing cookies for personalized advertising"
-            category_social = "Social media cookies for content sharing"
-        }
-        [params.consent.text]
-            acceptAll = "Accept All"
-            acceptEssential = "Accept Essential Only"
-            rejectAll = "Reject All"
-            savePreferences = "Save Preferences"
-            settings = "Settings"
-            cookieSettings = "Cookie Settings"
-            privacyPolicy = "Privacy Policy"
-            termsOfUse = "Terms of Use"
+        descriptions = { essential = "Essential cookies for basic website functionality", analytics = "Analytics cookies for understanding website usage", marketing = "Marketing cookies for personalized advertising", social = "Social media cookies for content sharing" }
+    
+    [params.consent.text]
+        acceptAll = "Accept All"
+        acceptEssential = "Accept Essential Only"
+        rejectAll = "Reject All"
+        savePreferences = "Save Preferences"
+        settings = "Settings"
+        cookieSettings = "Cookie Settings"
+        privacyPolicy = "Privacy Policy"
+        termsOfUse = "Terms of Use"
 
 # Menu configuration
 [[menu.main]]
