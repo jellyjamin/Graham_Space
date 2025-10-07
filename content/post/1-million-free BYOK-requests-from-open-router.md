@@ -24,6 +24,8 @@ You'll have your API key!
 
 #### How to get free 250k daily chat-gpt 5 tokens per day!
 
+- [Checkout my blogpost to set it up](https://graham-space.pages.dev/p/unlock-free-daily-gpt-5-tokens-how-to-get-250k-from-openai/)
+
 
 
 ## how to get an anthropic API key
