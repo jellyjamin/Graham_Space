@@ -38,3 +38,25 @@ You'll have your API key!
      alt="Where to find anthropics API keys in the settings." 
      style="max-width: 100%; height: auto;">
 ![[anthropic-api.png]]
+
+- create your anthropic API key.
+
+
+## Connecting your keys to Openrouter
+
+- in your Openrouter settings, select integrations and from the list input your API keys.
+
+<img src="/img/posts/Inlines/1-million-free BYOK-requests-from-open-router/openrouter-byok.png" 
+     alt="Where to find anthropics API keys in the settings." 
+     style="max-width: 100%; height: auto;">
+![[openrouter-byok.png]]
+
+### Configuration (mandaory)
+
+Sometimes you have to learn things the hard way and that was me a few hours ago when I zapped away a dollar in credits when I went through the hassle of getting my openai account verified. 
+
+One of the amazing features of Openrouter is that they will choose 
+
+### How to get a discount on Openrouter's general use on all models
+
+Another 
