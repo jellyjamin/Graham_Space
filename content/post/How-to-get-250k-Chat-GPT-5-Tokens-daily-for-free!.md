@@ -49,5 +49,8 @@ Just by clicking a button in your data control settings.
 
 - Simply choose how you want to share your data. If you don't mind giving up your data on every chat, then select all projects, or just select the projects you don't mind sharing.
 
+> [!NOTE]
+> You have to verify your identity in settings > general to use the free tokens.
+
 Now you have access to free daily chat GPT daily requests!
 

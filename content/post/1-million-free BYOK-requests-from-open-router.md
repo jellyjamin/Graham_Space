@@ -53,9 +53,9 @@ You'll have your API key!
 
 ### Configuration (mandaory)
 
-Sometimes you have to learn things the hard way and that was me a few hours ago when I zapped away a dollar in credits when I went through the hassle of getting my openai account verified. 
+Sometimes you have to learn things the hard way and that was me a few hours ago when I zapped away a dollar in credits when I went through the hassle of getting my openai account verified to use 
 
-One of the amazing features of Openrouter is that they will choose 
+One of the amazing features of Openrouter is that they will choose aggregate 
 
 ### How to get a discount on Openrouter's general use on all models
 
