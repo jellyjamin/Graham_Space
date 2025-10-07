@@ -19,7 +19,7 @@ categories:
   - OpenAI
 draft: false
 featured: true
-image: /img/posts/headers/How-to-get-250k-Chat-GPT-5-Tokens-daily-for-free!/free-gpt-5-tokens.jpg
+image: /img/posts/headers/How-to-get-250k-Chat-GPT-5-Tokens-daily-for-free!/free-gpt-5-tokens.png
 image_alt: "Unlock Free GPT-5 Tokens Daily: Featured image showing token access"
 toc: true
 reading_time: true
