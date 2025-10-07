@@ -21,7 +21,7 @@ draft: false
 featured: true
 image: /img/posts/headers/How-to-get-250k-Chat-GPT-5-Tokens-daily-for-free!/free-gpt-5-tokens.png
 image_alt: "Unlock Free GPT-5 Tokens Daily: Featured image showing token access"
-toc: true
+toc: false
 reading_time: true
 math: false
 author: Jake Graham
@@ -37,7 +37,7 @@ and
 
 Just by clicking a button in your data control settings.
 
-##### How to unlock them
+## How to unlock them
 
 - Go into your [Openais developer console](https://platform.openai.com/) sign in (or create an account)
 
