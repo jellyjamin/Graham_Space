@@ -31,6 +31,13 @@ Thumbs.db
 *.tmp
 *.temp
 
+# agents.md
+
+AGENTS.md/
+AGENTS.md
+**/AGENTS.md/
+**/AGENTS.md
+
 # Node modules (if using any Node.js tools)
 node_modules/
 
