@@ -51,12 +51,24 @@ You'll have your API key!
      style="max-width: 100%; height: auto;">
 ![[openrouter-byok.png]]
 
-### Configuration (mandaory)
+### Configuration of presets (mandaory)
 
-Sometimes you have to learn things the hard way and that was me a few hours ago when I zapped away a dollar in credits when I went through the hassle of getting my openai account verified to use 
+Sometimes you have to learn things the hard way and that was me a few hours ago when I zapped away a dollar in credits when I went through the hassle of getting my openai account verified to use the free daily 250k tokens for GPT 5.
 
-One of the amazing features of Openrouter is that they will choose aggregate 
+One of the amazing features of Openrouter is that they will choose the best provider of each models which you can configure from the fastest to the cheapest, however to make sure it routes through your BYOK key:
 
-### How to get a discount on Openrouter's general use on all models
+- Go into settings > presets > add presets 
+
+In your new preset you're going to want to:
+
+- give it a `name` (name it around the model you want to use, for easy configuration)
+- select the `model` you want to use
+- then enable `provider routing`
+
+![[Pasted image 20251006222901.png]]
+
+
+
+## How to get a discount on Openrouter's general use on all models
 
 Another 
