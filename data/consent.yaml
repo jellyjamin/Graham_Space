@@ -1,0 +1,96 @@
+items:
+  # Essential/Functional Scripts
+  - title: Essential Website Functionality
+    description: These scripts are essential for the basic functionality of our website, including navigation, user authentication, and core features. They do not collect personal data and are required for the website to operate properly.
+    is_functional: true
+    script_file: essential.js
+
+  - title: Cookie Consent Management
+    description: This script manages the cookie consent banner and user preferences. It stores your consent choices to ensure we respect your privacy preferences across your visits.
+    is_functional: true
+    script_file: cookie-consent.js
+
+  - title: Search Functionality
+    description: Enables the search feature on our website, allowing you to find content quickly. This script processes your search queries to provide relevant results.
+    is_functional: true
+    script_file: search.js
+
+  # Analytics Scripts
+  - title: Google Analytics
+    description: Google Analytics helps us understand how visitors interact with our website by collecting anonymous information such as pages visited, time spent on site, and traffic sources. This data helps us improve our website and user experience.
+    is_functional: false
+    script_file: google-analytics.js
+
+  - title: Google Tag Manager
+    description: Google Tag Manager helps us manage and deploy marketing tags on our website without modifying the code. It allows us to track various user interactions and events.
+    is_functional: false
+    script_file: google-tag-manager.js
+
+  - title: Hotjar Analytics
+    description: Hotjar provides heatmaps, session recordings, and user feedback tools to help us understand how users interact with our website. This helps us identify areas for improvement.
+    is_functional: false
+    script_file: hotjar.js
+
+  # Marketing Scripts
+  - title: Facebook Pixel
+    description: The Facebook Pixel helps us track conversions from Facebook ads and build targeted audiences for our marketing campaigns. It collects data about your interactions with our site.
+    is_functional: false
+    script_file: facebook-pixel.js
+
+  - title: LinkedIn Insight Tag
+    description: The LinkedIn Insight Tag helps us track conversions from LinkedIn ads and understand how you interact with our website through LinkedIn marketing efforts.
+    is_functional: false
+    script_file: linkedin-insight.js
+
+  - title: Google Ads Conversion Tracking
+    description: This script tracks conversions from Google Ads campaigns, helping us measure the effectiveness of our advertising spend and optimize our marketing strategies.
+    is_functional: false
+    script_file: google-ads-tracking.js
+
+  # Social Media Scripts
+  - title: Twitter (X) Integration
+    description: Twitter integration allows you to share content on Twitter and view embedded tweets. This script may collect data about your interactions with Twitter content on our site.
+    is_functional: false
+    script_file: twitter.js
+
+  - title: Facebook Social Plugins
+    description: Facebook social plugins (like, share, comment buttons) allow you to interact with Facebook directly from our website. This may collect information about your social media activity.
+    is_functional: false
+    script_file: facebook-social.js
+
+  - title: YouTube Embeds
+    description: YouTube embeds allow us to display videos on our website. This script may collect data about your video viewing behavior and interactions with YouTube content.
+    is_functional: false
+    script_file: youtube-embeds.js
+
+  # Chat Support Scripts
+  - title: Crisp Chat Support
+    description: Crisp provides live chat support directly on our website. This script enables real-time communication with our support team and may collect data about your chat interactions.
+    is_functional: false
+    script_file: crisp-chat.js
+
+  - title: Intercom Customer Support
+    description: Intercom helps us provide customer support and engage with visitors through in-app messaging. This script may collect data about your support interactions and browsing behavior.
+    is_functional: false
+    script_file: intercom.js
+
+  - title: Zendesk Support Widget
+    description: Zendesk provides customer support services and help desk functionality. This script enables support ticket creation and may collect data about your support requests.
+    is_functional: false
+    script_file: zendesk.js
+
+  # Additional Utility Scripts
+  - title: Google reCAPTCHA
+    description: Google reCAPTCHA helps protect our website from spam and abuse by verifying that you are human. This script may collect data about your interactions to provide security.
+    is_functional: false
+    script_file: recaptcha.js
+
+  - title: Cloudflare Web Analytics
+    description: Cloudflare Web Analytics provides insights into website traffic and performance while respecting user privacy. It collects anonymous data about visitor behavior.
+    is_functional: false
+    script_file: cloudflare-analytics.js
+
+  - title: Microsoft Clarity
+    description: Microsoft Clarity provides user behavior analytics through heatmaps and session recordings to help us improve website usability and user experience.
+    is_functional: false
+    script_file: microsoft-clarity.js
