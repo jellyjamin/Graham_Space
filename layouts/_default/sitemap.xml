@@ -7,7 +7,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>{{ .Site.BaseURL }}sitemap-posts.xml</loc>
+    <loc>{{ .Site.BaseURL }}post/sitemap-posts.xml</loc>
     <lastmod>{{ now.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
   </sitemap>
   <sitemap>
@@ -15,11 +15,11 @@
     <lastmod>{{ now.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>{{ .Site.BaseURL }}sitemap-categories.xml</loc>
+    <loc>{{ .Site.BaseURL }}categories/sitemap-categories.xml</loc>
     <lastmod>{{ now.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>{{ .Site.BaseURL }}sitemap-tags.xml</loc>
+    <loc>{{ .Site.BaseURL }}tags/sitemap-tags.xml</loc>
     <lastmod>{{ now.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
   </sitemap>
 </sitemapindex>
