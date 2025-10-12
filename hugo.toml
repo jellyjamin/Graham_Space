@@ -186,6 +186,27 @@ theme = "stack"
     priority = 0.5
     filename = "sitemap.xml"
 
+# Create separate sitemaps for different content types
+[sitemap.posts]
+    changefreq = "weekly"
+    priority = 0.8
+    filename = "sitemap-posts.xml"
+
+[sitemap.pages]
+    changefreq = "monthly"
+    priority = 0.6
+    filename = "sitemap-pages.xml"
+
+[sitemap.categories]
+    changefreq = "monthly"
+    priority = 0.5
+    filename = "sitemap-categories.xml"
+
+[sitemap.tags]
+    changefreq = "monthly"
+    priority = 0.4
+    filename = "sitemap-tags.xml"
+
 # Markup configuration
 [markup]
     [markup.goldmark]

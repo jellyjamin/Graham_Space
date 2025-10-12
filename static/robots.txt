@@ -1,8 +1,15 @@
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap index
+Sitemap: https://graham-space.pages.dev/sitemapindex.xml
+
+# Individual sitemaps (optional, but recommended)
 Sitemap: https://graham-space.pages.dev/sitemap.xml
+Sitemap: https://graham-space.pages.dev/sitemap-posts.xml
+Sitemap: https://graham-space.pages.dev/sitemap-pages.xml
+Sitemap: https://graham-space.pages.dev/sitemap-categories.xml
+Sitemap: https://graham-space.pages.dev/sitemap-tags.xml
 
 # Disallow admin or private areas (if any)
 # Disallow: /admin/
