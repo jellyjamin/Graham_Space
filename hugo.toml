@@ -180,13 +180,13 @@ theme = "stack"
         name = "categories"
         weight = 200
 
-# Sitemap configuration
+# Sitemap configuration - using custom template
 [sitemap]
     changefreq = "monthly"
     priority = 0.5
     filename = "sitemap.xml"
+    disable = false
 
-# Create separate sitemaps for different content types
 [sitemap.posts]
     changefreq = "weekly"
     priority = 0.8
@@ -206,6 +206,10 @@ theme = "stack"
     changefreq = "monthly"
     priority = 0.4
     filename = "sitemap-tags.xml"
+
+# Enable custom sitemap template
+[outputs]
+    home = ["HTML", "RSS", "JSON", "sitemap"]
 
 # Markup configuration
 [markup]
