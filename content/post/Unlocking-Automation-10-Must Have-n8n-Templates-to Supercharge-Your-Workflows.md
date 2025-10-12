@@ -1,5 +1,7 @@
 
-title: Unlocking Automation: 10 Must-Have n8n Templates to Supercharge Your Workflows
+title: Unlocking Automation: 5 Must-Have n8n Templates to Supercharge Your Workflows
+
+https://github.com/enescingoz/awesome-n8n-templates
 
 > Efficiency is not only a goal, but a necessity in the fast-paced digital world of today. Let me introduce you to n8n, an open-source workflow automation tool that enables you to increase productivity and streamline procedures. Having the appropriate templates can be crucial when it comes to automating tedious tasks, managing data across apps, and integrating intricate workflows. We'll look at ten essential n8n templates in this post that will improve your workflows. These templates not only save time but also revolutionize project management by automating marketing tasks. Imagine having the ability to quickly connect multiple services and improve teamwork—all at your fingertips. Are you prepared to change the way you operate? Let's explore the world of n8n and discover how much automation can do for you!
 
@@ -38,4 +40,36 @@ docker run -it --rm \
 - [timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
 
 ### importing templates
+
+- Simply click `create workflow at the top right` of the dashboard
+
+- then in your bare workflow at the top right menu, import from URL or file. I will give you the template URLs so just copy and paste!
+
+
+<img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/import.webp" 
+     alt="OpenAI Data Control Settings: Unlock Free Daily GPT-5 Tokens by Sharing Data" 
+     style="max-width: 100%; height: auto;">
+
+## Must have n8n template 1: Auto-label incoming Gmail messages with AI nodes
+
+- [link](https://raw.githubusercontent.com/enescingoz/awesome-n8n-templates/refs/heads/main/Gmail_and_Email_Automation/Auto-label%20incoming%20Gmail%20messages%20with%20AI%20nodes.json)
+
+<img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/temp1.png" 
+     alt="OpenAI Data Control Settings: Unlock Free Daily GPT-5 Tokens by Sharing Data" 
+     style="max-width: 100%; height: auto;">
+
+This workflow uses AI to automatically label incoming emails so that you can finally have an organized inbox. 
+
+- simply connect it to your Gmail account and to an openai API.
+
+> [!NOTE]
+> To get free daily Chat GPT tokens check out my article:
+> 
+> [Unlock FREE Daily GPT-5 Tokens: How to Get 250K from OpenAI](https://graham-space.pages.dev/p/unlock-free-daily-gpt-5-tokens-how-to-get-250k-from-openai/) 
+
+
+## Must have n8n template 2: Chat with a Google Sheet using AI
+
+- [link](https://raw.githubusercontent.com/enescingoz/awesome-n8n-templates/refs/heads/main/Google_Drive_and_Google_Sheets/Chat%20with%20a%20Google%20Sheet%20using%20AI.json)
+
 
