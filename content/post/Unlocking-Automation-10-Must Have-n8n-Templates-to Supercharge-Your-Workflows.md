@@ -38,6 +38,7 @@ The vast library of pre-built nodes that n8n offers is one of its primary charac
 
 The fact that n8n can connect to a wide range of third-party applications is another important advantage. Supporting more than 200 services, n8n can easily integrate with well-known programs like Trello, Google Sheets, Slack, and more. Businesses can establish unified workflows across various platforms thanks to this broad integration capability, which guarantees data consistency and boosts productivity. Furthermore, n8n's open-source community is always adding new features and integrations to keep the platform current with emerging technologies.
 
+
 ## How to Get Started with n8n Templates
 
 ### Installing n8n
@@ -73,6 +74,7 @@ docker run -it --rm \
 <img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/import.webp" 
      alt="Screenshot of the n8n dashboard showing the option to import a new workflow from a URL or file" 
      style="max-width: 100%; height: auto;">
+
 
 ## Must have n8n template 1: Auto-label incoming Gmail messages with AI nodes
 
