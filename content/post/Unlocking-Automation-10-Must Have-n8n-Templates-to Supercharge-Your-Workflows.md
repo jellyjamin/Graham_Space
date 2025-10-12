@@ -72,4 +72,19 @@ This workflow uses AI to automatically label incoming emails so that you can fin
 
 - [link](https://raw.githubusercontent.com/enescingoz/awesome-n8n-templates/refs/heads/main/Google_Drive_and_Google_Sheets/Chat%20with%20a%20Google%20Sheet%20using%20AI.json)
 
+<img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/temp2.png" 
+     alt="OpenAI Data Control Settings: Unlock Free Daily GPT-5 Tokens by Sharing Data" 
+     style="max-width: 100%; height: auto;">
 
+One of the worst things to have to deal with concerning your data is that it gets to a point where you just have walls of digits, this workflow uses openAI to make your data analysis a conversation rather than a hunt *through the columns*.
+
+
+## Must have n8n template 3: Chat with PDF docs using AI (quoting sources)	
+
+- [link](https://raw.githubusercontent.com/enescingoz/awesome-n8n-templates/refs/heads/main/PDF_and_Document_Processing/Chat%20with%20PDF%20docs%20using%20AI%20(quoting%20sources).json)
+
+<img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/temp3.png" 
+     alt="OpenAI Data Control Settings: Unlock Free Daily GPT-5 Tokens by Sharing Data" 
+     style="max-width: 100%; height: auto;">
+
+Keeping up with the trend of having your docs at your finger tips, this work flow makes your PDF files 
