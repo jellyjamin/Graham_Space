@@ -17,7 +17,7 @@ tags:
 categories:
   - technology
   - productivity 
-draft: true
+draft: false
 featured: false
 image: /img/posts/headers/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/header.png
 image_alt: A visual representation of interconnected digital nodes and data flow, symbolizing n8n's workflow automation capabilities
