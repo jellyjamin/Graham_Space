@@ -180,36 +180,43 @@ theme = "stack"
         name = "categories"
         weight = 200
 
-# Sitemap configuration - using custom template
+# Disable Hugo's built-in sitemap generation - using custom templates
 [sitemap]
-    changefreq = "monthly"
-    priority = 0.5
-    filename = "sitemap.xml"
-    disable = false
-
-[sitemap.posts]
-    changefreq = "weekly"
-    priority = 0.8
-    filename = "sitemap-posts.xml"
-
-[sitemap.pages]
-    changefreq = "monthly"
-    priority = 0.6
-    filename = "sitemap-pages.xml"
-
-[sitemap.categories]
-    changefreq = "monthly"
-    priority = 0.5
-    filename = "sitemap-categories.xml"
-
-[sitemap.tags]
-    changefreq = "monthly"
-    priority = 0.4
-    filename = "sitemap-tags.xml"
+    disable = true
 
 # Enable custom sitemap template
 [outputs]
     home = ["HTML", "RSS", "JSON", "sitemap"]
+
+# Ensure custom sitemap templates are used
+[mediaTypes]
+    [mediaTypes."application/xml"]
+        suffixes = ["xml"]
+
+[outputFormats.Sitemap]
+    mediaType = "application/xml"
+    baseName = "sitemap"
+    isPlainText = false
+
+[outputFormats.SitemapPosts]
+    mediaType = "application/xml"
+    baseName = "sitemap-posts"
+    isPlainText = false
+
+[outputFormats.SitemapPages]
+    mediaType = "application/xml"
+    baseName = "sitemap-pages"
+    isPlainText = false
+
+[outputFormats.SitemapCategories]
+    mediaType = "application/xml"
+    baseName = "sitemap-categories"
+    isPlainText = false
+
+[outputFormats.SitemapTags]
+    mediaType = "application/xml"
+    baseName = "sitemap-tags"
+    isPlainText = false
 
 # Markup configuration
 [markup]
