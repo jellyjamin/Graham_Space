@@ -71,7 +71,7 @@ docker run -it --rm \
 - then in your bare workflow at the top right menu, import from URL or file. I will give you the template URLs, so just copy and paste!
 
 
-<img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/import.webp" 
+<img src="/img/posts/Inlines/Unlocking-Automation-10-Must Have-n8n-Templates-to Supercharge-Your-Workflows/import.png" 
      alt="Screenshot of the n8n dashboard showing the option to import a new workflow from a URL or file" 
      style="max-width: 100%; height: auto;">
 
@@ -137,4 +137,3 @@ In this job market, it's important to take every advantage you can get. One grea
 
 When researching for articles or projects, I spend nearly half of my time sitting through tutorials, skipping from one part of the video. Using this workflow, you can have a personal researcher who summarizes a video sent straight to your Telegram. 
 
-![[header.png]]
