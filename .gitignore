@@ -50,3 +50,5 @@ node_modules/
 
 # Cloudflare Pages specific
 #.cfignore
+
+indexnow_submitter.py
