@@ -1,0 +1,54 @@
+# Hugo build output (Cloudflare Pages will build this)
+public/
+resources/_gen/
+
+# SyncThing folders
+.stfolder/
+.stfolder
+**/.stfolder/
+**/.stfolder
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# agents.md
+
+AGENTS.md/
+AGENTS.md
+**/AGENTS.md/
+**/AGENTS.md
+
+# Node modules (if using any Node.js tools)
+node_modules/
+
+# Environment files (keep these for Cloudflare Pages build settings)
+# .env files are typically used for build-time environment variables
+# Uncomment the lines below if you want to exclude them:
+# .env
+# .env.local
+# .env.*.local
+
+# Cloudflare Pages specific
+#.cfignore
+
+indexnow_submitter.py

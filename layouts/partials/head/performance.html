@@ -1,0 +1,23 @@
+{{/* Performance Optimizations */}}
+{{- $css := resources.Get "css/featured-gallery.css" -}}
+{{- if $css -}}
+    {{- $cssMin := $css | minify | resources.Fingerprint "sha256" -}}
+    <link rel="preload" href="{{ $cssMin.RelPermalink }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ $cssMin.RelPermalink }}"></noscript>
+{{- end -}}
+
+{{/* Preload critical resources */}}
+<link rel="preload" href="/img/avatar.png" as="image">
+{{ with .Params.image }}
+<link rel="preload" href="{{ . | relURL }}" as="image">
+{{ end }}
+
+{{/* DNS prefetch for external resources */}}
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="dns-prefetch" href="//github.com">
+<link rel="dns-prefetch" href="//linkedin.com">
+
+{{/* Resource hints for better performance */}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
