@@ -69,6 +69,22 @@ theme = "stack"
     # Comments (disabled for now)
     [params.comments]
         enabled = false
+
+    [params.giscus]
+        enabled = true
+        repo = "jellyjamin/Graham_Space"
+        repoID = ""
+        category = ""
+        categoryID = ""
+        mapping = "pathname"
+        strict = false
+        reactionsEnabled = true
+        emitMetadata = false
+        inputPosition = "bottom"
+        lightTheme = "light"
+        darkTheme = "dark_dimmed"
+        lang = "en"
+        loading = "lazy"
     
     # Widgets
     [params.widgets]
