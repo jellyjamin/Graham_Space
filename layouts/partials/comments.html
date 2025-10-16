@@ -1,0 +1,68 @@
+{{- with .Site.Params.giscus }}
+    {{- if .enabled }}
+        {{- $strict := cond (default false .strict) "1" "0" -}}
+        {{- $reactions := cond (default true .reactionsEnabled) "1" "0" -}}
+        {{- $metadata := cond (default false .emitMetadata) "1" "0" -}}
+        <section id="comments" class="giscus-comments" aria-label="Comments">
+            <script
+                src="https://giscus.app/client.js"
+                data-repo="{{ .repo }}"
+                data-repo-id="{{ .repoID }}"
+                data-category="{{ .category }}"
+                data-category-id="{{ .categoryID }}"
+                data-mapping="{{ default `pathname` .mapping }}"
+                data-strict="{{ $strict }}"
+                data-reactions-enabled="{{ $reactions }}"
+                data-emit-metadata="{{ $metadata }}"
+                data-input-position="{{ default `bottom` .inputPosition }}"
+                data-theme="{{ default `light` .lightTheme }}"
+                data-lang="{{ default `en` .lang }}"
+                crossorigin="anonymous"
+                async
+            ></script>
+        </section>
+        <script>
+            (function () {
+                const lightTheme = "{{ default `light` .lightTheme }}";
+                const darkTheme = "{{ default `dark_dimmed` .darkTheme }}";
+
+                function setGiscusTheme(theme) {
+                    const frame = document.querySelector("iframe.giscus-frame");
+                    if (!frame) {
+                        return;
+                    }
+
+                    frame.contentWindow.postMessage(
+                        {
+                            giscus: {
+                                setConfig: { theme },
+                            },
+                        },
+                        "https://giscus.app"
+                    );
+                }
+
+                function updateTheme() {
+                    const scheme = document.documentElement.dataset.scheme;
+                    if (scheme === "dark") {
+                        setGiscusTheme(darkTheme);
+                    } else {
+                        setGiscusTheme(lightTheme);
+                    }
+                }
+
+                window.addEventListener("message", (event) => {
+                    if (event.origin !== "https://giscus.app") {
+                        return;
+                    }
+
+                    updateTheme();
+                });
+
+                window.addEventListener("onColorSchemeChange", updateTheme);
+
+                updateTheme();
+            })();
+        </script>
+    {{- end }}
+{{- end }}

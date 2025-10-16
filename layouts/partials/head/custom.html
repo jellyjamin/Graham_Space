@@ -1,0 +1,8 @@
+{{/* Custom CSS for footer links and breadcrumbs */}}
+{{ $footerCSS := resources.Get "css/footer-links.css" }}
+{{ $footerCSS := $footerCSS | resources.Fingerprint "sha256" }}
+<link rel="stylesheet" href="{{ $footerCSS.RelPermalink }}">
+
+{{ $breadcrumbsCSS := resources.Get "css/breadcrumbs.css" }}
+{{ $breadcrumbsCSS := $breadcrumbsCSS | resources.Fingerprint "sha256" }}
+<link rel="stylesheet" href="{{ $breadcrumbsCSS.RelPermalink }}">

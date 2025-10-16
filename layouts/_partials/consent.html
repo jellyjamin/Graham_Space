@@ -1,0 +1,865 @@
+{{- /* Cookie Consent Banner */ -}}
+<div id="consent-banner" class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title" aria-describedby="consent-description">
+  <div class="consent-banner__content">
+    <div class="consent-banner__header">
+      <h2 id="consent-title" class="consent-banner__title">We Value Your Privacy</h2>
+      <p id="consent-description" class="consent-banner__description">
+        We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking 'Accept All', you consent to our use of cookies.
+      </p>
+    </div>
+
+    <div class="consent-banner__preferences" id="consent-preferences">
+      <h3 class="consent-banner__preferences-title">Cookie Preferences</h3>
+      <div class="consent-categories">
+        <div class="consent-category" data-category="essential">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-essential" class="consent-category__toggle"
+                   data-category="essential" checked disabled>
+            <label for="category-essential" class="consent-category__label">
+              <span class="consent-category__name">Essential</span>
+              <span class="consent-category__description">Manage essential cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-essential">
+{{ range .Site.Data.consent.items }}
+{{ if or .is_functional (eq .script_file "recaptcha.js") }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}" {{ if or .is_functional (eq .script_file "recaptcha.js") }}checked disabled{{ end }}>
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="consent-category" data-category="analytics">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-analytics" class="consent-category__toggle"
+                   data-category="analytics">
+            <label for="category-analytics" class="consent-category__label">
+              <span class="consent-category__name">Analytics</span>
+              <span class="consent-category__description">Manage analytics cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-analytics">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "google-analytics.js") (eq .script_file "google-tag-manager.js") (eq .script_file "hotjar.js") (eq .script_file "cloudflare-analytics.js") (eq .script_file "microsoft-clarity.js")) }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="consent-category" data-category="marketing">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-marketing" class="consent-category__toggle"
+                   data-category="marketing">
+            <label for="category-marketing" class="consent-category__label">
+              <span class="consent-category__name">Marketing</span>
+              <span class="consent-category__description">Manage marketing cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-marketing">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "facebook-pixel.js") (eq .script_file "linkedin-insight.js") (eq .script_file "google-ads-tracking.js")) }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="consent-category" data-category="social">
+          <div class="consent-category__header">
+            <input type="checkbox" id="category-social" class="consent-category__toggle"
+                   data-category="social">
+            <label for="category-social" class="consent-category__label">
+              <span class="consent-category__name">Social</span>
+              <span class="consent-category__description">Manage social cookies</span>
+            </label>
+          </div>
+          <div class="consent-category__details" id="details-social">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "twitter.js") (eq .script_file "facebook-social.js") (eq .script_file "youtube-embeds.js") (eq .script_file "crisp-chat.js") (eq .script_file "intercom.js") (eq .script_file "zendesk.js")) }}
+            <div class="consent-item">
+              <input type="checkbox" class="consent-item__toggle" id="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="consent-item__label">
+                <span class="consent-item__title">{{ .title }}</span>
+                <span class="consent-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="consent-banner__actions">
+      <button id="accept-all" class="btn btn--primary" aria-label="Accept all cookies">
+        Accept All
+      </button>
+      <button id="accept-essential" class="btn btn--secondary" aria-label="Accept essential cookies only">
+        Accept Essential Only
+      </button>
+      <button id="reject-all" class="btn btn--secondary" aria-label="Reject all non-essential cookies">
+        Reject All
+      </button>
+      <button id="save-preferences" class="btn btn--primary" style="display: none;" aria-label="Save cookie preferences">
+        Save Preferences
+      </button>
+    </div>
+
+    <div class="consent-banner__footer">
+      <a href="/privacy/" class="consent-banner__link" rel="noopener noreferrer">
+        Privacy Policy
+      </a>
+      <a href="/terms/" class="consent-banner__link" rel="noopener noreferrer">
+        Terms of Use
+      </a>
+    </div>
+  </div>
+  <button id="close-consent" class="consent-banner__close" aria-label="Close consent banner" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+</div>
+
+{{- /* Cookie Settings Modal */ -}}
+<div id="cookie-settings-modal" class="cookie-settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+  <div class="cookie-settings-modal__content">
+    <div class="cookie-settings-modal__header">
+      <h2 id="settings-title" class="cookie-settings-modal__title">Cookie Settings</h2>
+      <button id="close-settings" class="cookie-settings-modal__close" aria-label="Close settings">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cookie-settings-modal__body">
+      <div class="cookie-settings-modal__preferences">
+        <div class="settings-category" data-category="essential">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-essential" class="settings-category__toggle"
+                   data-category="essential" checked disabled>
+            <label for="settings-category-essential" class="settings-category__label">
+              <span class="settings-category__name">Essential</span>
+              <span class="settings-category__description">Manage essential cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-essential">
+{{ range .Site.Data.consent.items }}
+{{ if or .is_functional (eq .script_file "recaptcha.js") }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}" {{ if or .is_functional (eq .script_file "recaptcha.js") }}checked disabled{{ end }}>
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="settings-category" data-category="analytics">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-analytics" class="settings-category__toggle"
+                   data-category="analytics">
+            <label for="settings-category-analytics" class="settings-category__label">
+              <span class="settings-category__name">Analytics</span>
+              <span class="settings-category__description">Manage analytics cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-analytics">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "google-analytics.js") (eq .script_file "google-tag-manager.js") (eq .script_file "hotjar.js") (eq .script_file "cloudflare-analytics.js") (eq .script_file "microsoft-clarity.js")) }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="settings-category" data-category="marketing">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-marketing" class="settings-category__toggle"
+                   data-category="marketing">
+            <label for="settings-category-marketing" class="settings-category__label">
+              <span class="settings-category__name">Marketing</span>
+              <span class="settings-category__description">Manage marketing cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-marketing">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "facebook-pixel.js") (eq .script_file "linkedin-insight.js") (eq .script_file "google-ads-tracking.js")) }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+        <div class="settings-category" data-category="social">
+          <div class="settings-category__header">
+            <input type="checkbox" id="settings-category-social" class="settings-category__toggle"
+                   data-category="social">
+            <label for="settings-category-social" class="settings-category__label">
+              <span class="settings-category__name">Social</span>
+              <span class="settings-category__description">Manage social cookies</span>
+            </label>
+          </div>
+          <div class="settings-category__details" id="settings-details-social">
+{{ range .Site.Data.consent.items }}
+{{ if and (not .is_functional) (or (eq .script_file "twitter.js") (eq .script_file "facebook-social.js") (eq .script_file "youtube-embeds.js") (eq .script_file "crisp-chat.js") (eq .script_file "intercom.js") (eq .script_file "zendesk.js")) }}
+            <div class="settings-item">
+              <input type="checkbox" class="settings-item__toggle" id="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" data-script="{{ .script_file }}">
+              <label for="settings-item-{{ .script_file | replaceRE "[^a-zA-Z0-9]" "-" }}" class="settings-item__label">
+                <span class="settings-item__title">{{ .title }}</span>
+                <span class="settings-item__description">{{ .description }}</span>
+              </label>
+            </div>
+{{ end }}
+{{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cookie-settings-modal__actions">
+      <button id="save-settings" class="btn btn--primary" aria-label="Save cookie settings">
+        Save Settings
+      </button>
+      <button id="reset-settings" class="btn btn--secondary" aria-label="Reset to default settings">
+        Reset to Default
+      </button>
+    </div>
+  </div>
+</div>
+
+{{- /* Cookie Settings Button */ -}}
+<button id="cookie-settings-btn" class="cookie-settings-btn" aria-label="Open cookie settings" aria-expanded="false" aria-controls="cookie-settings-modal">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M12 1v6m0 6v6m4.22-10.22l4.24-4.24m-4.24 12.68l4.24 4.24M20 12h-6m-6 0H2m10.22-4.22L7.98 3.54m12.68 4.24l4.24 4.24"></path>
+  </svg>
+  <span class="cookie-settings-btn__text">Settings</span>
+</button>
+
+{{- /* CSS Styles */ -}}
+<style>
+/* Cookie Consent Banner */
+.consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.consent-banner.show {
+  transform: translateY(0);
+}
+
+.consent-banner__content {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.consent-banner__header {
+  margin-bottom: 1.5rem;
+}
+
+.consent-banner__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #111827;
+}
+
+.consent-banner__description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #6b7280;
+  margin: 0;
+}
+
+.consent-banner__preferences {
+  margin-bottom: 1.5rem;
+}
+
+.consent-banner__preferences-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: #374151;
+}
+
+.consent-categories {
+  display: grid;
+  gap: 1rem;
+}
+
+.consent-category {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.consent-category__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.consent-category__header:hover {
+  background: #f3f4f6;
+}
+
+.consent-category__toggle {
+  margin-right: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+.consent-category__label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.consent-category__name {
+  display: block;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.consent-category__description {
+  display: block;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.consent-category__details {
+  padding: 0 1rem 1rem 1rem;
+  display: none;
+}
+
+.consent-category__details.show {
+  display: block;
+}
+
+.consent-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.consent-item:last-child {
+  border-bottom: none;
+}
+
+.consent-item__toggle {
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.consent-item__label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.consent-item__title {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.consent-item__description {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.consent-banner__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.consent-banner__footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.consent-banner__link {
+  font-size: 0.875rem;
+  color: #3b82f6;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.consent-banner__link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.consent-banner__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.consent-banner__close:hover {
+  background: #f3f4f6;
+}
+
+.consent-banner__close:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Cookie Settings Modal */
+.cookie-settings-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10001;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cookie-settings-modal.show {
+  display: flex;
+}
+
+.cookie-settings-modal__content {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.cookie-settings-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cookie-settings-modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #111827;
+}
+
+.cookie-settings-modal__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.cookie-settings-modal__close:hover {
+  background: #f3f4f6;
+}
+
+.cookie-settings-modal__close:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.cookie-settings-modal__body {
+  padding: 1.5rem;
+}
+
+.cookie-settings-modal__preferences {
+  display: grid;
+  gap: 1rem;
+}
+
+.settings-category {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.settings-category__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.settings-category__header:hover {
+  background: #f3f4f6;
+}
+
+.settings-category__toggle {
+  margin-right: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+.settings-category__label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.settings-category__name {
+  display: block;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.settings-category__description {
+  display: block;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.settings-category__details {
+  padding: 0 1rem 1rem 1rem;
+  display: none;
+}
+
+.settings-category__details.show {
+  display: block;
+}
+
+.settings-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.settings-item:last-child {
+  border-bottom: none;
+}
+
+.settings-item__toggle {
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.settings-item__label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.settings-item__title {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.settings-item__description {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.cookie-settings-modal__actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  justify-content: flex-end;
+}
+
+/* Cookie Settings Button */
+.cookie-settings-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  z-index: 9999;
+}
+
+.cookie-settings-btn:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+.cookie-settings-btn:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+.cookie-settings-btn__text {
+  position: absolute;
+  right: 4rem;
+  background: #1f2937;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.cookie-settings-btn:hover .cookie-settings-btn__text {
+  opacity: 1;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn--primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn--primary:hover {
+  background: #2563eb;
+}
+
+.btn--secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.btn--secondary:hover {
+  background: #e5e7eb;
+}
+
+.btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .consent-banner__content {
+    padding: 1rem;
+  }
+
+  .consent-banner__title {
+    font-size: 1.125rem;
+  }
+
+  .consent-banner__description {
+    font-size: 0.8125rem;
+  }
+
+  .consent-banner__actions {
+    flex-direction: column;
+  }
+
+  .consent-banner__footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cookie-settings-modal__content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .cookie-settings-modal__header,
+  .cookie-settings-modal__body,
+  .cookie-settings-modal__actions {
+    padding: 1rem;
+  }
+
+  .cookie-settings-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .cookie-settings-btn__text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .consent-banner__content {
+    padding: 0.75rem;
+  }
+
+  .consent-banner__title {
+    font-size: 1rem;
+  }
+
+  .consent-banner__description {
+    font-size: 0.75rem;
+  }
+
+  .consent-category__header,
+  .settings-category__header {
+    padding: 0.75rem;
+  }
+
+  .consent-item,
+  .settings-item {
+    padding: 0.5rem 0;
+  }
+
+  .consent-item__title,
+  .settings-item__title {
+    font-size: 0.8125rem;
+  }
+
+  .consent-item__description,
+  .settings-item__description {
+    font-size: 0.6875rem;
+  }
+
+  .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .consent-banner,
+  .cookie-settings-modal__content {
+    border: 2px solid #000;
+  }
+
+  .consent-category,
+  .settings-category {
+    border: 2px solid #000;
+  }
+
+  .btn--primary {
+    background: #000;
+    color: #fff;
+  }
+
+  .btn--secondary {
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+  }
+}
+
+/* Focus visible */
+@media (hover: hover) and (pointer: fine) {
+  .btn:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .consent-banner__close:focus-visible,
+  .cookie-settings-modal__close:focus-visible,
+  .cookie-settings-btn:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+</style>
+
+{{- /* JavaScript */ -}}
+<script>
+window.consentData = {{ .Site.Data.consent | jsonify }};
+</script>

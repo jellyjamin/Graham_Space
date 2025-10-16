@@ -1,0 +1,13 @@
+items:
+  - title: Essential Scripts (functional)
+    description: Core JavaScript for site functionality, including theme behaviors.
+    is_functional: true
+    script_file: essential.js
+  - title: Search (functional)
+    description: JavaScript for site search functionality.
+    is_functional: true
+    script_file: search.js
+  - title: Google Analytics
+    description: Provides insights into website visitors, their locations, and interactions. Non-functional; requires consent.
+    is_functional: false
+    script_file: ga.js

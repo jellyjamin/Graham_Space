@@ -1,0 +1,261 @@
+baseURL = 'https://graham-space.pages.dev/'
+languageCode = 'en-us'
+title = 'Graham_Space'
+theme = "stack"
+
+# SEO Configuration
+[params.seo]
+    description = "Graham Space - A blog about technology, self-hosting, and software development. Sharing insights on programming, automation, and digital tools."
+    keywords = ["technology", "programming", "self-hosting", "software development", "automation", "blog", "tutorials"]
+    author = "Jake Graham"
+    twitter = "@jellyjamin"
+    image = "img/avatar.png"
+    favicon = "img/avatar.png"
+    
+    # Google Search Console Verification
+    # Get this from: https://search.google.com/search-console/
+    googleSiteVerification = "a3CVdK-6K5Xj2hXj0lpVGCyHoSW0EYKK9qngRlR3m5Y"
+    
+    # Additional SEO settings
+    noindex = false
+    nofollow = false
+    canonical = true
+
+[build]
+    writeStats = true
+
+# Pagination
+[pagination]
+    pagerSize = 3
+
+# Permalinks
+[permalinks]
+    post = "/p/:slug/"
+    page = "/:slug/"
+
+# Main configuration
+[params]
+    mainSections = ["post"]
+    featuredImageField = "image"
+    rssFullContent = true
+    
+    # Footer
+    [params.footer]
+        since = 2025
+        customText = "Built with Hugo and Stack theme"
+    
+    # Date format
+    [params.dateFormat]
+        published = "Jan 02, 2006"
+        lastUpdated = "Jan 02, 2006 15:04 MST"
+    
+    # Sidebar
+    [params.sidebar]
+        subtitle = ""
+        [params.sidebar.avatar]
+            enabled = true
+            local = true
+            src = "img/avatar.png"
+    
+    # Article settings
+    [params.article]
+        math = false
+        toc = true
+        readingTime = true
+        [params.article.license]
+            enabled = true
+            default = "Licensed under CC BY-NC-SA 4.0"
+    
+    # Comments (disabled for now)
+    [params.comments]
+        enabled = false
+
+    [params.giscus]
+        enabled = true
+        repo = "jellyjamin/Graham_Space"
+        repoID = "R_kgDOPzKUAw"
+        category = "General"
+        categoryID = "DIC_kwDOPzKUA84CwuPq"
+        mapping = "title"
+        strict = false
+        reactionsEnabled = true
+        emitMetadata = false
+        inputPosition = "top"
+        lightTheme = "preferred_color_scheme"
+        darkTheme = "dark_dimmed"
+        lang = "en"
+    
+    # Widgets
+    [params.widgets]
+        homepage = [
+            {type = "search"},
+            {type = "archives", params = {limit = 5}},
+            {type = "categories", params = {limit = 10}},
+            {type = "tag-cloud", params = {limit = 10}}
+        ]
+        page = [
+            {type = "toc"}
+        ]
+    
+    # Color scheme
+    [params.colorScheme]
+        toggle = true
+        default = "auto"
+    
+    # Image processing
+    [params.imageProcessing]
+        [params.imageProcessing.cover]
+            enabled = true
+        [params.imageProcessing.content]
+            enabled = true
+    
+    # Performance optimizations
+    [params.performance]
+        minify = true
+        compress = true
+        preload = true
+
+    # Consent configuration
+    [params.consent]
+        title = "We Value Your Privacy"
+        description = "We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic."
+        categories = ["essential", "analytics", "marketing", "social"]
+        descriptions = { essential = "Essential cookies for basic website functionality", analytics = "Analytics cookies for understanding website usage", marketing = "Marketing cookies for personalized advertising", social = "Social media cookies for content sharing" }
+    
+    [params.consent.text]
+        acceptAll = "Accept All"
+        acceptEssential = "Accept Essential Only"
+        rejectAll = "Reject All"
+        savePreferences = "Save Preferences"
+        settings = "Settings"
+        cookieSettings = "Cookie Settings"
+        privacyPolicy = "Privacy Policy"
+        termsOfUse = "Terms of Use"
+
+# Menu configuration
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    name = "Posts"
+    url = "/post/"
+    weight = 2
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 3
+
+[[menu.main]]
+    name = "Search"
+    url = "/search/"
+    weight = 4
+
+[[menu.main]]
+    name = "Archives"
+    url = "/archives/"
+    weight = 5
+
+[[menu.main]]
+    name = "Terms"
+    url = "/terms/"
+    weight = 6
+
+[[menu.main]]
+    name = "Privacy"
+    url = "/privacy/"
+    weight = 7
+
+# Social links
+[[menu.social]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/jellyjamin"
+    [menu.social.params]
+        icon = "brand-github"
+
+[[menu.social]]
+    identifier = "linkedin"
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/jake-graham-76b78b1a7/"
+    [menu.social.params]
+        icon = "brand-linkedin"
+
+# Related content
+[related]
+    includeNewer = true
+    threshold = 60
+    toLower = false
+    [[related.indices]]
+        name = "tags"
+        weight = 100
+    [[related.indices]]
+        name = "categories"
+        weight = 200
+
+# Enable sitemap generation
+[sitemap]
+    changefreq = "monthly"
+    filename = "sitemap.xml"
+    priority = 0.5
+
+# Enable custom sitemap templates
+[outputs]
+    home = ["HTML", "RSS", "JSON", "Sitemap"]
+    section = ["HTML", "RSS", "SitemapPosts"]
+    taxonomyTerm = ["HTML", "RSS", "SitemapCategories", "SitemapTags"]
+
+# Ensure custom sitemap templates are used
+[mediaTypes]
+    [mediaTypes."application/xml"]
+        suffixes = ["xml"]
+
+[outputFormats.Sitemap]
+    mediaType = "application/xml"
+    baseName = "sitemap"
+    isPlainText = false
+    rel = "sitemap"
+
+[outputFormats.SitemapPosts]
+    mediaType = "application/xml"
+    baseName = "sitemap-posts"
+    isPlainText = false
+    rel = "sitemap"
+
+[outputFormats.SitemapCategories]
+    mediaType = "application/xml"
+    baseName = "sitemap-categories"
+    isPlainText = false
+    rel = "sitemap"
+
+[outputFormats.SitemapTags]
+    mediaType = "application/xml"
+    baseName = "sitemap-tags"
+    isPlainText = false
+    rel = "sitemap"
+
+# Markup configuration
+[markup]
+    [markup.goldmark]
+        [markup.goldmark.extensions]
+            [markup.goldmark.extensions.passthrough]
+                enable = true
+                [markup.goldmark.extensions.passthrough.delimiters]
+                    block = [["[", "]"], ["$$", "$$"]]
+                    inline = [["(", ")"]]
+        [markup.goldmark.renderer]
+            unsafe = true
+    [markup.tableOfContents]
+        endLevel = 4
+        ordered = true
+        startLevel = 2
+    [markup.highlight]
+        noClasses = false
+        codeFences = true
+        guessSyntax = true
+        lineNoStart = 1
+        lineNos = true
+        lineNumbersInTable = true
+        tabWidth = 4
