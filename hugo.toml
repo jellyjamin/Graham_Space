@@ -84,7 +84,6 @@ theme = "stack"
         lightTheme = "light"
         darkTheme = "dark_dimmed"
         lang = "en"
-        loading = "lazy"
     
     # Widgets
     [params.widgets]
