@@ -203,9 +203,9 @@ theme = "stack"
 
 # Enable custom sitemap templates
 [outputs]
-    home = ["HTML", "RSS", "JSON", "Sitemap"]
+    home = ["HTML", "RSS", "JSON", "Sitemap", "SitemapPages"]
     section = ["HTML", "RSS", "SitemapPosts"]
-    taxonomyTerm = ["HTML", "RSS", "SitemapCategories", "SitemapTags"]
+    taxonomy = ["HTML", "RSS", "SitemapCategories", "SitemapTags"]
 
 # Ensure custom sitemap templates are used
 [mediaTypes]
@@ -233,6 +233,12 @@ theme = "stack"
 [outputFormats.SitemapTags]
     mediaType = "application/xml"
     baseName = "sitemap-tags"
+    isPlainText = false
+    rel = "sitemap"
+
+[outputFormats.SitemapPages]
+    mediaType = "application/xml"
+    baseName = "sitemap-pages"
     isPlainText = false
     rel = "sitemap"
 
