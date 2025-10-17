@@ -1,0 +1,13 @@
+{{- $page := .Page -}}
+{{- $base := strings.TrimSuffix (("" | absURL)) "/" -}}
+{{- $content := $page.Content -}}
+{{- $attributes := slice "src" "href" "poster" "data-src" "data-href" "srcset" -}}
+{{- range $attributes }}
+    {{- $pattern := printf "%s=\"/" . -}}
+    {{- $replacement := printf "%s=\"%s/" . $base -}}
+    {{- $content = replace $content $pattern $replacement -}}
+    {{- $patternSingle := printf "%s='/" . -}}
+    {{- $replacementSingle := printf "%s='%s/" . $base -}}
+    {{- $content = replace $content $patternSingle $replacementSingle -}}
+{{- end -}}
+{{- return $content -}}

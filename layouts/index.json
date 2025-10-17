@@ -1,0 +1,106 @@
+{{- $site := .Site -}}
+{{- $pages := $site.RegularPages -}}
+{{- if gt (len (default (slice) $site.Params.mainSections)) 0 -}}
+    {{- $pages = where $pages "Section" "in" $site.Params.mainSections -}}
+{{- end -}}
+{{- $pages = where $pages "Params.hidden" "!=" true -}}
+{{- $pages = where $pages "Draft" "!=" true -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- $limit := $site.Config.Services.RSS.Limit | default 0 -}}
+{{- if ge $limit 1 -}}
+    {{- $pages = first $limit $pages -}}
+{{- end -}}
+{{- $siteAuthorName := default $site.Params.seo.author $site.Params.Author.name -}}
+{{- $scratch := newScratch -}}
+{{- $scratch.Set "items" (slice) -}}
+{{- range $pages -}}
+    {{- $page := . -}}
+    {{- $content := partial "feed/prepare-content.html" (dict "Page" $page) -}}
+    {{- $summary := "" -}}
+    {{- if $page.Params.summary -}}
+        {{- $summary = $page.Params.summary -}}
+    {{- else if $page.Description -}}
+        {{- $summary = $page.Description -}}
+    {{- else -}}
+        {{- $summary = $page.Summary -}}
+    {{- end -}}
+    {{- $summary = plainify $summary -}}
+    {{- $hero := partial "helper/image" (dict "Context" $page "Type" "rss") -}}
+    {{- $image := "" -}}
+    {{- if $hero.exists -}}
+        {{- $image = absURL $hero.permalink -}}
+    {{- end -}}
+    {{- $tags := slice -}}
+    {{- with $page.Params.tags }}{{ $tags = union $tags . }}{{ end -}}
+    {{- with $page.Params.categories }}{{ $tags = union $tags . }}{{ end -}}
+    {{- $tags = uniq $tags -}}
+    {{- $authors := slice -}}
+    {{- if $page.Params.author -}}
+        {{- $authors = slice (dict "name" $page.Params.author) -}}
+    {{- else if $siteAuthorName -}}
+        {{- $authors = slice (dict "name" $siteAuthorName) -}}
+    {{- end -}}
+    {{- $enclosure := partial "feed/enclosure.html" (dict "Page" $page) -}}
+    {{- $enclosureURL := index $enclosure "url" -}}
+    {{- $enclosureType := index $enclosure "type" -}}
+    {{- $enclosureTitle := index $enclosure "title" -}}
+    {{- $attachments := slice -}}
+    {{- if $enclosureURL -}}
+        {{- $attachment := dict "url" (absURL $enclosureURL) -}}
+        {{- with $enclosureType }}{{ $attachment = merge $attachment (dict "mime_type" .) }}{{ end -}}
+        {{- with $enclosureTitle }}{{ $attachment = merge $attachment (dict "title" .) }}{{ end -}}
+        {{- $attachments = slice $attachment -}}
+    {{- end -}}
+    {{- $item := dict
+        "id" $page.Permalink
+        "url" $page.Permalink
+        "title" $page.Title
+        "summary" $summary
+        "content_html" $content
+        "date_published" ($page.Date.Format "2006-01-02T15:04:05-07:00")
+    -}}
+    {{- if not $page.Lastmod.IsZero -}}
+        {{- $item = merge $item (dict "date_modified" ($page.Lastmod.Format "2006-01-02T15:04:05-07:00")) -}}
+    {{- end -}}
+    {{- if $image -}}
+        {{- $item = merge $item (dict "image" $image) -}}
+    {{- end -}}
+    {{- if gt (len $tags) 0 -}}
+        {{- $item = merge $item (dict "tags" $tags) -}}
+    {{- end -}}
+    {{- if gt (len $authors) 0 -}}
+        {{- $item = merge $item (dict "authors" $authors) -}}
+    {{- end -}}
+    {{- if gt (len $attachments) 0 -}}
+        {{- $item = merge $item (dict "attachments" $attachments) -}}
+    {{- end -}}
+    {{- $scratch.Add "items" (slice $item) -}}
+{{- end -}}
+{{- $items := $scratch.Get "items" -}}
+{{- $feed := dict
+    "version" "https://jsonfeed.org/version/1.1"
+    "title" $site.Title
+    "home_page_url" ("" | absURL)
+    "items" $items
+-}}
+{{- with (.OutputFormats.Get "JSON") -}}
+    {{- $feed = merge $feed (dict "feed_url" .Permalink) -}}
+{{- end -}}
+{{- with $site.Params.seo.description -}}
+    {{- $feed = merge $feed (dict "description" .) -}}
+{{- end -}}
+{{- with $site.Params.seo.image -}}
+    {{- $image := absURL . -}}
+    {{- $feed = merge $feed (dict "icon" $image "favicon" $image) -}}
+{{- end -}}
+{{- if $site.LanguageCode -}}
+    {{- $feed = merge $feed (dict "language" $site.LanguageCode) -}}
+{{- end -}}
+{{- $feedAuthors := slice -}}
+{{- if $siteAuthorName -}}
+    {{- $feedAuthors = slice (dict "name" $siteAuthorName) -}}
+{{- end -}}
+{{- if gt (len $feedAuthors) 0 -}}
+    {{- $feed = merge $feed (dict "authors" $feedAuthors) -}}
+{{- end -}}
+{{- $feed | jsonify (dict "indent" "  ") -}}

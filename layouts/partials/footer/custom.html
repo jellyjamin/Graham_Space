@@ -1,3 +1,42 @@
+{{/* Feed subscription section */}}
+{{- $home := .Site.Home -}}
+{{- $homeRss := $home.OutputFormats.Get "RSS" -}}
+{{- $homeJson := $home.OutputFormats.Get "JSON" -}}
+{{- $currentRss := .OutputFormats.Get "RSS" -}}
+{{- $showCurrent := and $currentRss (or .IsSection (eq .Kind "taxonomy")) -}}
+{{- if or $homeRss $homeJson $showCurrent }}
+<section class="footer-feeds">
+    <div class="footer-feed-container">
+        <span class="footer-feed-label">Subscribe:</span>
+        <div class="footer-feed-links">
+            {{- with $homeRss }}
+            <a href="{{ .Permalink }}" class="footer-feed-link" rel="alternate" type="{{ .MediaType.Type }}">
+                {{ partial "helper/icon" "rss" }}
+                <span>Site RSS</span>
+            </a>
+            {{- end }}
+            {{- with $homeJson }}
+            <a href="{{ .Permalink }}" class="footer-feed-link" rel="alternate" type="{{ .MediaType.Type }}">
+                <span>JSON Feed</span>
+            </a>
+            {{- end }}
+            {{- if and $showCurrent (or (not $homeRss) (ne $currentRss.Permalink $homeRss.Permalink)) }}
+                {{- $currentLabel := "Current Feed" -}}
+                {{- if .IsSection -}}
+                    {{- $currentLabel = printf "%s Section RSS" (humanize .Section) -}}
+                {{- else if eq .Kind "taxonomy" -}}
+                    {{- $currentLabel = printf "%s RSS Feed" .Title -}}
+                {{- end -}}
+                <a href="{{ $currentRss.Permalink }}" class="footer-feed-link" rel="alternate" type="{{ $currentRss.MediaType.Type }}">
+                    {{ partial "helper/icon" "rss" }}
+                    <span>{{ $currentLabel }}</span>
+                </a>
+            {{- end }}
+        </div>
+    </div>
+</section>
+{{- end }}
+
 {{/* Custom footer links section */}}
 <section class="footer-links">
     <div class="footer-links-container">

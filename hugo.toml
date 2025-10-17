@@ -205,7 +205,8 @@ theme = "stack"
 [outputs]
     home = ["HTML", "RSS", "JSON", "Sitemap"]
     section = ["HTML", "RSS", "SitemapPosts"]
-    taxonomyTerm = ["HTML", "RSS", "SitemapCategories", "SitemapTags"]
+    taxonomy = ["HTML", "RSS"]
+    taxonomyTerm = ["HTML", "SitemapCategories", "SitemapTags"]
 
 # Ensure custom sitemap templates are used
 [mediaTypes]
