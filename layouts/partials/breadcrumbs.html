@@ -1,22 +1,60 @@
-<div id="breadcrumbs" class="breadcrumb-list">
-    <a href="{{ "/" | relURL }}">Home</a>
+<div id="breadcrumbs" class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="{{ "/" | relURL }}">
+            <span itemprop="name">Home</span>
+        </a>
+        <meta itemprop="position" content="1" />
+    </span>
     {{- if eq .Type "post" }}
         <span class="separator">›</span>
-        <a href="{{ "/post/" | relURL }}">Posts</a>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="{{ "/post/" | relURL }}">
+                <span itemprop="name">Posts</span>
+            </a>
+            <meta itemprop="position" content="2" />
+        </span>
+        <span class="separator">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ .Title }}</span>
+            <meta itemprop="position" content="3" />
+        </span>
     {{- else if eq .Type "page" }}
-        {{- $currentPage := . }}
+        {{- $position := 1 }}
         {{- range .Ancestors.Reverse }}
             {{- if ne .Title "Home" }}
-                <span class="separator">›</span>
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                {{- $position = add $position 1 }}
+        <span class="separator">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="{{ .RelPermalink }}">
+                <span itemprop="name">{{ .Title }}</span>
+            </a>
+            <meta itemprop="position" content="{{ $position }}" />
+        </span>
             {{- end }}
         {{- end }}
+        {{- $position = add $position 1 }}
+        <span class="separator">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ .Title }}</span>
+            <meta itemprop="position" content="{{ $position }}" />
+        </span>
     {{- else }}
+        {{- $position := 1 }}
         {{- range .Ancestors.Reverse }}
-            <span class="separator">›</span>
-            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            {{- $position = add $position 1 }}
+        <span class="separator">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="{{ .RelPermalink }}">
+                <span itemprop="name">{{ .Title }}</span>
+            </a>
+            <meta itemprop="position" content="{{ $position }}" />
+        </span>
         {{- end }}
+        {{- $position = add $position 1 }}
+        <span class="separator">›</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ .Title }}</span>
+            <meta itemprop="position" content="{{ $position }}" />
+        </span>
     {{- end }}
-    <span class="separator">›</span>
-    <span class="current">{{ .Title }}</span>
 </div>
