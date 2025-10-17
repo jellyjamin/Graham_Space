@@ -76,7 +76,7 @@ theme = "stack"
         repoID = "R_kgDOPzKUAw"
         category = "General"
         categoryID = "DIC_kwDOPzKUA84CwuPq"
-        mapping = "title"
+        mapping = "pathname"
         strict = false
         reactionsEnabled = true
         emitMetadata = false
@@ -203,9 +203,9 @@ theme = "stack"
 
 # Enable custom sitemap templates
 [outputs]
-    home = ["HTML", "RSS", "JSON", "Sitemap"]
+    home = ["HTML", "RSS", "JSON", "Sitemap", "SitemapPages"]
     section = ["HTML", "RSS", "SitemapPosts"]
-    taxonomy = ["HTML", "RSS"]
+    taxonomy = ["HTML", "RSS", "SitemapCategories", "SitemapTags"]
     taxonomyTerm = ["HTML", "SitemapCategories", "SitemapTags"]
 
 # Ensure custom sitemap templates are used
@@ -234,6 +234,12 @@ theme = "stack"
 [outputFormats.SitemapTags]
     mediaType = "application/xml"
     baseName = "sitemap-tags"
+    isPlainText = false
+    rel = "sitemap"
+
+[outputFormats.SitemapPages]
+    mediaType = "application/xml"
+    baseName = "sitemap-pages"
     isPlainText = false
     rel = "sitemap"
 
