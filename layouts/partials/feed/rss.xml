@@ -53,7 +53,7 @@
         {{- end -}}{{ with $siteAuthorName }}
         <itunes:author>{{ . }}</itunes:author>{{ end }}
         {{- with $channelDescription }}
-        <itunes:summary><![CDATA[{{ . }}]]></itunes:summary>
+        <itunes:summary>{{ htmlEscape . }}</itunes:summary>
         {{- end -}}
         {{- if and $site.Params.Author.name $site.Params.Author.email -}}
         <itunes:owner>
