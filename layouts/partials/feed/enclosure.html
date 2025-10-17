@@ -1,0 +1,72 @@
+{{- $page := .Page -}}
+{{- $url := "" -}}
+{{- $type := "" -}}
+{{- $length := "" -}}
+{{- $title := "" -}}
+
+{{- with $page.Params.enclosure -}}
+    {{- if reflect.IsMap . -}}
+        {{- with index . "url" }}{{ $url = printf "%v" . }}{{ end -}}
+        {{- with or (index . "type") (index . "mime_type") }}{{ $type = printf "%v" . }}{{ end -}}
+        {{- with or (index . "length") (index . "size") }}{{ $length = printf "%v" . }}{{ end -}}
+        {{- with index . "title" }}{{ $title = printf "%v" . }}{{ end -}}
+    {{- else -}}
+        {{- $url = printf "%v" . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- with $page.Params.podcast -}}
+    {{- if not $url -}}
+        {{- if reflect.IsMap . -}}
+            {{- with or (index . "enclosure") (index . "url") (index . "audio") }}{{ $url = printf "%v" . }}{{ end -}}
+        {{- else -}}
+            {{- $url = printf "%v" . -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if reflect.IsMap . -}}
+        {{- if not $type -}}
+            {{- with or (index . "type") (index . "mime_type") }}{{ $type = printf "%v" . }}{{ end -}}
+        {{- end -}}
+        {{- if not $length -}}
+            {{- with or (index . "length") (index . "size") }}{{ $length = printf "%v" . }}{{ end -}}
+        {{- end -}}
+        {{- if not $title -}}
+            {{- with index . "title" }}{{ $title = printf "%v" . }}{{ end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- with $page.Params.audio -}}
+    {{- if not $url -}}
+        {{- if reflect.IsMap . -}}
+            {{- with or (index . "url") (index . "src") }}{{ $url = printf "%v" . }}{{ end -}}
+        {{- else -}}
+            {{- $url = printf "%v" . -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if reflect.IsMap . -}}
+        {{- if not $type -}}
+            {{- with or (index . "type") (index . "mime_type") }}{{ $type = printf "%v" . }}{{ end -}}
+        {{- end -}}
+        {{- if not $length -}}
+            {{- with or (index . "length") (index . "size") }}{{ $length = printf "%v" . }}{{ end -}}
+        {{- end -}}
+        {{- if not $title -}}
+            {{- with or (index . "title") (index . "name") }}{{ $title = printf "%v" . }}{{ end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if not $type -}}
+    {{- with $page.Params.audioType }}{{ $type = printf "%v" . }}{{ end -}}
+{{- end -}}
+
+{{- if not $length -}}
+    {{- with or ($page.Params.audioLength) ($page.Params.audio_bytes) }}{{ $length = printf "%v" . }}{{ end -}}
+{{- end -}}
+
+{{- if not $title -}}
+    {{- with $page.Params.audioTitle }}{{ $title = printf "%v" . }}{{ end -}}
+{{- end -}}
+
+{{- return (dict "url" $url "type" $type "length" $length "title" $title) -}}

@@ -1,0 +1,84 @@
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $content := partial "feed/prepare-content.html" (dict "Page" $page) -}}
+{{- $content = trim $content " \t\r\n" -}}
+{{- $cdataContent := printf "<![CDATA[%s]]>" (replace $content "]]>" "]]]]><![CDATA[>") -}}
+{{- $summary := "" -}}
+{{- if $page.Params.summary -}}
+    {{- $summary = $page.Params.summary -}}
+{{- else if $page.Description -}}
+    {{- $summary = $page.Description -}}
+{{- else -}}
+    {{- $summary = $page.Summary -}}
+{{- end -}}
+{{- $summary = htmlEscape (plainify $summary) -}}
+{{- $siteAuthorName := default $site.Params.seo.author $site.Params.Author.name -}}
+{{- $author := $page.Params.author | default $siteAuthorName -}}
+{{- $authorEmail := $site.Params.Author.email -}}
+{{- $hero := partial "helper/image" (dict "Context" $page "Type" "rss") -}}
+{{- $heroURL := "" -}}
+{{- $heroAlt := $page.Params.image_alt | default (printf "Featured image for %s" $page.Title) -}}
+{{- $heroType := "" -}}
+{{- $heroWidth := "" -}}
+{{- $heroHeight := "" -}}
+{{- if $hero.exists -}}
+    {{- $heroURL = absURL $hero.permalink -}}
+    {{- with $hero.resource -}}
+        {{- $heroType = .MediaType.Type -}}
+        {{- $heroWidth = printf "%v" .Width -}}
+        {{- $heroHeight = printf "%v" .Height -}}
+    {{- end -}}
+{{- end -}}
+{{- $enclosure := partial "feed/enclosure.html" (dict "Page" $page) -}}
+{{- $enclosureURL := index $enclosure "url" -}}
+{{- $enclosureType := index $enclosure "type" -}}
+{{- $enclosureLength := index $enclosure "length" -}}
+{{- $enclosureTitle := index $enclosure "title" -}}
+{{- $duration := "" -}}
+{{- with $page.Params.audioDuration }}{{ $duration = printf "%v" . }}{{ end -}}
+{{- if not $duration -}}
+    {{- with $page.Params.podcast -}}
+        {{- if reflect.IsMap . -}}
+            {{- with or (index . "duration") (index . "durationFormatted") }}{{ $duration = printf "%v" . }}{{ end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- $categories := slice -}}
+{{- with $page.Params.categories }}{{ $categories = union $categories . }}{{ end -}}
+{{- with $page.Params.tags }}{{ $categories = union $categories . }}{{ end -}}
+{{- $categories = uniq $categories -}}
+<item>
+    <title>{{ $page.Title }}</title>
+    <link>{{ $page.Permalink }}</link>
+    <guid isPermaLink="true">{{ $page.Permalink }}</guid>
+    <pubDate>{{ $page.Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+    {{- if not $page.Lastmod.IsZero -}}
+    <lastBuildDate>{{ $page.Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- end -}}
+    <description>{{ $summary }}</description>
+    {{- if $author -}}
+    <author>{{ with $authorEmail }}{{ . }}{{ end }}{{ if and $authorEmail $author }} ({{ $author }}){{ else }}{{ $author }}{{ end }}</author>
+    {{- end -}}
+    {{- range $categories -}}
+    <category>{{ . }}</category>
+    {{- end -}}
+    {{- if $heroURL -}}
+    <media:content url="{{ $heroURL }}" medium="image"{{ with $heroType }} type="{{ . }}"{{ end }}{{ with $heroWidth }} width="{{ . }}"{{ end }}{{ with $heroHeight }} height="{{ . }}"{{ end }}>
+        <media:title>{{ $page.Title }}</media:title>
+        <media:description>{{ $heroAlt }}</media:description>
+    </media:content>
+    <media:thumbnail url="{{ $heroURL }}" />
+    <itunes:image href="{{ $heroURL }}" />
+    {{- end -}}
+    {{- if $enclosureURL -}}
+    {{- $enclosureAbs := absURL $enclosureURL -}}
+    <enclosure url="{{ $enclosureAbs }}"{{ with $enclosureType }} type="{{ . }}"{{ end }}{{ with $enclosureLength }} length="{{ . }}"{{ end }} />
+    <media:content url="{{ $enclosureAbs }}" medium="audio"{{ with $enclosureType }} type="{{ . }}"{{ end }}{{ with $enclosureLength }} fileSize="{{ . }}"{{ end }}>
+        {{- with $enclosureTitle }}<media:title>{{ . }}</media:title>{{ end -}}
+    </media:content>
+    {{- with $duration }}
+    <itunes:duration>{{ . }}</itunes:duration>
+    {{- end -}}
+    {{- end -}}
+    <content:encoded>{{ $cdataContent | safeHTML }}</content:encoded>
+</item>

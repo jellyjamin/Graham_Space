@@ -1,0 +1,68 @@
+{{- $context := . -}}
+{{- $site := $context.Site -}}
+{{- $pages := cond (eq $context.Kind "home") $site.RegularPages $context.Pages -}}
+{{- if and (eq $context.Kind "home") (gt (len (default (slice) $site.Params.mainSections)) 0) -}}
+    {{- $pages = where $pages "Section" "in" $site.Params.mainSections -}}
+{{- end -}}
+{{- $pages = where $pages "Params.hidden" "!=" true -}}
+{{- $pages = where $pages "Draft" "!=" true -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- $limit := $site.Config.Services.RSS.Limit | default 0 -}}
+{{- if ge $limit 1 -}}
+    {{- $pages = first $limit $pages -}}
+{{- end -}}
+{{- $pagesByLastmod := $pages.ByLastmod.Reverse -}}
+{{- $channelTitle := $site.Title -}}
+{{- if eq $context.Kind "section" -}}
+    {{- $channelTitle = printf "%s — %s" (humanize $context.Section) $site.Title -}}
+{{- else if eq $context.Kind "taxonomy" -}}
+    {{- $channelTitle = printf "%s: %s — %s" (title $context.Data.Singular) $context.Title $site.Title -}}
+{{- else if and (ne $context.Kind "home") (ne $context.Title $site.Title) -}}
+    {{- $channelTitle = printf "%s — %s" $context.Title $site.Title -}}
+{{- end -}}
+{{- $channelDescription := default (printf "Latest updates from %s" $site.Title) (or $context.Params.description $site.Params.seo.description) -}}
+{{- if eq $context.Kind "section" -}}
+    {{- $channelDescription = printf "Latest posts from the %s section on %s" (humanize $context.Section) $site.Title -}}
+{{- else if eq $context.Kind "taxonomy" -}}
+    {{- $channelDescription = printf "Posts tagged with %s on %s" $context.Title $site.Title -}}
+{{- end -}}
+{{- $siteAuthorName := default $site.Params.seo.author $site.Params.Author.name -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+    <channel>
+        <title>{{ $channelTitle }}</title>
+        <link>{{ $context.Permalink }}</link>
+        <description>{{ htmlEscape $channelDescription }}</description>
+        <generator>Hugo -- gohugo.io</generator>{{ with $site.LanguageCode }}
+        <language>{{ . }}</language>{{ end }}{{ with $site.Params.Author.email }}
+        <managingEditor>{{ . }}{{ with $site.Params.Author.name }} ({{ . }}){{ end }}</managingEditor>{{ end }}{{ with $site.Params.Author.email }}
+        <webMaster>{{ . }}{{ with $site.Params.Author.name }} ({{ . }}){{ end }}</webMaster>{{ end }}{{ with $site.Copyright }}
+        <copyright>{{ . }}</copyright>{{ end }}{{ if and (gt (len $pages) 0) (gt (len $pagesByLastmod) 0) }}
+        <lastBuildDate>{{ (index $pagesByLastmod 0).Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
+        {{- with $context.OutputFormats.Get "RSS" -}}
+        {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType.Type | safeHTML }}
+        {{- end -}}
+        {{- with $site.Params.seo.image -}}
+        {{- $channelImage := absURL . -}}
+        <image>
+            <url>{{ $channelImage }}</url>
+            <title>{{ $channelTitle }}</title>
+            <link>{{ $context.Permalink }}</link>
+        </image>
+        <itunes:image href="{{ $channelImage }}" />
+        {{- end -}}{{ with $siteAuthorName }}
+        <itunes:author>{{ . }}</itunes:author>{{ end }}
+        {{- with $channelDescription }}
+        <itunes:summary>{{ htmlEscape . }}</itunes:summary>
+        {{- end -}}
+        {{- if and $site.Params.Author.name $site.Params.Author.email -}}
+        <itunes:owner>
+            <itunes:name>{{ $site.Params.Author.name }}</itunes:name>
+            <itunes:email>{{ $site.Params.Author.email }}</itunes:email>
+        </itunes:owner>
+        {{- end -}}
+        {{- range $pages }}
+        {{- partial "feed/item.xml" (dict "page" . "site" $site) -}}
+        {{- end }}
+    </channel>
+</rss>

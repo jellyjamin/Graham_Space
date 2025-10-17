@@ -146,4 +146,26 @@ hugo
 
 This template will help you create well-optimized posts that rank well in search engines and look great when shared on social media!
 
-test
+## Feeds & Syndication
+
+The site publishes full-content feeds with hero imagery and optional audio enclosures, making it easy to share updates across platforms.
+
+- **Site-wide RSS:** `https://graham-space.pages.dev/index.xml`
+- **Site-wide JSON feed:** `https://graham-space.pages.dev/index.json`
+- **Per-section and topic feeds:** append `index.xml` to any section, tag, or category URL (for example, `/post/index.xml`, `/tags/self-hosting/index.xml`, `/categories/ai/index.xml`).
+- Quick access icons are available in the sidebar widgets and the footer "Subscribe" area.
+
+### Podcast & Audio Attachments
+
+To surface an audio enclosure in the feeds, add one of the following front matter blocks to your post:
+
+```yaml
+enclosure:
+  url: "https://cdn.example.com/audio/my-episode.mp3"
+  type: "audio/mpeg"
+  length: 12345678      # optional but recommended (bytes)
+  title: "My Episode Title"
+audioDuration: "32:17"   # optional (HH:MM:SS)
+```
+
+You can alternately use `podcast` or `audio` maps with the same keys—the feed template will detect any of them. Always set a high-quality `image` and `image_alt`; those values are embedded into the RSS and JSON feeds as the episode or article artwork.

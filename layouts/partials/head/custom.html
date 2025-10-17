@@ -1,7 +1,11 @@
-{{/* Custom CSS for footer links and breadcrumbs */}}
+{{/* Custom CSS for footer links, feed links, and breadcrumbs */}}
 {{ $footerCSS := resources.Get "css/footer-links.css" }}
 {{ $footerCSS := $footerCSS | resources.Fingerprint "sha256" }}
 <link rel="stylesheet" href="{{ $footerCSS.RelPermalink }}">
+
+{{ $feedCSS := resources.Get "css/feed-links.css" }}
+{{ $feedCSS := $feedCSS | resources.Fingerprint "sha256" }}
+<link rel="stylesheet" href="{{ $feedCSS.RelPermalink }}">
 
 {{ $breadcrumbsCSS := resources.Get "css/breadcrumbs.css" }}
 {{ $breadcrumbsCSS := $breadcrumbsCSS | resources.Fingerprint "sha256" }}

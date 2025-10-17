@@ -1,0 +1,24 @@
+{{- $context := .Context -}}
+{{- $limit := default 10 .Params.limit -}}
+<section class="widget tagCloud">
+    <div class="widget-icon">
+        {{ partial "helper/icon" "categories" }}
+    </div>
+    <h2 class="widget-title section-title">{{ T "widget.categoriesCloud.title" }}</h2>
+
+    <div class="tagCloud-tags">
+        {{ range first $limit $context.Site.Taxonomies.categories.ByCount }}
+            {{- $termPage := .Page -}}
+            <div class="tagCloud-tagItem">
+                <a href="{{ $termPage.RelPermalink }}" class="font_size_{{ .Count }}">
+                    {{ $termPage.Title }}
+                </a>
+                {{- with $termPage.OutputFormats.Get "RSS" }}
+                <a href="{{ .Permalink }}" class="tag-feed-link" aria-label="{{ printf "Subscribe to %s via RSS" $termPage.Title }}" title="{{ printf "RSS feed for %s" $termPage.Title }}">
+                    {{ partial "helper/icon" "rss" }}
+                </a>
+                {{- end }}
+            </div>
+        {{ end }}
+    </div>
+</section>
