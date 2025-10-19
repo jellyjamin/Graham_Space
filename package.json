@@ -7,10 +7,7 @@
   "scripts": {
     "build:og": "node tools/og/generate.mjs",
     "og:generate": "node tools/og/generate.mjs",
-    "prebuild": "node tools/og/generate.mjs",
-    "og:generate": "node scripts/generate-og.mjs",
-    "build:og": "node scripts/generate-og.mjs",
-    "prebuild": "node scripts/generate-og.mjs"
+    "lint:pkg": "node -e \"JSON.parse(require('fs').readFileSync('package.json','utf8'))\""
   },
   "dependencies": {
     "@resvg/resvg-js": "2.6.2",
@@ -21,5 +18,9 @@
   },
   "overrides": {
     "satori-html": "0.3.2"
-  }
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "packageManager": "npm@10"
 }
