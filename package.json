@@ -12,7 +12,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "gray-matter": "^4.0.3",
     "satori": "^0.10.13",
-    "satori-html": "^0.3.3",
+    "satori-html": "0.3.2",
     "toml": "^3.0.0"
   }
 }
