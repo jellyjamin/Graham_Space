@@ -6,6 +6,7 @@
   "description": "Automated Open Graph image generation pipeline for Hugo site",
   "scripts": {
     "og:generate": "node scripts/generate-og.mjs",
+    "build:og": "node scripts/generate-og.mjs",
     "prebuild": "node scripts/generate-og.mjs"
   },
   "dependencies": {
@@ -14,5 +15,8 @@
     "satori": "^0.10.13",
     "satori-html": "0.3.2",
     "toml": "^3.0.0"
+  },
+  "overrides": {
+    "satori-html": "0.3.2"
   }
 }
