@@ -8,6 +8,9 @@
     "build:og": "node tools/og/generate.mjs",
     "og:generate": "node tools/og/generate.mjs",
     "prebuild": "node tools/og/generate.mjs"
+    "og:generate": "node scripts/generate-og.mjs",
+    "build:og": "node scripts/generate-og.mjs",
+    "prebuild": "node scripts/generate-og.mjs"
   },
   "dependencies": {
     "@resvg/resvg-js": "2.6.2",
@@ -15,5 +18,8 @@
     "satori": "0.10.13",
     "satori-html": "0.3.2",
     "toml": "^3.0.0"
+  },
+  "overrides": {
+    "satori-html": "0.3.2"
   }
 }
