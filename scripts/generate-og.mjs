@@ -82,12 +82,14 @@ async function walkMarkdown(dir) {
 
 async function loadSiteMeta() {
   let siteTitle = 'Site';
+  let siteAuthor = '';
   try {
     const toml = await fsp.readFile(HUGO_TOML, 'utf8');
     const data = TOML.parse(toml);
     if (data && data.title) siteTitle = data.title;
+    if (data?.params?.seo?.author) siteAuthor = String(data.params.seo.author);
   } catch {}
-  return { siteTitle };
+  return { siteTitle, siteAuthor };
 }
 
 async function ensureFonts() {
@@ -202,7 +204,7 @@ async function needsRegeneration(pngPath, dependencies) {
 }
 
 async function main() {
-  const { siteTitle } = await loadSiteMeta();
+  const { siteTitle, siteAuthor } = await loadSiteMeta();
   await ensureDir(STATIC_OG_DIR);
 
   const fonts = await ensureFonts().catch((e) => {
@@ -234,7 +236,7 @@ async function main() {
     }
 
     const title = String(fm.data?.title || fm.data?.Title || '');
-    const author = String(fm.data?.author || fm.data?.Author || '');
+    const author = String(fm.data?.author || fm.data?.Author || siteAuthor || '');
     const dateNice = formatDateISOToNice(fm.data?.date || fm.data?.Date);
     const tag = chooseTag(fm.data?.tags || fm.data?.Tags);
 

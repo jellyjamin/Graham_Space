@@ -25,6 +25,16 @@ This scans content/post/**/*.md and outputs images in static/og/.
 Build integration
 - The generator runs automatically before any npm run build via the prebuild script. If your CI or local workflow builds the site directly with hugo rather than npm, run npm run og:generate prior to hugo.
 
+Cloudflare Pages
+- Framework preset: Hugo
+- Build command:
+  npm ci && npm run og:generate && hugo --cleanDestinationDir
+- Build output directory: public
+- Recommended environment variables:
+  - NODE_VERSION = 20
+  - HUGO_ENV = production
+  - HUGO_VERSION = e.g., 0.134.2
+
 How it works
 1. Parse post front matter to get title, date, author, tags, and slug (falls back to filename-based slug).
 2. Read site title from hugo.toml for branding.
