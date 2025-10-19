@@ -3,7 +3,15 @@
 {{- $description := partialCached "data/description" . .RelPermalink -}}
 {{- $keywords := .Params.keywords | default .Site.Params.seo.keywords -}}
 {{- $author := .Params.author | default .Site.Params.seo.author | default .Site.Title -}}
-{{- $image := .Params.image | default .Site.Params.seo.image | default "/img/avatar.png" -}}
+{{- $ogImage := "" -}}
+{{- if .IsPage -}}
+  {{- $slug := ( .Params.slug | default .Slug | default .File.BaseFileName ) | urlize -}}
+  {{- $ogStaticPath := printf "static/og/%s.png" $slug -}}
+  {{- if fileExists $ogStaticPath -}}
+    {{- $ogImage = printf "/og/%s.png" $slug -}}
+  {{- end -}}
+{{- end -}}
+{{- $image := $ogImage | default (.Params.image | default .Site.Params.seo.image | default "/img/avatar.png") -}}
 {{- $canonical := .Permalink -}}
 
 {{/* Basic Meta Tags */}}
