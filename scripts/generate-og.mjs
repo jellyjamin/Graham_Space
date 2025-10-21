@@ -84,6 +84,18 @@ async function loadSiteMeta() {
   return { siteTitle, siteAuthor };
 }
 
+function isLikelyOpenTypeFont(buf) {
+  if (!buf || buf.byteLength < 1024) return false;
+  const a = new Uint8Array(buf.slice(0, 4));
+  // TrueType: 0x00010000
+  const isTTF = a[0] === 0x00 && a[1] === 0x01 && a[2] === 0x00 && a[3] === 0x00;
+  // OpenType CFF: 'OTTO'
+  const isOTF = a[0] === 0x4f && a[1] === 0x54 && a[2] === 0x54 && a[3] === 0x4f;
+  // TrueType Collection: 'ttcf'
+  const isTTC = a[0] === 0x74 && a[1] === 0x74 && a[2] === 0x63 && a[3] === 0x66;
+  return isTTF || isOTF || isTTC;
+}
+
 // Try to load vendored fonts from disk to avoid any network access
 async function ensureFonts() {
   const fonts = [];
@@ -92,29 +104,52 @@ async function ensureFonts() {
       { name: 'Inter', file: 'Inter-Regular.ttf', weight: 400 },
       { name: 'Inter', file: 'Inter-Bold.ttf', weight: 700 },
     ]},
+    // Allow vendoring alternative fonts in static as well
+    { dir: STATIC_FONTS_DIR, files: [
+      { name: 'DejaVu Sans', file: 'DejaVuSans.ttf', weight: 400 },
+      { name: 'DejaVu Sans', file: 'DejaVuSans-Bold.ttf', weight: 700 },
+    ]},
     { dir: ASSETS_FONTS_DIR, files: [
       { name: 'Inter', file: 'Inter-Regular.ttf', weight: 400 },
       // some repos may have ExtraBold instead of Bold
       { name: 'Inter', file: 'Inter-ExtraBold.ttf', weight: 800 },
     ]},
+    // As a final fallback, use common system fonts on Linux containers
+    { dir: '/usr/share/fonts/truetype/dejavu', files: [
+      { name: 'DejaVu Sans', file: 'DejaVuSans.ttf', weight: 400 },
+      { name: 'DejaVu Sans', file: 'DejaVuSans-Bold.ttf', weight: 700 },
+    ]},
   ];
 
   for (const src of candidates) {
+    let added = 0;
     for (const f of src.files) {
       const p = path.join(src.dir, f.file);
       try {
         const data = await fsp.readFile(p);
+        if (!isLikelyOpenTypeFont(data)) {
+          if (!src.dir.includes('dejavu')) {
+            console.warn(`Ignoring invalid font file: ${path.relative(projectRoot, p)}`);
+          }
+          continue;
+        }
         fonts.push({ name: f.name, data, weight: f.weight, style: 'normal' });
+        added++;
       } catch {
         // ignore missing file
       }
     }
-    if (fonts.length) break; // prefer first location where at least one font is found
+    if (added > 0) {
+      if (src.dir.includes('dejavu')) {
+        console.warn('Using system DejaVu Sans fonts as fallback.');
+      }
+      break; // use the first source where we found at least one valid font
+    }
   }
 
   if (!fonts.length) {
-    // Graceful fallback to system fonts (letting Satori choose defaults)
-    console.warn('No vendored fonts found in static/fonts/og or assets/og/fonts. Falling back to system fonts.');
+    // If absolutely nothing is available, we can't render text
+    console.warn('No valid fonts found (vendored or system).');
   }
   return fonts;
 }
@@ -248,10 +283,37 @@ async function main() {
       generated++;
       console.log(`Generated OG image: ${path.relative(projectRoot, outPath)} (from ${rel})`);
     } catch (err) {
-      const hint = /Invalid value for CSS property\s+\"display\"/i.test(String(err && err.message))
+      const msg = String(err && err.message || err);
+      const hint = /Invalid value for CSS property\s+\"display\"/i.test(msg)
         ? ' Hint: sanitize CSS (e.g., replace inline-flex with flex) or adjust the OG template.'
         : '';
-      console.error(`Failed to generate OG for ${rel}: ${err && err.message || err}${hint}`);
+      if (/Unsupported OpenType signature|No fonts are loaded/i.test(msg)) {
+        console.warn(`Font issue encountered. Retrying ${path.relative(projectRoot, file)} with system fallback fonts...`);
+        try {
+          const sysFonts = await (async () => {
+            try {
+              const reg = await fsp.readFile('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf');
+              const bold = await fsp.readFile('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf');
+              return [
+                { name: 'DejaVu Sans', data: reg, weight: 400, style: 'normal' },
+                { name: 'DejaVu Sans', data: bold, weight: 700, style: 'normal' },
+              ];
+            } catch {
+              return [];
+            }
+          })();
+          const svg = await renderSVG(html, sysFonts);
+          const png = await svgToPng(svg);
+          await fsp.writeFile(outPath, png);
+          generated++;
+          console.log(`Generated OG image (system fonts): ${path.relative(projectRoot, outPath)} (from ${rel})`);
+          continue;
+        } catch (e2) {
+          console.error(`Failed to generate OG for ${rel}: ${e2 && e2.message || e2}`);
+          continue;
+        }
+      }
+      console.error(`Failed to generate OG for ${rel}: ${msg}${hint}`);
       // continue with next file
     }
   }
