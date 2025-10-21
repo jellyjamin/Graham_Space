@@ -18,9 +18,5 @@
     <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
 {{- end -}}
 
-{{ with .Site.Params.seo.favicon }}
-    <link rel="shortcut icon" href="{{ . | relURL }}" />
-{{ end }}
-
 {{- template "_internal/google_analytics.html" . -}}
 {{- partial "head/custom.html" . -}}

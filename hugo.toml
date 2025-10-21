@@ -10,7 +10,6 @@ theme = "stack"
     author = "Jake Graham"
     twitter = "@jellyjamin"
     image = "img/avatar.png"
-    favicon = "img/avatar.png"
     
     # Google Search Console Verification
     # Get this from: https://search.google.com/search-console/
