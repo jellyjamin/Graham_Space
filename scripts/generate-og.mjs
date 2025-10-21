@@ -5,10 +5,8 @@
   - Generates 1200x630 PNGs in static/og/<slug>.png
   - Skips regeneration if the PNG is newer than its dependencies (content file, template, hugo.toml)
 */
-import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import satori from 'satori';
@@ -23,7 +21,10 @@ const CONTENT_DIR = path.join(projectRoot, 'content', 'post');
 const STATIC_OG_DIR = path.join(projectRoot, 'static', 'og');
 const TEMPLATE_HTML = path.join(projectRoot, 'assets', 'og', 'template.html');
 const HUGO_TOML = path.join(projectRoot, 'hugo.toml');
-const FONTS_DIR = path.join(projectRoot, 'assets', 'og', 'fonts');
+
+// Prefer vendored fonts committed into the repo
+const STATIC_FONTS_DIR = path.join(projectRoot, 'static', 'fonts', 'og');
+const ASSETS_FONTS_DIR = path.join(projectRoot, 'assets', 'og', 'fonts');
 
 async function ensureDir(dir) {
   await fsp.mkdir(dir, { recursive: true });
@@ -47,15 +48,6 @@ function escapeHTML(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
-}
-
-async function readJSONIfExists(file) {
-  try {
-    const buf = await fsp.readFile(file, 'utf8');
-    return JSON.parse(buf);
-  } catch (e) {
-    return null;
-  }
 }
 
 async function statIfExists(file) {
@@ -92,47 +84,74 @@ async function loadSiteMeta() {
   return { siteTitle, siteAuthor };
 }
 
+function isLikelyOpenTypeFont(buf) {
+  if (!buf || buf.byteLength < 1024) return false;
+  const a = new Uint8Array(buf.slice(0, 4));
+  // TrueType: 0x00010000
+  const isTTF = a[0] === 0x00 && a[1] === 0x01 && a[2] === 0x00 && a[3] === 0x00;
+  // OpenType CFF: 'OTTO'
+  const isOTF = a[0] === 0x4f && a[1] === 0x54 && a[2] === 0x54 && a[3] === 0x4f;
+  // TrueType Collection: 'ttcf'
+  const isTTC = a[0] === 0x74 && a[1] === 0x74 && a[2] === 0x63 && a[3] === 0x66;
+  return isTTF || isOTF || isTTC;
+}
+
+// Try to load vendored fonts from disk to avoid any network access
 async function ensureFonts() {
-  await ensureDir(FONTS_DIR);
-  const regularPath = path.join(FONTS_DIR, 'Inter-Regular.ttf');
-  const boldPath = path.join(FONTS_DIR, 'Inter-ExtraBold.ttf');
-
-  const needRegular = !(await statIfExists(regularPath));
-  const needBold = !(await statIfExists(boldPath));
-
-  const headers = { 'User-Agent': 'Mozilla/5.0 (OG Generator)' };
-  const downloads = [];
-
-  if (needRegular) {
-    const url = 'https://raw.githubusercontent.com/google/fonts/main/ofl/inter/static/Inter-Regular.ttf';
-    downloads.push(fetch(url, { headers }).then(async (res) => {
-      if (!res.ok) throw new Error('Failed to download Inter-Regular.ttf');
-      const buf = new Uint8Array(await res.arrayBuffer());
-      await fsp.writeFile(regularPath, buf);
-    }));
-  }
-  if (needBold) {
-    const url = 'https://raw.githubusercontent.com/google/fonts/main/ofl/inter/static/Inter-ExtraBold.ttf';
-    downloads.push(fetch(url, { headers }).then(async (res) => {
-      if (!res.ok) throw new Error('Failed to download Inter-ExtraBold.ttf');
-      const buf = new Uint8Array(await res.arrayBuffer());
-      await fsp.writeFile(boldPath, buf);
-    }));
-  }
-
-  if (downloads.length) {
-    await Promise.all(downloads);
-  }
-
-  const [regular, bold] = await Promise.all([
-    fsp.readFile(regularPath),
-    fsp.readFile(boldPath)
-  ]);
-
-  return [
-    { name: 'Inter', data: regular, weight: 400, style: 'normal' },
-    { name: 'Inter', data: bold, weight: 800, style: 'normal' },
+  const fonts = [];
+  const candidates = [
+    { dir: STATIC_FONTS_DIR, files: [
+      { name: 'Inter', file: 'Inter-Regular.ttf', weight: 400 },
+      { name: 'Inter', file: 'Inter-Bold.ttf', weight: 700 },
+    ]},
+    // Allow vendoring alternative fonts in static as well
+    { dir: STATIC_FONTS_DIR, files: [
+      { name: 'DejaVu Sans', file: 'DejaVuSans.ttf', weight: 400 },
+      { name: 'DejaVu Sans', file: 'DejaVuSans-Bold.ttf', weight: 700 },
+    ]},
+    { dir: ASSETS_FONTS_DIR, files: [
+      { name: 'Inter', file: 'Inter-Regular.ttf', weight: 400 },
+      // some repos may have ExtraBold instead of Bold
+      { name: 'Inter', file: 'Inter-ExtraBold.ttf', weight: 800 },
+    ]},
+    // As a final fallback, use common system fonts on Linux containers
+    { dir: '/usr/share/fonts/truetype/dejavu', files: [
+      { name: 'DejaVu Sans', file: 'DejaVuSans.ttf', weight: 400 },
+      { name: 'DejaVu Sans', file: 'DejaVuSans-Bold.ttf', weight: 700 },
+    ]},
   ];
+
+  for (const src of candidates) {
+    let added = 0;
+    for (const f of src.files) {
+      const p = path.join(src.dir, f.file);
+      try {
+        const data = await fsp.readFile(p);
+        if (!isLikelyOpenTypeFont(data)) {
+          if (!src.dir.includes('dejavu')) {
+            console.warn(`Ignoring invalid font file: ${path.relative(projectRoot, p)}`);
+          }
+          continue;
+        }
+        fonts.push({ name: f.name, data, weight: f.weight, style: 'normal' });
+        added++;
+      } catch {
+        // ignore missing file
+      }
+    }
+    if (added > 0) {
+      if (src.dir.includes('dejavu')) {
+        console.warn('Using system DejaVu Sans fonts as fallback.');
+      }
+      break; // use the first source where we found at least one valid font
+    }
+  }
+
+  if (!fonts.length) {
+    // If absolutely nothing is available, we can't render text
+    console.warn('No valid fonts found (vendored or system).');
+  }
+  return fonts;
 }
 
 function formatDateISOToNice(dateStr) {
@@ -149,6 +168,15 @@ function formatDateISOToNice(dateStr) {
 function chooseTag(tags) {
   if (Array.isArray(tags) && tags.length) return String(tags[0]);
   return '';
+}
+
+function sanitizeCssInHtml(html) {
+  // Replace unsupported CSS values and Tailwind-like class tokens
+  let out = html;
+  out = out.replace(/display\s*:\s*inline-flex/gi, 'display: flex');
+  out = out.replace(/\binline-flex\b/gi, 'flex');
+  // Future: normalize other unsupported values if needed
+  return out;
 }
 
 async function renderSVG(htmlStr, fonts) {
@@ -190,7 +218,7 @@ async function buildHTML(template, data) {
     // remove the whole optional block
     html = html.replace(/\{\{#if tag\}\}[\s\S]*?\{\{\/if\}\}/g, '');
   }
-  return html;
+  return sanitizeCssInHtml(html);
 }
 
 async function needsRegeneration(pngPath, dependencies) {
@@ -255,7 +283,38 @@ async function main() {
       generated++;
       console.log(`Generated OG image: ${path.relative(projectRoot, outPath)} (from ${rel})`);
     } catch (err) {
-      console.error(`Failed to generate OG for ${rel}:`, err.message);
+      const msg = String(err && err.message || err);
+      const hint = /Invalid value for CSS property\s+\"display\"/i.test(msg)
+        ? ' Hint: sanitize CSS (e.g., replace inline-flex with flex) or adjust the OG template.'
+        : '';
+      if (/Unsupported OpenType signature|No fonts are loaded/i.test(msg)) {
+        console.warn(`Font issue encountered. Retrying ${path.relative(projectRoot, file)} with system fallback fonts...`);
+        try {
+          const sysFonts = await (async () => {
+            try {
+              const reg = await fsp.readFile('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf');
+              const bold = await fsp.readFile('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf');
+              return [
+                { name: 'DejaVu Sans', data: reg, weight: 400, style: 'normal' },
+                { name: 'DejaVu Sans', data: bold, weight: 700, style: 'normal' },
+              ];
+            } catch {
+              return [];
+            }
+          })();
+          const svg = await renderSVG(html, sysFonts);
+          const png = await svgToPng(svg);
+          await fsp.writeFile(outPath, png);
+          generated++;
+          console.log(`Generated OG image (system fonts): ${path.relative(projectRoot, outPath)} (from ${rel})`);
+          continue;
+        } catch (e2) {
+          console.error(`Failed to generate OG for ${rel}: ${e2 && e2.message || e2}`);
+          continue;
+        }
+      }
+      console.error(`Failed to generate OG for ${rel}: ${msg}${hint}`);
+      // continue with next file
     }
   }
 

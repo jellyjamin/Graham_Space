@@ -53,8 +53,8 @@ Customizing the template
 - After editing, re-run npm run og:generate.
 
 Fonts
-- The generator downloads Inter Regular and ExtraBold (TTF) into assets/og/fonts/ on first run and embeds them in the SVG so rendering is consistent.
-- If font download fails (e.g., no network), the generator will proceed without custom fonts; visual results may differ.
+- The generator prefers vendored Inter fonts from static/fonts/og/ (Inter-Regular.ttf, Inter-Bold.ttf) and embeds them in the SVG for consistent rendering.
+- If no local fonts are found, the generator proceeds without custom fonts and relies on system fallbacks; visual results may differ.
 
 SEO integration
 - layouts/partials/head/seo.html now prefers a generated image when present:

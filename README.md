@@ -56,6 +56,6 @@ Hugo integration
 
 Notes
 - To force regeneration for all posts, delete files under static/og/ and run npm run build:og.
-- The generator downloads Inter fonts on first run into assets/og/fonts/.
+- Vendored fonts: place Inter-Regular.ttf and Inter-Bold.ttf under static/fonts/og/ to ensure consistent rendering without network access.
 
 For more details see OG_IMAGE_PIPELINE.md.
