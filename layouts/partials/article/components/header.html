@@ -5,8 +5,18 @@
             <a href="{{ .RelPermalink }}">
                 {{- $alt := default (printf "Featured image of post %s" .Title) .Params.imageAlt -}}
                 {{- $preload := true -}}
-                {{- with .Params.image -}}
-                  {{- if eq .preload false -}}{{ $preload = false }}{{ end -}}
+                {{- /* Prefer top-level override if provided */ -}}
+                {{- if and (isset .Params "imagePreload") (eq .Params.imagePreload false) -}}
+                  {{- $preload = false -}}
+                {{- else -}}
+                  {{- /* Support nested map only if .Params.image is a map */ -}}
+                  {{- $ip := .Params.image -}}
+                  {{- $ipt := printf "%T" $ip -}}
+                  {{- if in $ipt "map" -}}
+                    {{- if and (isset $ip "preload") (eq (index $ip "preload") false) -}}
+                      {{- $preload = false -}}
+                    {{- end -}}
+                  {{- end -}}
                 {{- end -}}
                 {{- $loading := cond $preload "eager" "lazy" -}}
                 {{- $fetch := cond $preload "high" nil -}}

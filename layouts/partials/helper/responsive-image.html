@@ -39,15 +39,33 @@
   {{- $contentEnabled = default true .enabled -}}
 {{- end -}}
 
-{{- /* Page-level overrides: support params.image.process or params.image.processing or disableImageProcessing */ -}}
+{{- /* Page-level overrides: support page-scoped switches without assuming .Params.image is a map */ -}}
 {{- $pageDisable := false -}}
 {{- with $page -}}
-  {{- with .Params.image -}}
-    {{- if eq .process false -}}{{ $pageDisable = true }}{{ end -}}
-    {{- if eq .processing false -}}{{ $pageDisable = true }}{{ end -}}
-    {{- if eq .disableProcessing true -}}{{ $pageDisable = true }}{{ end -}}
+  {{- $imgParam := .Params.image -}}
+  {{- $imgParamType := printf "%T" $imgParam -}}
+  {{- $imgIsMap := in $imgParamType "map" -}}
+  {{- if $imgIsMap -}}
+    {{- if and (isset $imgParam "process") (not (index $imgParam "process")) -}}
+      {{- $pageDisable = true -}}
+    {{- end -}}
+    {{- if and (isset $imgParam "processing") (not (index $imgParam "processing")) -}}
+      {{- $pageDisable = true -}}
+    {{- end -}}
+    {{- if and (isset $imgParam "disableProcessing") (index $imgParam "disableProcessing") -}}
+      {{- $pageDisable = true -}}
+    {{- end -}}
   {{- end -}}
-  {{- if eq .Params.disableImageProcessing true -}}{{ $pageDisable = true }}{{ end -}}
+  {{- if and (isset .Params "disableImageProcessing") (eq .Params.disableImageProcessing true) -}}
+    {{- $pageDisable = true -}}
+  {{- end -}}
+  {{- /* Also support top-level aliases */ -}}
+  {{- if and (isset .Params "imageProcess") (eq .Params.imageProcess false) -}}
+    {{- $pageDisable = true -}}
+  {{- end -}}
+  {{- if and (isset .Params "image_processing") (eq .Params.image_processing false) -}}
+    {{- $pageDisable = true -}}
+  {{- end -}}
 {{- end -}}
 
 {{- $enabled := cond (or (eq $kind "cover") (eq $kind "hero") (eq $kind "article")) $coverEnabled $contentEnabled -}}
