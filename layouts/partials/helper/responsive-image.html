@@ -1,0 +1,166 @@
+{{- /*
+  Reusable responsive <picture> generator with AVIF/WebP and fallback
+  Params (dict):
+    - Page: .Page (optional, used for front matter switches)
+    - Resource: Hugo image resource (preferred for processing)
+    - Src: string URL for non-resource images (external or static)
+    - Alt: alt text (string)
+    - Class: class attribute (string)
+    - Type: one of "cover"|"content"|"gallery" (affects defaults)
+    - Sizes: sizes attribute (string). Defaults based on Type
+    - Widths: slice of integers for responsive widths. Defaults based on Type
+    - Loading: "lazy"|"eager" (default lazy)
+    - FetchPriority: "high"|"low"|"auto" (optional)
+    - Transform: "resize"|"fit"|"fill" (default "resize")
+    - FillWidth: int (when Transform==fill)
+    - FillHeight: int (when Transform==fill)
+*/ -}}
+{{- $page := .Page -}}
+{{- $res := .Resource -}}
+{{- $src := .Src -}}
+{{- $alt := default "" .Alt -}}
+{{- $class := .Class -}}
+{{- $kind := default "content" .Type -}}
+{{- $sizes := .Sizes -}}
+{{- $widths := .Widths -}}
+{{- $loading := default "lazy" .Loading -}}
+{{- $fetch := .FetchPriority -}}
+{{- $transform := default "resize" .Transform -}}
+{{- $fillW := .FillWidth -}}
+{{- $fillH := .FillHeight -}}
+
+{{- /* Site-level enable switches */ -}}
+{{- $coverEnabled := true -}}
+{{- $contentEnabled := true -}}
+{{- with $page.Site.Params.imageProcessing.cover -}}
+  {{- $coverEnabled = default true .enabled -}}
+{{- end -}}
+{{- with $page.Site.Params.imageProcessing.content -}}
+  {{- $contentEnabled = default true .enabled -}}
+{{- end -}}
+
+{{- /* Page-level overrides: support params.image.process or params.image.processing or disableImageProcessing */ -}}
+{{- $pageDisable := false -}}
+{{- with $page -}}
+  {{- with .Params.image -}}
+    {{- if eq .process false -}}{{ $pageDisable = true }}{{ end -}}
+    {{- if eq .processing false -}}{{ $pageDisable = true }}{{ end -}}
+    {{- if eq .disableProcessing true -}}{{ $pageDisable = true }}{{ end -}}
+  {{- end -}}
+  {{- if eq .Params.disableImageProcessing true -}}{{ $pageDisable = true }}{{ end -}}
+{{- end -}}
+
+{{- $enabled := cond (or (eq $kind "cover") (eq $kind "hero") (eq $kind "article")) $coverEnabled $contentEnabled -}}
+{{- $shouldProcess := and $enabled (not $pageDisable) -}}
+
+{{- /* Determine default sizes and widths */ -}}
+{{- if not $sizes -}}
+  {{- if or (eq $kind "cover") (eq $kind "hero") (eq $kind "article") -}}
+    {{- $sizes = "(max-width: 800px) 100vw, 800px" -}}
+  {{- else if eq $kind "gallery" -}}
+    {{- $sizes = "(max-width: 600px) 50vw, 400px" -}}
+  {{- else -}}
+    {{- $sizes = "100vw" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if not $widths -}}
+  {{- if or (eq $kind "cover") (eq $kind "hero") (eq $kind "article") -}}
+    {{- $widths = slice 480 800 1200 1600 1920 -}}
+  {{- else if eq $kind "gallery" -}}
+    {{- $widths = slice 400 800 -}}
+  {{- else -}}
+    {{- $widths = slice 320 640 960 1280 -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Detect external or svg */ -}}
+{{- $isExternal := false -}}
+{{- $isSVG := false -}}
+{{- if $res -}}
+  {{- $isSVG = eq $res.MediaType.SubType "svg" -}}
+{{- else if $src -}}
+  {{- $url := urls.Parse $src -}}
+  {{- if or (eq $url.Scheme "http") (eq $url.Scheme "https") -}}{{ $isExternal = true }}{{- end -}}
+  {{- if eq (lower (path.Ext $src)) ".svg" -}}{{ $isSVG = true }}{{- end -}}
+{{- end -}}
+
+{{- $canProcess := and $shouldProcess (not $isSVG) (or $res (and (not $isExternal) false)) -}}
+
+{{- /* Build sources */ -}}
+{{- $avifSet := slice -}}
+{{- $webpSet := slice -}}
+{{- $fallbackSet := slice -}}
+{{- $imgSrc := $src -}}
+{{- $imgWidth := 0 -}}
+{{- $imgHeight := 0 -}}
+
+{{- if and $canProcess $res -}}
+  {{- /* Cap widths to original width */ -}}
+  {{- $maxW := $res.Width -}}
+  {{- $usable := slice -}}
+  {{- range $widths -}}
+    {{- if le . $maxW -}}
+      {{- $usable = $usable | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if eq (len $usable) 0 -}}
+    {{- if ge $maxW 800 -}}
+      {{- $usable = slice 800 -}}
+    {{- else -}}
+      {{- $usable = slice $maxW -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $fallbackRes := $res -}}
+  {{- if eq $transform "fill" -}}
+    {{- /* Keep aspect via provided FillWidth/FillHeight (required) */ -}}
+    {{- if and $fillW $fillH -}}
+      {{- $fallbackRes = $res.Fill (printf "%dx%d" $fillW $fillH) -}}
+      {{- $imgWidth = $fallbackRes.Width -}}
+      {{- $imgHeight = $fallbackRes.Height -}}
+      {{- $imgSrc = $fallbackRes.RelPermalink -}}
+      {{- /* For AVIF/WEBP, use same WxH */ -}}
+      {{- $avif := $res.Fill (printf "%dx%d avif" $fillW $fillH) -}}
+      {{- $webp := $res.Fill (printf "%dx%d webp" $fillW $fillH) -}}
+      {{- $avifSet = $avifSet | append (printf "%s %dw" $avif.RelPermalink $avif.Width) -}}
+      {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $webp.Width) -}}
+      {{- $fallbackSet = $fallbackSet | append (printf "%s %dw" $fallbackRes.RelPermalink $fallbackRes.Width) -}}
+    {{- else -}}
+      {{- /* Missing fill dimensions; fall back to resize pipeline */ -}}
+      {{- $transform = "resize" -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if ne $transform "fill" -}}
+    {{- /* Resize/Fit variants */ -}}
+    {{- range $usable -}}
+      {{- $w := . -}}
+      {{- $avif := (cond (eq $transform "fit") ($res.Fit (printf "%dx avif" $w)) ($res.Resize (printf "%dx avif" $w))) -}}
+      {{- $webp := (cond (eq $transform "fit") ($res.Fit (printf "%dx webp" $w)) ($res.Resize (printf "%dx webp" $w))) -}}
+      {{- $orig := (cond (eq $transform "fit") ($res.Fit (printf "%dx" $w)) ($res.Resize (printf "%dx" $w))) -}}
+      {{- $avifSet = $avifSet | append (printf "%s %dw" $avif.RelPermalink $avif.Width) -}}
+      {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $webp.Width) -}}
+      {{- $fallbackSet = $fallbackSet | append (printf "%s %dw" $orig.RelPermalink $orig.Width) -}}
+      {{- $fallbackRes = $orig -}}
+    {{- end -}}
+    {{- $imgSrc = $fallbackRes.RelPermalink -}}
+    {{- $imgWidth = $fallbackRes.Width -}}
+    {{- $imgHeight = $fallbackRes.Height -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if or (not $canProcess) (not $res) -}}
+  {{- /* Just pass-through <img> for svg or external or non-resource */ -}}
+  <img src="{{ $src }}" alt="{{ $alt }}" {{ with $class }}class="{{ . }}"{{ end }} {{ with $loading }}loading="{{ . }}"{{ end }} {{ with $fetch }}fetchpriority="{{ . }}"{{ end }}>
+  {{- else -}}
+  <picture{{ with $class }} class="{{ . }}"{{ end }}>
+    {{- if gt (len $avifSet) 0 -}}
+      <source type="image/avif" srcset="{{ delimit $avifSet ", " }}" sizes="{{ $sizes }}">
+    {{- end -}}
+    {{- if gt (len $webpSet) 0 -}}
+      <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="{{ $sizes }}">
+    {{- end -}}
+    <img src="{{ $imgSrc }}" srcset="{{ delimit $fallbackSet ", " }}" sizes="{{ $sizes }}" width="{{ $imgWidth }}" height="{{ $imgHeight }}" alt="{{ $alt }}" {{ with $loading }}loading="{{ . }}"{{ end }} {{ with $fetch }}fetchpriority="{{ . }}"{{ end }} decoding="async">
+  </picture>
+{{- end -}}

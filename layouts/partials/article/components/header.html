@@ -1,0 +1,40 @@
+<header class="article-header">
+    {{- $image := partialCached "helper/image" (dict "Context" . "Type" "article") .RelPermalink "article" -}}
+    {{ if $image.exists }}
+        <div class="article-image">
+            <a href="{{ .RelPermalink }}">
+                {{- $alt := default (printf "Featured image of post %s" .Title) .Params.imageAlt -}}
+                {{- $preload := true -}}
+                {{- with .Params.image -}}
+                  {{- if eq .preload false -}}{{ $preload = false }}{{ end -}}
+                {{- end -}}
+                {{- $loading := cond $preload "eager" "lazy" -}}
+                {{- $fetch := cond $preload "high" nil -}}
+                {{ if $image.resource }}
+                    {{ partial "helper/responsive-image" (dict
+                        "Page" .
+                        "Resource" $image.resource
+                        "Alt" $alt
+                        "Type" "cover"
+                        "Loading" $loading
+                        "FetchPriority" $fetch
+                        "Sizes" "(max-width: 800px) 100vw, 800px"
+                        "Widths" (slice 480 800 1200 1600)
+                        "Transform" "resize"
+                    ) }}
+                {{ else }}
+                    {{ partial "helper/responsive-image" (dict
+                        "Page" .
+                        "Src" $image.permalink
+                        "Alt" $alt
+                        "Type" "cover"
+                        "Loading" $loading
+                        "FetchPriority" $fetch
+                    ) }}
+                {{ end }}
+            </a>
+        </div>
+    {{ end }}
+
+    {{ partialCached "article/components/details" . .RelPermalink }}
+</header>
