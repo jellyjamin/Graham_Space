@@ -203,44 +203,49 @@ theme = "stack"
 
 # Enable custom sitemap templates
 [outputs]
-    home = ["HTML", "RSS", "JSON", "Sitemap", "SitemapPages"]
-    section = ["HTML", "RSS", "SitemapPosts"]
-    taxonomy = ["HTML", "RSS", "SitemapCategories", "SitemapTags"]
-    taxonomyTerm = ["HTML", "SitemapCategories", "SitemapTags"]
+    home = ["HTML", "RSS", "SITEMAP", "SITEMAPPAGES"]
+    section = ["HTML", "RSS", "SITEMAPPOSTS"]
+    taxonomy = ["HTML", "SITEMAPCATEGORIES", "SITEMAPTAGS"]
+    taxonomyTerm = ["HTML", "SITEMAPCATEGORIES", "SITEMAPTAGS"]
 
 # Ensure custom sitemap templates are used
 [mediaTypes]
     [mediaTypes."application/xml"]
         suffixes = ["xml"]
 
-[outputFormats.Sitemap]
+[outputFormats.SITEMAP]
     mediaType = "application/xml"
     baseName = "sitemap"
-    isPlainText = false
+    isPlainText = true
+    notAlternative = true
     rel = "sitemap"
 
-[outputFormats.SitemapPosts]
+[outputFormats.SITEMAPPOSTS]
     mediaType = "application/xml"
     baseName = "sitemap-posts"
-    isPlainText = false
+    isPlainText = true
+    notAlternative = true
     rel = "sitemap"
 
-[outputFormats.SitemapCategories]
+[outputFormats.SITEMAPCATEGORIES]
     mediaType = "application/xml"
     baseName = "sitemap-categories"
-    isPlainText = false
+    isPlainText = true
+    notAlternative = true
     rel = "sitemap"
 
-[outputFormats.SitemapTags]
+[outputFormats.SITEMAPTAGS]
     mediaType = "application/xml"
     baseName = "sitemap-tags"
-    isPlainText = false
+    isPlainText = true
+    notAlternative = true
     rel = "sitemap"
 
-[outputFormats.SitemapPages]
+[outputFormats.SITEMAPPAGES]
     mediaType = "application/xml"
     baseName = "sitemap-pages"
-    isPlainText = false
+    isPlainText = true
+    notAlternative = true
     rel = "sitemap"
 
 # Markup configuration
