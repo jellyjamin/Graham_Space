@@ -9,28 +9,26 @@
                 <a href="{{ .RelPermalink }}" class="featured-post-link">
                     {{ if $image.exists }}
                         <div class="featured-post-image">
+                            {{- $alt := default (printf "Featured image of post %s" .Title) .Params.imageAlt -}}
                             {{ if $image.resource }}
-                                {{- $imageRaw := $image.resource | resources.Fingerprint "md5" -}}
-                                {{- $Permalink := $imageRaw.RelPermalink -}}
-                                {{- $Width := $imageRaw.Width -}}
-                                {{- $Height := $imageRaw.Height -}}
-
-                                {{- if .Site.Params.imageProcessing.cover.enabled -}}
-                                    {{- $thumbnail := $imageRaw.Fill "400x300" -}}
-                                    {{- $Permalink = $thumbnail.RelPermalink -}}
-                                    {{- $Width = $thumbnail.Width -}}
-                                    {{- $Height = $thumbnail.Height -}}
-                                {{- end -}}
-                                
-                                <img src="{{ $Permalink }}" 
-                                    width="{{ $Width }}" 
-                                    height="{{ $Height }}" 
-                                    loading="lazy"
-                                    alt="Featured image of post {{ .Title }}"
-                                    {{ with .Slug }}data-key="{{ . }}" {{ end }}
-                                    data-hash="{{ $imageRaw.Data.Integrity }}">
+                                {{ partial "helper/responsive-image" (dict
+                                    "Page" .
+                                    "Resource" $image.resource
+                                    "Alt" $alt
+                                    "Type" "gallery"
+                                    "Loading" "lazy"
+                                    "Transform" "fill"
+                                    "FillWidth" 400
+                                    "FillHeight" 300
+                                ) }}
                             {{ else }}
-                                <img src="{{ $image.permalink }}" loading="lazy" data-key="{{ .Slug }}" data-hash="{{ $image.permalink }}"/>
+                                {{ partial "helper/responsive-image" (dict
+                                    "Page" .
+                                    "Src" $image.permalink
+                                    "Alt" $alt
+                                    "Type" "gallery"
+                                    "Loading" "lazy"
+                                ) }}
                             {{ end }}
                         </div>
                     {{ end }}

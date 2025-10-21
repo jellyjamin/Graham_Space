@@ -1,0 +1,35 @@
+{{- /* Render hook for Markdown images using responsive-image partial */ -}}
+{{- $page := .Page -}}
+{{- $src := .Destination -}}
+{{- $alt := or .Text .Title -}}
+{{- $res := $page.Resources.GetMatch (printf "%s" ($src | safeURL)) -}}
+{{- if not $res -}}
+  {{- $base := path.Base $src -}}
+  {{- $res = $page.Resources.GetMatch (printf "%s" ($base | safeURL)) -}}
+{{- end -}}
+
+{{- $isExternal := false -}}
+{{- $url := urls.Parse $src -}}
+{{- if or (eq $url.Scheme "http") (eq $url.Scheme "https") -}}{{ $isExternal = true }}{{- end -}}
+
+{{- if and $res (ne $res.MediaType.SubType "svg") -}}
+  {{- partial "helper/responsive-image" (dict
+    "Page" $page
+    "Resource" $res
+    "Alt" (default "Image" $alt)
+    "Type" "content"
+    "Loading" "lazy"
+    "Sizes" "(max-width: 800px) 100vw, 800px"
+    "Widths" (slice 360 720 1200)
+    "Transform" "resize"
+  ) -}}
+{{- else -}}
+  {{- /* External/SVG/non-resource fallback */ -}}
+  {{- partial "helper/responsive-image" (dict
+    "Page" $page
+    "Src" $src
+    "Alt" (default "Image" $alt)
+    "Type" "content"
+    "Loading" "lazy"
+  ) -}}
+{{- end -}}
