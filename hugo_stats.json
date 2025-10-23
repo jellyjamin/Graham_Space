@@ -1,6 +1,7 @@
 {
   "htmlElements": {
     "tags": [
+      "?xml",
       "a",
       "article",
       "aside",
@@ -85,6 +86,7 @@
       "count",
       "current",
       "deny-consent",
+      "dots",
       "extended",
       "featured-gallery",
       "featured-post",
