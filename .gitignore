@@ -1,6 +1,7 @@
 # Hugo build output (Cloudflare Pages will build this)
 public/
 resources/_gen/
+hugo_stats.json
 
 # SyncThing folders
 .stfolder/

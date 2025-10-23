@@ -18,10 +18,11 @@
 <meta name="description" content="{{ $description }}">
 {{ with $keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
 <meta name="author" content="{{ $author }}">
-<meta name="robots" content="{{ if .Params.noindex }}noindex{{ else }}index{{ end }}, {{ if .Params.nofollow }}nofollow{{ else }}follow{{ end }}">
+{{/* Ensure drafts are always noindexed, then check params */}}
+<meta name="robots" content="{{ if or .Draft .Params.noindex }}noindex{{ else }}index{{ end }}, {{ if .Params.nofollow }}nofollow{{ else }}follow{{ end }}">
 
-{{/* Canonical URL */}}
-{{ if .Site.Params.seo.canonical }}
+{{/* Canonical URL - skip for drafts */}}
+{{ if and .Site.Params.seo.canonical (not .Draft) }}
 <link rel="canonical" href="{{ $canonical }}">
 {{ end }}
 
