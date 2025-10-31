@@ -1,0 +1,245 @@
+# Programming Language Guide Configuration
+# This file defines the structure and content for the "Intro to Tech" sidebar section
+
+# Main configuration
+enabled: true
+title: "Intro to Tech"
+description: "Programming language guides and tutorials"
+
+# Programming languages configuration
+languages:
+  - id: "python"
+    name: "Python"
+    slug: "intro-to-python"
+    description: "Learn Python programming from basics to advanced concepts"
+    icon: "code" # SVG icon identifier
+    color: "#3776ab" # Brand color for the language
+    difficulty: "Beginner"
+    estimatedTime: "4-6 weeks"
+    
+    # Main navigation - when clicking the language title
+    mainNavigation:
+      url: "/p/intro-to-python/"
+      title: "Complete Python Tutorial"
+      description: "Start your Python journey with comprehensive tutorials"
+    
+    # Submenu sections - lesson modules
+    sections:
+      - id: "variables"
+        title: "Variables & Data Types"
+        url: "/p/intro-to-python/#variables-data-types"
+        description: "Understanding Python variables and different data types"
+        order: 1
+        
+      - id: "control-flow"
+        title: "Control Flow"
+        url: "/p/intro-to-python/#control-flow"
+        description: "If statements, loops, and conditional logic"
+        order: 2
+        
+      - id: "functions"
+        title: "Functions"
+        url: "/p/intro-to-python/#functions"
+        description: "Creating and using functions in Python"
+        order: 3
+        
+      - id: "data-structures"
+        title: "Data Structures"
+        url: "/p/intro-to-python/#data-structures"
+        description: "Lists, dictionaries, sets, and tuples"
+        order: 4
+        
+      - id: "oop"
+        title: "Object-Oriented Programming"
+        url: "/p/intro-to-python/#object-oriented-programming"
+        description: "Classes, objects, and OOP principles"
+        order: 5
+        
+      - id: "file-handling"
+        title: "File Handling"
+        url: "/p/intro-to-python/#file-handling"
+        description: "Reading and writing files in Python"
+        order: 6
+        
+      - id: "libraries"
+        title: "Popular Libraries"
+        url: "/p/intro-to-python/#popular-libraries"
+        description: "Using external libraries and modules"
+        order: 7
+        
+      - id: "projects"
+        title: "Practice Projects"
+        url: "/p/intro-to-python/#practice-projects"
+        description: "Hands-on projects to apply your knowledge"
+        order: 8
+
+  - id: "javascript"
+    name: "JavaScript"
+    slug: "intro-to-javascript"
+    description: "Master JavaScript for web development"
+    icon: "code"
+    color: "#f7df1e"
+    difficulty: "Beginner to Intermediate"
+    estimatedTime: "3-5 weeks"
+    
+    mainNavigation:
+      url: "/p/intro-to-javascript/"
+      title: "Complete JavaScript Tutorial"
+      description: "Learn JavaScript from the ground up"
+    
+    sections:
+      - id: "basics"
+        title: "JavaScript Basics"
+        url: "/p/intro-to-javascript/#javascript-basics"
+        description: "Variables, operators, and basic syntax"
+        order: 1
+        
+      - id: "dom"
+        title: "DOM Manipulation"
+        url: "/p/intro-to-javascript/#dom-manipulation"
+        description: "Interacting with HTML elements"
+        order: 2
+        
+      - id: "events"
+        title: "Events & Event Handling"
+        url: "/p/intro-to-javascript/#events-event-handling"
+        description: "Handling user interactions and events"
+        order: 3
+        
+      - id: "functions-js"
+        title: "Functions & Scope"
+        url: "/p/intro-to-javascript/#functions-scope"
+        description: "Understanding function behavior and scope"
+        order: 4
+        
+      - id: "async"
+        title: "Asynchronous JavaScript"
+        url: "/p/intro-to-javascript/#asynchronous-javascript"
+        description: "Promises, async/await, and AJAX"
+        order: 5
+
+  - id: "go"
+    name: "Go"
+    slug: "intro-to-go"
+    description: "Learn Google's Go programming language"
+    icon: "code"
+    color: "#00add8"
+    difficulty: "Intermediate"
+    estimatedTime: "3-4 weeks"
+    
+    mainNavigation:
+      url: "/p/intro-to-go/"
+      title: "Complete Go Tutorial"
+      description: "Efficient programming with Go"
+    
+    sections:
+      - id: "setup"
+        title: "Environment Setup"
+        url: "/p/intro-to-go/#environment-setup"
+        description: "Installing Go and setting up development environment"
+        order: 1
+        
+      - id: "syntax"
+        title: "Go Syntax & Types"
+        url: "/p/intro-to-go/#syntax-types"
+        description: "Basic syntax and type system"
+        order: 2
+        
+      - id: "packages"
+        title: "Packages & Modules"
+        url: "/p/intro-to-go/#packages-modules"
+        description: "Understanding Go's package system"
+        order: 3
+        
+      - id: "concurrency"
+        title: "Concurrency"
+        url: "/p/intro-to-go/#concurrency"
+        description: "Goroutines and channels"
+        order: 4
+
+  - id: "rust"
+    name: "Rust"
+    slug: "intro-to-rust"
+    description: "Systems programming with Rust"
+    icon: "code"
+    color: "#dea584"
+    difficulty: "Advanced"
+    estimatedTime: "6-8 weeks"
+    
+    mainNavigation:
+      url: "/p/intro-to-rust/"
+      title: "Complete Rust Tutorial"
+      description: "Safe and fast systems programming"
+    
+    sections:
+      - id: "ownership"
+        title: "Ownership & Borrowing"
+        url: "/p/intro-to-rust/#ownership-borrowing"
+        description: "Understanding Rust's memory management"
+        order: 1
+        
+      - id: "lifetime"
+        title: "Lifetimes"
+        url: "/p/intro-to-rust/#lifetimes"
+        description: "Managing references and lifetimes"
+        order: 2
+        
+      - id: "traits"
+        title: "Traits & Generics"
+        url: "/p/intro-to-rust/#traits-generics"
+        description: "Polymorphism and code reuse"
+        order: 3
+        
+      - id: "error-handling"
+        title: "Error Handling"
+        url: "/p/intro-to-rust/#error-handling"
+        description: "Result, Option, and error patterns"
+        order: 4
+
+# Customization options
+customization:
+  # Animation settings
+  animations:
+    duration: 300 # milliseconds
+    easing: "ease-in-out"
+    enable: true
+  
+  # Visual settings
+  styling:
+    showProgress: true
+    showDifficulty: true
+    showEstimatedTime: true
+    compactMode: false
+  
+  # Behavior settings
+  behavior:
+    persistState: true
+    deepLinking: true
+    autoExpandActive: true
+    keyboardNavigation: true
+  
+  # Responsive breakpoints
+  responsive:
+    mobileBreakpoint: 768 # pixels
+    tabletBreakpoint: 1024 # pixels
+
+# Theme integration
+theme:
+  # CSS class prefixes to avoid conflicts
+  cssPrefix: "tech-guide"
+  
+  # Color scheme variables
+  colors:
+    primary: "var(--primary-color)"
+    secondary: "var(--secondary-color)"
+    accent: "var(--accent-color)"
+    background: "var(--background-color)"
+    text: "var(--text-color)"
+    border: "var(--border-color)"
+    hover: "var(--hover-color)"
+  
+  # Icon settings
+  icons:
+    enabled: true
+    size: 16 # pixels
+    style: "outlined" # outlined, filled, or both
