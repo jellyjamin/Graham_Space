@@ -1,7 +1,7 @@
 {{- $context := .Context -}}
 {{- $config := .Site.Data.programming_languages -}}
 
-{{- if and $config.enabled (eq $config.enabled true) -}}
+{{- if $config.enabled -}}
 <section class="widget tech-guide-widget">
     <div class="widget-icon">
         {{ partial "helper/icon" "code" }}
