@@ -40,3 +40,5 @@ sudo apt update && sudo apt install python3
 
 
 ## Table of contents 
+
+[1.1 Declaring variables and Naming Conventions to Name Variables]()
