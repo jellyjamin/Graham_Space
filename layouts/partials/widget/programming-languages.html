@@ -1,4 +1,144 @@
+{{- $config := dict "enabled" true "title" "Intro to Tech" "description" "Programming language guides and tutorials" -}}
+
+{{- if $config.enabled -}}
 <section class="widget tech-guide-widget">
-    <h3>Test Widget</h3>
-    <p>If you can see this, the basic widget is working!</p>
+    <div class="widget-icon">
+        📚
+    </div>
+    <h2 class="widget-title section-title">{{ $config.title }}</h2>
+    {{- with $config.description }}
+    <p class="widget-description">{{ . }}</p>
+    {{- end }}
+
+    <div class="tech-guide-container" 
+         data-duration="300"
+         data-easing="ease-in-out"
+         data-persist-state="true"
+         data-deep-linking="true"
+         data-keyboard-nav="true">
+        
+        <div class="tech-guide-language" data-language-id="python">
+            <!-- Language Header -->
+            <div class="tech-guide-language-header">
+                <!-- Main Language Title (navigates to main tutorial) -->
+                <a href="/p/intro-to-python/" class="tech-guide-main-link" aria-label="Go to Python tutorial">
+                    <div class="tech-guide-language-info">
+                        <h3 class="tech-guide-language-name">Python</h3>
+                        <p class="tech-guide-language-description">Learn Python programming from basics to advanced concepts</p>
+                        <div class="tech-guide-meta">
+                            <span class="tech-guide-difficulty difficulty-beginner">Beginner</span>
+                            <span class="tech-guide-time">4-6 weeks</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Dropdown Toggle Button -->
+                <button type="button" 
+                        class="tech-guide-dropdown-toggle"
+                        aria-expanded="false"
+                        aria-controls="tech-guide-sections-python"
+                        aria-label="Toggle Python sections">
+                    <svg class="tech-guide-dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Language Sections (Submenu) -->
+            <div class="tech-guide-sections" 
+                 id="tech-guide-sections-python"
+                 role="region"
+                 aria-labelledby="tech-guide-sections-python-label"
+                 hidden>
+                <h4 id="tech-guide-sections-python-label" class="sr-only">Python Tutorial Sections</h4>
+                <ul class="tech-guide-section-list">
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#variables-data-types" class="tech-guide-section-link" data-section-id="variables">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Variables & Data Types</span>
+                                <span class="tech-guide-section-description">Understanding Python variables and different data types</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#control-flow" class="tech-guide-section-link" data-section-id="control-flow">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Control Flow</span>
+                                <span class="tech-guide-section-description">If statements, loops, and conditional logic</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#functions" class="tech-guide-section-link" data-section-id="functions">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Functions</span>
+                                <span class="tech-guide-section-description">Creating and using functions in Python</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#data-structures" class="tech-guide-section-link" data-section-id="data-structures">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Data Structures</span>
+                                <span class="tech-guide-section-description">Lists, dictionaries, sets, and tuples</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#object-oriented-programming" class="tech-guide-section-link" data-section-id="oop">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Object-Oriented Programming</span>
+                                <span class="tech-guide-section-description">Classes, objects, and OOP principles</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#file-handling" class="tech-guide-section-link" data-section-id="file-handling">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">File Handling</span>
+                                <span class="tech-guide-section-description">Reading and writing files in Python</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#popular-libraries" class="tech-guide-section-link" data-section-id="libraries">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Popular Libraries</span>
+                                <span class="tech-guide-section-description">Using external libraries and modules</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="tech-guide-section-item">
+                        <a href="/p/intro-to-python/#practice-projects" class="tech-guide-section-link" data-section-id="projects">
+                            <div class="tech-guide-section-content">
+                                <span class="tech-guide-section-title">Practice Projects</span>
+                                <span class="tech-guide-section-description">Hands-on projects to apply your knowledge</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Debug info -->
+    <div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
+        Widget loaded successfully with hardcoded config
+    </div>
 </section>
+{{- end -}}
+
+<!-- Screen Reader Only Styles -->
+<style>
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+</style>
