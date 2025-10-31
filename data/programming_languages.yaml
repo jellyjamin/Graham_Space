@@ -2,7 +2,7 @@
 # This file defines the structure and content for the "Intro to Tech" sidebar section
 
 # Main configuration
-enabled: true
+enabled: false
 title: "Intro to Tech"
 description: "Programming language guides and tutorials"
 
