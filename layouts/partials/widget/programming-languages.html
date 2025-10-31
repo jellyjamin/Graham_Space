@@ -1,5 +1,5 @@
 {{- $context := .Context -}}
-{{- $config := .Site.Data.programming-languages -}}
+{{- $config := .Site.Data.programming_languages -}}
 
 {{- if and $config.enabled (eq $config.enabled true) -}}
 <section class="widget tech-guide-widget">
@@ -19,17 +19,16 @@
          data-keyboard-nav="{{ $config.customization.behavior.keyboardNavigation }}">
         
         {{ range $language := $config.languages }}
-        <div class="tech-guide-language" 
-             data-language-id="{{ $language.id }}"
-             data-color="{{ $language.color }}">
+        <div class="tech-guide-language"
+             data-language-id="{{ $language.id }}">
             
             <!-- Language Header -->
             <div class="tech-guide-language-header">
                 <!-- Main Language Title (navigates to main tutorial) -->
-                <a href="{{ $language.mainNavigation.url }}" 
+                <a href="{{ $language.mainNavigation.url }}"
                    class="tech-guide-main-link"
                    aria-label="Go to {{ $language.name }} tutorial">
-                    <span class="tech-guide-language-icon" style="background-color: {{ $language.color }}20; color: {{ $language.color }}">
+                    <span class="tech-guide-language-icon">
                         {{ partial "helper/icon" $language.icon }}
                     </span>
                     <div class="tech-guide-language-info">

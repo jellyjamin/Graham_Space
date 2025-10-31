@@ -1,0 +1,16 @@
+/*!
+ *   Graham Space Custom Styles
+ *   
+ *   Inherits from Stack theme and adds custom components
+ */
+
+// Import Stack theme styles
+@import "../../themes/stack/assets/scss/style.scss";
+
+// Import custom components
+@import "components/_tech-guide.scss";
+
+// Custom overrides and additions for Graham Space
+.widget.tech-guide-widget {
+    margin-bottom: var(--widget-separation);
+}
