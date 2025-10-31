@@ -3,6 +3,8 @@ languageCode = 'en-us'
 title = 'Graham_Space'
 theme = "stack"
 
+
+
 # SEO Configuration
 [params.seo]
     description = "Graham Space - A blog about technology, self-hosting, and software development. Sharing insights on programming, automation, and digital tools."
