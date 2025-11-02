@@ -1,107 +1,252 @@
-{{- $config := dict "enabled" true "title" "Intro to Tech" "description" "Programming language guides and tutorials" "languages" (slice (dict "id" "python" "name" "Python" "description" "Learn Python programming from basics to advanced concepts" "difficulty" "Beginner" "estimatedTime" "4-6 weeks" "mainNavigation" (dict "url" "/p/intro-to-python/" "title" "Complete Python Tutorial" "description" "Start your Python journey with comprehensive tutorials") "sections" (slice (dict "id" "variables" "title" "Declaring variables & their naming conventions" "url" "/p/intro-to-python/sections/declaring-variables-naming-conventions" "description" "Understanding Python variables and different data types" "order" 1)))) -}}
+{{- $ctx := .Context | default . -}}
+{{- $site := $ctx.Site -}}
+{{- $config := $site.Data.programming_languages -}}
 
-<!-- Debug info -->
-<div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
-    Widget loaded successfully with {{ len $config.languages }} languages
-    {{ if not $.Site.Data.programming_languages -}}
-    (Note: Using fallback config - YAML data not loading)
-    {{- end }}
-</div>
+{{- $enabled := true -}}
+{{- $title := "Intro to Tech" -}}
+{{- $description := "Programming language guides and tutorials" -}}
+{{- $languages := slice
+  (dict
+    "id" "python"
+    "name" "Python"
+    "slug" "intro-to-python"
+    "description" "Learn Python programming from basics to advanced concepts"
+    "icon" "code"
+    "color" "#3776ab"
+    "difficulty" "Beginner"
+    "estimatedTime" "4-6 weeks"
+    "mainNavigation" (dict
+      "url" "/p/intro-to-python/"
+      "title" "Complete Python Tutorial"
+      "description" "Start your Python journey with comprehensive tutorials"
+    )
+    "sections" (slice
+      (dict
+        "id" "variables"
+        "title" "Declaring variables & their naming conventions"
+        "url" "/p/intro-to-python/sections/declaring-variables-naming-conventions"
+        "description" "Understanding Python variables and different data types"
+        "order" 1
+      )
+    )
+  )
+  (dict
+    "id" "javascript"
+    "name" "JavaScript"
+    "slug" "intro-to-javascript"
+    "description" "Master JavaScript for web development"
+    "icon" "code"
+    "color" "#f7df1e"
+    "difficulty" "Beginner to Intermediate"
+    "estimatedTime" "3-5 weeks"
+    "mainNavigation" (dict
+      "url" "/p/intro-to-javascript/"
+      "title" "Complete JavaScript Tutorial"
+      "description" "Learn JavaScript from the ground up"
+    )
+    "sections" (slice
+      (dict
+        "id" "basics"
+        "title" "JavaScript Basics"
+        "url" "/p/intro-to-javascript/#javascript-basics"
+        "description" "Variables, operators, and basic syntax"
+        "order" 1
+      )
+    )
+  )
+) -}}
 
-{{- if and $config $config.enabled -}}
-<section class="widget tech-guide-widget">
-    <div class="widget-icon">
-        📚
-    </div>
-    <h2 class="widget-title section-title">{{ $config.title }}</h2>
-    {{- with $config.description }}
-    <p class="widget-description">{{ . }}</p>
-    {{- end }}
+{{- $animationsDuration := 300 -}}
+{{- $animationsEasing := "ease-in-out" -}}
+{{- $animationsEnabled := true -}}
+{{- $persistState := true -}}
+{{- $deepLinking := true -}}
+{{- $keyboardNav := true -}}
+{{- $mobileBreakpoint := 768 -}}
+{{- $tabletBreakpoint := 1024 -}}
+{{- $prefix := "tech-guide" -}}
+{{- $colorPrimary := "var(--primary-color)" -}}
+{{- $colorSecondary := "var(--secondary-color)" -}}
+{{- $colorAccent := "var(--accent-color)" -}}
+{{- $colorBackground := "var(--background-color)" -}}
+{{- $colorText := "var(--text-color)" -}}
+{{- $colorBorder := "var(--border-color)" -}}
+{{- $colorHover := "var(--hover-color)" -}}
 
-    <div class="tech-guide-container"
-         data-duration="{{ $config.customization.animations.duration }}"
-         data-easing="{{ $config.customization.animations.easing }}"
-         data-persist-state="{{ $config.customization.behavior.persistState }}"
-         data-deep-linking="{{ $config.customization.behavior.deepLinking }}"
-         data-keyboard-nav="{{ $config.customization.behavior.keyboardNavigation }}">
-        
-        {{- range $language := $config.languages }}
-        <div class="tech-guide-language" data-language-id="{{ $language.id }}">
-            <!-- Language Header -->
-            <div class="tech-guide-language-header">
-                <!-- Main Language Title (navigates to main tutorial) -->
-                <a href="{{ $language.mainNavigation.url }}" class="tech-guide-main-link" aria-label="Go to {{ $language.name }} tutorial">
-                    <div class="tech-guide-language-info">
-                        <h3 class="tech-guide-language-name">{{ $language.name }}</h3>
-                        <p class="tech-guide-language-description">{{ $language.description }}</p>
-                        <div class="tech-guide-meta">
-                            <span class="tech-guide-difficulty difficulty-{{ lower $language.difficulty }}">{{ $language.difficulty }}</span>
-                            <span class="tech-guide-time">{{ $language.estimatedTime }}</span>
-                        </div>
-                    </div>
-                </a>
-                
-                <!-- Dropdown Toggle Button -->
-                <button type="button"
-                        class="tech-guide-dropdown-toggle"
-                        aria-expanded="false"
-                        aria-controls="tech-guide-sections-{{ $language.id }}"
-                        aria-label="Toggle {{ $language.name }} sections">
-                    <svg class="tech-guide-dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6,9 12,15 18,9"></polyline>
-                    </svg>
-                </button>
-            </div>
+{{- if $config -}}
+  {{- with $config.enabled }}{{- $enabled = . -}}{{- end -}}
+  {{- with $config.title }}{{- $title = . -}}{{- end -}}
+  {{- with $config.description }}{{- $description = . -}}{{- end -}}
+  {{- with $config.languages }}
+    {{- if gt (len .) 0 }}
+      {{- $languages = . -}}
+    {{- end -}}
+  {{- end -}}
 
-            <!-- Language Sections (Submenu) -->
-            <div class="tech-guide-sections"
-                 id="tech-guide-sections-{{ $language.id }}"
-                 role="region"
-                 aria-labelledby="tech-guide-sections-{{ $language.id }}-label"
-                 hidden>
-                <h4 id="tech-guide-sections-{{ $language.id }}-label" class="sr-only">{{ $language.name }} Tutorial Sections</h4>
-                <ul class="tech-guide-section-list">
-                    {{- range $section := (sort $language.sections "order") }}
-                    <li class="tech-guide-section-item">
-                        <a href="{{ $section.url }}" class="tech-guide-section-link" data-section-id="{{ $section.id }}">
-                            <div class="tech-guide-section-content">
-                                <span class="tech-guide-section-title">{{ $section.title }}</span>
-                                <span class="tech-guide-section-description">{{ $section.description }}</span>
-                            </div>
-                        </a>
-                    </li>
-                    {{- end }}
-                </ul>
-            </div>
-        </div>
-        {{- end }}
-    </div>
+  {{- with $config.customization }}
+    {{- with .animations }}
+      {{- with .duration }}{{- $animationsDuration = . -}}{{- end -}}
+      {{- with .easing }}{{- $animationsEasing = . -}}{{- end -}}
+      {{- with .enable }}{{- $animationsEnabled = . -}}{{- end -}}
+    {{- end -}}
+    {{- with .behavior }}
+      {{- with .persistState }}{{- $persistState = . -}}{{- end -}}
+      {{- with .deepLinking }}{{- $deepLinking = . -}}{{- end -}}
+      {{- with .keyboardNavigation }}{{- $keyboardNav = . -}}{{- end -}}
+    {{- end -}}
+    {{- with .responsive }}
+      {{- with .mobileBreakpoint }}{{- $mobileBreakpoint = . -}}{{- end -}}
+      {{- with .tabletBreakpoint }}{{- $tabletBreakpoint = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
 
-    <!-- Debug info -->
-    <div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
-        Widget loaded successfully with config: {{ $config.enabled }} | Languages: {{ len $config.languages }}
-    </div>
-</section>
-{{- else -}}
-<!-- Debug fallback -->
-<div style="background: red; color: white; padding: 10px; margin: 5px;">
-    WIDGET NOT LOADING - Config exists: {{ if $config }}YES{{ else }}NO{{ end }}, Enabled: {{ if $config }}{{ $config.enabled }}{{ else }}N/A{{ end }}
-</div>
+  {{- with $config.theme }}
+    {{- with .cssPrefix }}{{- $prefix = . -}}{{- end -}}
+    {{- with .colors }}
+      {{- with .primary }}{{- $colorPrimary = . -}}{{- end -}}
+      {{- with .secondary }}{{- $colorSecondary = . -}}{{- end -}}
+      {{- with .accent }}{{- $colorAccent = . -}}{{- end -}}
+      {{- with .background }}{{- $colorBackground = . -}}{{- end -}}
+      {{- with .text }}{{- $colorText = . -}}{{- end -}}
+      {{- with .border }}{{- $colorBorder = . -}}{{- end -}}
+      {{- with .hover }}{{- $colorHover = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 
+{{- $stylePairs := slice -}}
+{{- $prefixes := slice "tech-guide" -}}
+{{- if ne $prefix "tech-guide" }}
+  {{- $prefixes = $prefixes | append $prefix -}}
+{{- end -}}
+{{- range $stylePrefix := $prefixes }}
+  {{- with $colorPrimary }}{{- $stylePairs = $stylePairs | append (printf "--%s-primary: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorSecondary }}{{- $stylePairs = $stylePairs | append (printf "--%s-secondary: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorAccent }}{{- $stylePairs = $stylePairs | append (printf "--%s-accent: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorBackground }}{{- $stylePairs = $stylePairs | append (printf "--%s-background: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorText }}{{- $stylePairs = $stylePairs | append (printf "--%s-text: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorBorder }}{{- $stylePairs = $stylePairs | append (printf "--%s-border: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorHover }}{{- $stylePairs = $stylePairs | append (printf "--%s-hover: %s" $stylePrefix .) -}}{{- end -}}
+{{- end -}}
+{{- $styleAttr := "" -}}
+{{- if gt (len $stylePairs) 0 }}
+  {{- $styleAttr = printf "%s;" (delimit $stylePairs "; ") -}}
+{{- end -}}
 
+{{- $dataSource := cond $config "yaml" "fallback" -}}
 
-<!-- Screen Reader Only Styles -->
+{{- if and $enabled (gt (len $languages) 0) -}}
+<section class="widget tech-guide-widget"{{ if $styleAttr }} style="{{ $styleAttr }}"{{ end }} data-widget="programming-languages" data-prefix="{{ $prefix }}" data-data-source="{{ $dataSource }}">
+  <div class="widget-icon">📚</div>
+  <h2 class="widget-title section-title">{{ $title }}</h2>
+  {{- with $description }}
+    <p class="widget-description">{{ . }}</p>
+  {{- end }}
+
+  <div class="tech-guide-container"
+       data-duration="{{ $animationsDuration }}"
+       data-easing="{{ $animationsEasing }}"
+       data-animations-enabled="{{ if $animationsEnabled }}true{{ else }}false{{ end }}"
+       data-persist-state="{{ if $persistState }}true{{ else }}false{{ end }}"
+       data-deep-linking="{{ if $deepLinking }}true{{ else }}false{{ end }}"
+       data-keyboard-nav="{{ if $keyboardNav }}true{{ else }}false{{ end }}"
+       data-mobile-breakpoint="{{ $mobileBreakpoint }}"
+       data-tablet-breakpoint="{{ $tabletBreakpoint }}">
+    {{- range $index, $language := $languages }}
+      {{- $languageIdRaw := cond (isset $language "id") $language.id (printf "language-%d" (add $index 1)) -}}
+      {{- $languageId := anchorize (printf "%v" $languageIdRaw) -}}
+      {{- $languageSlug := cond (isset $language "slug") $language.slug "" -}}
+      {{- $languageColor := cond (isset $language "color") $language.color "" -}}
+      {{- $mainNav := default dict $language.mainNavigation -}}
+      {{- $mainURL := default "" $mainNav.url -}}
+      {{- $isExternal := or (hasPrefix $mainURL "http://") (hasPrefix $mainURL "https://") (hasPrefix $mainURL "mailto:") (hasPrefix $mainURL "//") -}}
+      {{- $mainLink := cond (eq $mainURL "") "#" (cond $isExternal $mainURL ($mainURL | relLangURL)) -}}
+      {{- $sections := default (slice) $language.sections -}}
+      {{- $sectionsId := printf "%s-sections-%s" $prefix $languageId -}}
+      {{- $sectionsLabelId := printf "%s-label" $sectionsId -}}
+      <div class="tech-guide-language"
+           data-language-id="{{ $languageId }}"
+           {{- with $languageSlug }} data-language-slug="{{ . }}"{{ end }}
+           {{- with $languageColor }} data-language-color="{{ . }}"{{ end }}>
+        <div class="tech-guide-language-header">
+          <a href="{{ $mainLink }}" class="tech-guide-main-link" aria-label="Go to {{ $language.name }} tutorial">
+            <div class="tech-guide-language-info">
+              {{- with $language.name }}
+                <h3 class="tech-guide-language-name">{{ . }}</h3>
+              {{- end }}
+              {{- with $language.description }}
+                <p class="tech-guide-language-description">{{ . }}</p>
+              {{- end }}
+              <div class="tech-guide-meta">
+                {{- with $language.difficulty }}
+                  <span class="tech-guide-difficulty difficulty-{{ lower (replace . " " "-") }}">{{ . }}</span>
+                {{- end }}
+                {{- with $language.estimatedTime }}
+                  <span class="tech-guide-time">{{ . }}</span>
+                {{- end }}
+              </div>
+            </div>
+          </a>
+          <button type="button"
+                  class="tech-guide-dropdown-toggle"
+                  aria-expanded="false"
+                  aria-controls="{{ $sectionsId }}"
+                  aria-label="Toggle {{ $language.name }} sections">
+            <svg class="tech-guide-dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="tech-guide-sections"
+             id="{{ $sectionsId }}"
+             role="region"
+             aria-labelledby="{{ $sectionsLabelId }}"
+             hidden>
+          <h4 id="{{ $sectionsLabelId }}" class="sr-only">{{ $language.name }} Tutorial Sections</h4>
+          <ul class="tech-guide-section-list">
+            {{- range sort $sections "order" }}
+              {{- $sectionURL := default "" .url -}}
+              {{- $sectionExternal := or (hasPrefix $sectionURL "http://") (hasPrefix $sectionURL "https://") (hasPrefix $sectionURL "mailto:") (hasPrefix $sectionURL "//") -}}
+              {{- $sectionLink := cond (eq $sectionURL "") "#" (cond $sectionExternal $sectionURL ($sectionURL | relLangURL)) -}}
+              <li class="tech-guide-section-item">
+                <a href="{{ $sectionLink }}" class="tech-guide-section-link" data-section-id="{{ .id }}">
+                  <div class="tech-guide-section-content">
+                    {{- with .title }}
+                      <span class="tech-guide-section-title">{{ . }}</span>
+                    {{- end }}
+                    {{- with .description }}
+                      <span class="tech-guide-section-description">{{ . }}</span>
+                    {{- end }}
+                  </div>
+                </a>
+              </li>
+            {{- end }}
+          </ul>
+        </div>
+      </div>
+    {{- end }}
+  </div>
+
+  <div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
+    Widget rendered from {{ $dataSource }} configuration with {{ len $languages }} languages
+  </div>
+</section>
+{{- else -}}
+<div style="background: #c0392b; color: white; padding: 10px; margin: 5px 0;">
+  Intro to Tech widget is currently disabled or has no available languages.
+</div>
+{{- end }}
+
 <style>
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
