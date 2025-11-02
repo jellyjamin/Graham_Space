@@ -27,7 +27,7 @@ languages:
     sections:
       - id: "variables"
         title: "Declaring variables & their naming conventions"
-        url: "/p/intro-to-python/sections/declaring-varibles-naming-conventions.md"
+        url: "/p/declaring-varibles-naming-conventions.md"
         description: "Understanding Python variables and different data types"
         order: 1
 
