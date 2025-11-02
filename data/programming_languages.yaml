@@ -26,11 +26,11 @@ languages:
     # Submenu sections - lesson modules
     sections:
       - id: "variables"
-        title: "Declaring varibles & their naming conventions"
-        url: "/p/intro-to-python/sections/declaring-varibles-naming-conventions"
+        title: "Declaring variables & their naming conventions"
+        url: "/p/intro-to-python/sections/declaring-variables-naming-conventions"
         description: "Understanding Python variables and different data types"
         order: 1
-      
+
   - id: "javascript"
     name: "JavaScript"
     slug: "intro-to-javascript"
@@ -51,108 +51,6 @@ languages:
         url: "/p/intro-to-javascript/#javascript-basics"
         description: "Variables, operators, and basic syntax"
         order: 1
-        
-      - id: "dom"
-        title: "DOM Manipulation"
-        url: "/p/intro-to-javascript/#dom-manipulation"
-        description: "Interacting with HTML elements"
-        order: 2
-        
-      - id: "events"
-        title: "Events & Event Handling"
-        url: "/p/intro-to-javascript/#events-event-handling"
-        description: "Handling user interactions and events"
-        order: 3
-        
-      - id: "functions-js"
-        title: "Functions & Scope"
-        url: "/p/intro-to-javascript/#functions-scope"
-        description: "Understanding function behavior and scope"
-        order: 4
-        
-      - id: "async"
-        title: "Asynchronous JavaScript"
-        url: "/p/intro-to-javascript/#asynchronous-javascript"
-        description: "Promises, async/await, and AJAX"
-        order: 5
-
-  - id: "go"
-    name: "Go"
-    slug: "intro-to-go"
-    description: "Learn Google's Go programming language"
-    icon: "code"
-    color: "#00add8"
-    difficulty: "Intermediate"
-    estimatedTime: "3-4 weeks"
-    
-    mainNavigation:
-      url: "/p/intro-to-go/"
-      title: "Complete Go Tutorial"
-      description: "Efficient programming with Go"
-    
-    sections:
-      - id: "setup"
-        title: "Environment Setup"
-        url: "/p/intro-to-go/#environment-setup"
-        description: "Installing Go and setting up development environment"
-        order: 1
-        
-      - id: "syntax"
-        title: "Go Syntax & Types"
-        url: "/p/intro-to-go/#syntax-types"
-        description: "Basic syntax and type system"
-        order: 2
-        
-      - id: "packages"
-        title: "Packages & Modules"
-        url: "/p/intro-to-go/#packages-modules"
-        description: "Understanding Go's package system"
-        order: 3
-        
-      - id: "concurrency"
-        title: "Concurrency"
-        url: "/p/intro-to-go/#concurrency"
-        description: "Goroutines and channels"
-        order: 4
-
-  - id: "rust"
-    name: "Rust"
-    slug: "intro-to-rust"
-    description: "Systems programming with Rust"
-    icon: "code"
-    color: "#dea584"
-    difficulty: "Advanced"
-    estimatedTime: "6-8 weeks"
-    
-    mainNavigation:
-      url: "/p/intro-to-rust/"
-      title: "Complete Rust Tutorial"
-      description: "Safe and fast systems programming"
-    
-    sections:
-      - id: "ownership"
-        title: "Ownership & Borrowing"
-        url: "/p/intro-to-rust/#ownership-borrowing"
-        description: "Understanding Rust's memory management"
-        order: 1
-        
-      - id: "lifetime"
-        title: "Lifetimes"
-        url: "/p/intro-to-rust/#lifetimes"
-        description: "Managing references and lifetimes"
-        order: 2
-        
-      - id: "traits"
-        title: "Traits & Generics"
-        url: "/p/intro-to-rust/#traits-generics"
-        description: "Polymorphism and code reuse"
-        order: 3
-        
-      - id: "error-handling"
-        title: "Error Handling"
-        url: "/p/intro-to-rust/#error-handling"
-        description: "Result, Option, and error patterns"
-        order: 4
 
 # Customization options
 customization:
@@ -162,18 +60,10 @@ customization:
     easing: "ease-in-out"
     enable: true
   
-  # Visual settings
-  styling:
-    showProgress: true
-    showDifficulty: true
-    showEstimatedTime: true
-    compactMode: false
-  
   # Behavior settings
   behavior:
     persistState: true
     deepLinking: true
-    autoExpandActive: true
     keyboardNavigation: true
   
   # Responsive breakpoints
@@ -195,9 +85,3 @@ theme:
     text: "var(--text-color)"
     border: "var(--border-color)"
     hover: "var(--hover-color)"
-  
-  # Icon settings
-  icons:
-    enabled: true
-    size: 16 # pixels
-    style: "outlined" # outlined, filled, or both

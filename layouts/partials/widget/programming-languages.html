@@ -1,4 +1,12 @@
-{{- $config := .Site.Data.programming_languages -}}
+{{- $config := dict "enabled" true "title" "Intro to Tech" "description" "Programming language guides and tutorials" "languages" (slice (dict "id" "python" "name" "Python" "description" "Learn Python programming from basics to advanced concepts" "difficulty" "Beginner" "estimatedTime" "4-6 weeks" "mainNavigation" (dict "url" "/p/intro-to-python/" "title" "Complete Python Tutorial" "description" "Start your Python journey with comprehensive tutorials") "sections" (slice (dict "id" "variables" "title" "Declaring variables & their naming conventions" "url" "/p/intro-to-python/sections/declaring-variables-naming-conventions" "description" "Understanding Python variables and different data types" "order" 1)))) -}}
+
+<!-- Debug info -->
+<div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
+    Widget loaded successfully with {{ len $config.languages }} languages
+    {{ if not $.Site.Data.programming_languages -}}
+    (Note: Using fallback config - YAML data not loading)
+    {{- end }}
+</div>
 
 {{- if and $config $config.enabled -}}
 <section class="widget tech-guide-widget">
@@ -74,7 +82,14 @@
         Widget loaded successfully with config: {{ $config.enabled }} | Languages: {{ len $config.languages }}
     </div>
 </section>
+{{- else -}}
+<!-- Debug fallback -->
+<div style="background: red; color: white; padding: 10px; margin: 5px;">
+    WIDGET NOT LOADING - Config exists: {{ if $config }}YES{{ else }}NO{{ end }}, Enabled: {{ if $config }}{{ $config.enabled }}{{ else }}N/A{{ end }}
+</div>
 {{- end -}}
+
+
 
 <!-- Screen Reader Only Styles -->
 <style>
