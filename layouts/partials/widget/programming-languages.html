@@ -1,136 +1,151 @@
-{{- $page := . -}}
-{{- with .Context }}
-  {{- $page = . -}}
-{{- end }}
-{{- $site := $page.Site -}}
-{{- $yamlData := $site.Data.programming_languages -}}
-{{- $fallback := dict
-  "enabled" true
-  "title" "Intro to Tech"
-  "description" "Programming language guides and tutorials"
-  "languages" (slice
-    (dict
-      "id" "python"
-      "name" "Python"
-      "slug" "intro-to-python"
-      "description" "Learn Python programming from basics to advanced concepts"
-      "icon" "code"
-      "color" "#3776ab"
-      "difficulty" "Beginner"
-      "estimatedTime" "4-6 weeks"
-      "mainNavigation" (dict
-        "url" "/p/intro-to-python/"
-        "title" "Complete Python Tutorial"
-        "description" "Start your Python journey with comprehensive tutorials"
-      )
-      "sections" (slice
-        (dict
-          "id" "variables"
-          "title" "Declaring variables & their naming conventions"
-          "url" "/p/intro-to-python/sections/declaring-variables-naming-conventions"
-          "description" "Understanding Python variables and different data types"
-          "order" 1
-        )
-      )
+{{- $ctx := .Context | default . -}}
+{{- $site := $ctx.Site -}}
+{{- $config := $site.Data.programming_languages -}}
+
+{{- $enabled := true -}}
+{{- $title := "Intro to Tech" -}}
+{{- $description := "Programming language guides and tutorials" -}}
+{{- $languages := slice
+  (dict
+    "id" "python"
+    "name" "Python"
+    "slug" "intro-to-python"
+    "description" "Learn Python programming from basics to advanced concepts"
+    "icon" "code"
+    "color" "#3776ab"
+    "difficulty" "Beginner"
+    "estimatedTime" "4-6 weeks"
+    "mainNavigation" (dict
+      "url" "/p/intro-to-python/"
+      "title" "Complete Python Tutorial"
+      "description" "Start your Python journey with comprehensive tutorials"
     )
-    (dict
-      "id" "javascript"
-      "name" "JavaScript"
-      "slug" "intro-to-javascript"
-      "description" "Master JavaScript for web development"
-      "icon" "code"
-      "color" "#f7df1e"
-      "difficulty" "Beginner to Intermediate"
-      "estimatedTime" "3-5 weeks"
-      "mainNavigation" (dict
-        "url" "/p/intro-to-javascript/"
-        "title" "Complete JavaScript Tutorial"
-        "description" "Learn JavaScript from the ground up"
-      )
-      "sections" (slice
-        (dict
-          "id" "basics"
-          "title" "JavaScript Basics"
-          "url" "/p/intro-to-javascript/#javascript-basics"
-          "description" "Variables, operators, and basic syntax"
-          "order" 1
-        )
+    "sections" (slice
+      (dict
+        "id" "variables"
+        "title" "Declaring variables & their naming conventions"
+        "url" "/p/intro-to-python/sections/declaring-variables-naming-conventions"
+        "description" "Understanding Python variables and different data types"
+        "order" 1
       )
     )
   )
-  "customization" (dict
-    "animations" (dict "duration" 300 "easing" "ease-in-out" "enable" true)
-    "behavior" (dict "persistState" true "deepLinking" true "keyboardNavigation" true)
-    "responsive" (dict "mobileBreakpoint" 768 "tabletBreakpoint" 1024)
-  )
-  "theme" (dict
-    "cssPrefix" "tech-guide"
-    "colors" (dict
-      "primary" "var(--primary-color)"
-      "secondary" "var(--secondary-color)"
-      "accent" "var(--accent-color)"
-      "background" "var(--background-color)"
-      "text" "var(--text-color)"
-      "border" "var(--border-color)"
-      "hover" "var(--hover-color)"
+  (dict
+    "id" "javascript"
+    "name" "JavaScript"
+    "slug" "intro-to-javascript"
+    "description" "Master JavaScript for web development"
+    "icon" "code"
+    "color" "#f7df1e"
+    "difficulty" "Beginner to Intermediate"
+    "estimatedTime" "3-5 weeks"
+    "mainNavigation" (dict
+      "url" "/p/intro-to-javascript/"
+      "title" "Complete JavaScript Tutorial"
+      "description" "Learn JavaScript from the ground up"
+    )
+    "sections" (slice
+      (dict
+        "id" "basics"
+        "title" "JavaScript Basics"
+        "url" "/p/intro-to-javascript/#javascript-basics"
+        "description" "Variables, operators, and basic syntax"
+        "order" 1
+      )
     )
   )
 ) -}}
-{{- $yamlDict := default dict $yamlData -}}
-{{- $config := merge $fallback $yamlDict -}}
-{{- $languages := coalesce $config.languages (slice) -}}
-{{- $prefix := default "tech-guide" ($config.theme.cssPrefix) -}}
-{{- $animations := default dict $config.customization.animations -}}
-{{- $behavior := default dict $config.customization.behavior -}}
-{{- $responsive := default dict $config.customization.responsive -}}
-{{- $colors := default dict $config.theme.colors -}}
-{{- $duration := cond (isset $animations "duration") $animations.duration 300 -}}
-{{- $easing := cond (isset $animations "easing") $animations.easing "ease-in-out" -}}
-{{- $animationsEnabled := cond (isset $animations "enable") $animations.enable true -}}
-{{- $persistState := cond (isset $behavior "persistState") $behavior.persistState true -}}
-{{- $deepLinking := cond (isset $behavior "deepLinking") $behavior.deepLinking true -}}
-{{- $keyboardNav := cond (isset $behavior "keyboardNavigation") $behavior.keyboardNavigation true -}}
-{{- $mobileBreakpoint := cond (isset $responsive "mobileBreakpoint") $responsive.mobileBreakpoint 768 -}}
-{{- $tabletBreakpoint := cond (isset $responsive "tabletBreakpoint") $responsive.tabletBreakpoint 1024 -}}
+
+{{- $animationsDuration := 300 -}}
+{{- $animationsEasing := "ease-in-out" -}}
+{{- $animationsEnabled := true -}}
+{{- $persistState := true -}}
+{{- $deepLinking := true -}}
+{{- $keyboardNav := true -}}
+{{- $mobileBreakpoint := 768 -}}
+{{- $tabletBreakpoint := 1024 -}}
+{{- $prefix := "tech-guide" -}}
+{{- $colorPrimary := "var(--primary-color)" -}}
+{{- $colorSecondary := "var(--secondary-color)" -}}
+{{- $colorAccent := "var(--accent-color)" -}}
+{{- $colorBackground := "var(--background-color)" -}}
+{{- $colorText := "var(--text-color)" -}}
+{{- $colorBorder := "var(--border-color)" -}}
+{{- $colorHover := "var(--hover-color)" -}}
+
+{{- if $config -}}
+  {{- with $config.enabled }}{{- $enabled = . -}}{{- end -}}
+  {{- with $config.title }}{{- $title = . -}}{{- end -}}
+  {{- with $config.description }}{{- $description = . -}}{{- end -}}
+  {{- with $config.languages }}
+    {{- if gt (len .) 0 }}
+      {{- $languages = . -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- with $config.customization }}
+    {{- with .animations }}
+      {{- with .duration }}{{- $animationsDuration = . -}}{{- end -}}
+      {{- with .easing }}{{- $animationsEasing = . -}}{{- end -}}
+      {{- with .enable }}{{- $animationsEnabled = . -}}{{- end -}}
+    {{- end -}}
+    {{- with .behavior }}
+      {{- with .persistState }}{{- $persistState = . -}}{{- end -}}
+      {{- with .deepLinking }}{{- $deepLinking = . -}}{{- end -}}
+      {{- with .keyboardNavigation }}{{- $keyboardNav = . -}}{{- end -}}
+    {{- end -}}
+    {{- with .responsive }}
+      {{- with .mobileBreakpoint }}{{- $mobileBreakpoint = . -}}{{- end -}}
+      {{- with .tabletBreakpoint }}{{- $tabletBreakpoint = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- with $config.theme }}
+    {{- with .cssPrefix }}{{- $prefix = . -}}{{- end -}}
+    {{- with .colors }}
+      {{- with .primary }}{{- $colorPrimary = . -}}{{- end -}}
+      {{- with .secondary }}{{- $colorSecondary = . -}}{{- end -}}
+      {{- with .accent }}{{- $colorAccent = . -}}{{- end -}}
+      {{- with .background }}{{- $colorBackground = . -}}{{- end -}}
+      {{- with .text }}{{- $colorText = . -}}{{- end -}}
+      {{- with .border }}{{- $colorBorder = . -}}{{- end -}}
+      {{- with .hover }}{{- $colorHover = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
 {{- $stylePairs := slice -}}
 {{- $prefixes := slice "tech-guide" -}}
 {{- if ne $prefix "tech-guide" }}
   {{- $prefixes = $prefixes | append $prefix -}}
-{{- end }}
-{{- range $varPrefix := $prefixes }}
-  {{- with $colors.primary }}{{- $stylePairs = $stylePairs | append (printf "--%s-primary: %s" $varPrefix .) -}}{{- end }}
-  {{- with $colors.secondary }}{{- $stylePairs = $stylePairs | append (printf "--%s-secondary: %s" $varPrefix .) -}}{{- end }}
-  {{- with $colors.accent }}{{- $stylePairs = $stylePairs | append (printf "--%s-accent: %s" $varPrefix .) -}}{{- end }}
-  {{- with $colors.background }}{{- $stylePairs = $stylePairs | append (printf "--%s-background: %s" $varPrefix .) -}}{{- end }}
-  {{- with $colors.text }}{{- $stylePairs = $stylePairs | append (printf "--%s-text: %s" $varPrefix .) -}}{{- end }}
-  {{- with $colors.border }}{{- $stylePairs = $stylePairs | append (printf "--%s-border: %s" $varPrefix .) -}}{{- end }}
-  {{- with $colors.hover }}{{- $stylePairs = $stylePairs | append (printf "--%s-hover: %s" $varPrefix .) -}}{{- end }}
-{{- end }}
+{{- end -}}
+{{- range $stylePrefix := $prefixes }}
+  {{- with $colorPrimary }}{{- $stylePairs = $stylePairs | append (printf "--%s-primary: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorSecondary }}{{- $stylePairs = $stylePairs | append (printf "--%s-secondary: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorAccent }}{{- $stylePairs = $stylePairs | append (printf "--%s-accent: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorBackground }}{{- $stylePairs = $stylePairs | append (printf "--%s-background: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorText }}{{- $stylePairs = $stylePairs | append (printf "--%s-text: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorBorder }}{{- $stylePairs = $stylePairs | append (printf "--%s-border: %s" $stylePrefix .) -}}{{- end -}}
+  {{- with $colorHover }}{{- $stylePairs = $stylePairs | append (printf "--%s-hover: %s" $stylePrefix .) -}}{{- end -}}
+{{- end -}}
 {{- $styleAttr := "" -}}
 {{- if gt (len $stylePairs) 0 }}
   {{- $styleAttr = printf "%s;" (delimit $stylePairs "; ") -}}
-{{- end }}
-{{- $dataSource := cond (ne $yamlData nil) "yaml" "fallback" -}}
+{{- end -}}
 
-<div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
-  {{- if eq $dataSource "yaml" -}}
-    Widget loaded from YAML with {{ len $languages }} languages
-  {{- else -}}
-    Widget using fallback configuration (YAML data not available)
-  {{- end -}}
-</div>
+{{- $dataSource := cond $config "yaml" "fallback" -}}
 
-{{- if and $config $config.enabled (gt (len $languages) 0) -}}
-<section class="widget tech-guide-widget"{{ if ne $styleAttr "" }} style="{{ $styleAttr }}"{{ end }} data-widget="programming-languages" data-prefix="{{ $prefix }}" data-data-source="{{ $dataSource }}">
+{{- if and $enabled (gt (len $languages) 0) -}}
+<section class="widget tech-guide-widget"{{ if $styleAttr }} style="{{ $styleAttr }}"{{ end }} data-widget="programming-languages" data-prefix="{{ $prefix }}" data-data-source="{{ $dataSource }}">
   <div class="widget-icon">📚</div>
-  <h2 class="widget-title section-title">{{ $config.title }}</h2>
-  {{- with $config.description }}
+  <h2 class="widget-title section-title">{{ $title }}</h2>
+  {{- with $description }}
     <p class="widget-description">{{ . }}</p>
   {{- end }}
 
   <div class="tech-guide-container"
-       data-duration="{{ $duration }}"
-       data-easing="{{ $easing }}"
+       data-duration="{{ $animationsDuration }}"
+       data-easing="{{ $animationsEasing }}"
        data-animations-enabled="{{ if $animationsEnabled }}true{{ else }}false{{ end }}"
        data-persist-state="{{ if $persistState }}true{{ else }}false{{ end }}"
        data-deep-linking="{{ if $deepLinking }}true{{ else }}false{{ end }}"
@@ -140,13 +155,13 @@
     {{- range $index, $language := $languages }}
       {{- $languageIdRaw := cond (isset $language "id") $language.id (printf "language-%d" (add $index 1)) -}}
       {{- $languageId := anchorize (printf "%v" $languageIdRaw) -}}
-      {{- $languageColor := cond (isset $language "color") $language.color "" -}}
       {{- $languageSlug := cond (isset $language "slug") $language.slug "" -}}
+      {{- $languageColor := cond (isset $language "color") $language.color "" -}}
       {{- $mainNav := default dict $language.mainNavigation -}}
       {{- $mainURL := default "" $mainNav.url -}}
       {{- $isExternal := or (hasPrefix $mainURL "http://") (hasPrefix $mainURL "https://") (hasPrefix $mainURL "mailto:") (hasPrefix $mainURL "//") -}}
       {{- $mainLink := cond (eq $mainURL "") "#" (cond $isExternal $mainURL ($mainURL | relLangURL)) -}}
-      {{- $sections := coalesce $language.sections (slice) -}}
+      {{- $sections := default (slice) $language.sections -}}
       {{- $sectionsId := printf "%s-sections-%s" $prefix $languageId -}}
       {{- $sectionsLabelId := printf "%s-label" $sectionsId -}}
       <div class="tech-guide-language"
@@ -213,7 +228,7 @@
   </div>
 
   <div class="tech-guide-debug" style="font-size: 0.8em; color: #666; margin-top: 10px;">
-    Widget rendered with config: {{ if $config.enabled }}enabled{{ else }}disabled{{ end }} | Languages: {{ len $languages }}
+    Widget rendered from {{ $dataSource }} configuration with {{ len $languages }} languages
   </div>
 </section>
 {{- else -}}
