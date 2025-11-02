@@ -282,6 +282,7 @@
       "year"
     ],
     "ids": [
+      "0001",
       "1-information-we-collect",
       "1-introduction",
       "10-contact-information",
@@ -471,6 +472,7 @@
       "web-developers",
       "web-development",
       "web-scraping",
+      "what-are-varibles",
       "what-i-do",
       "what-is-python-and-how-is-it-used",
       "while-loops",

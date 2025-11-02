@@ -26,53 +26,11 @@ languages:
     # Submenu sections - lesson modules
     sections:
       - id: "variables"
-        title: "Variables & Data Types"
-        url: "/p/intro-to-python/#variables-data-types"
+        title: "Declaring varibles & their naming conventions"
+        url: "/p/intro-to-python/sections/declaring-varibles-naming-conventions"
         description: "Understanding Python variables and different data types"
         order: 1
-        
-      - id: "control-flow"
-        title: "Control Flow"
-        url: "/p/intro-to-python/#control-flow"
-        description: "If statements, loops, and conditional logic"
-        order: 2
-        
-      - id: "functions"
-        title: "Functions"
-        url: "/p/intro-to-python/#functions"
-        description: "Creating and using functions in Python"
-        order: 3
-        
-      - id: "data-structures"
-        title: "Data Structures"
-        url: "/p/intro-to-python/#data-structures"
-        description: "Lists, dictionaries, sets, and tuples"
-        order: 4
-        
-      - id: "oop"
-        title: "Object-Oriented Programming"
-        url: "/p/intro-to-python/#object-oriented-programming"
-        description: "Classes, objects, and OOP principles"
-        order: 5
-        
-      - id: "file-handling"
-        title: "File Handling"
-        url: "/p/intro-to-python/#file-handling"
-        description: "Reading and writing files in Python"
-        order: 6
-        
-      - id: "libraries"
-        title: "Popular Libraries"
-        url: "/p/intro-to-python/#popular-libraries"
-        description: "Using external libraries and modules"
-        order: 7
-        
-      - id: "projects"
-        title: "Practice Projects"
-        url: "/p/intro-to-python/#practice-projects"
-        description: "Hands-on projects to apply your knowledge"
-        order: 8
-
+      
   - id: "javascript"
     name: "JavaScript"
     slug: "intro-to-javascript"
