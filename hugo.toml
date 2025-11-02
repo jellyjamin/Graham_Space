@@ -97,6 +97,9 @@ theme = "stack"
         page = [
             {type = "toc"}
         ]
+        section = [
+            {type = "toc"}
+        ]
     
     # Color scheme
     [params.colorScheme]
