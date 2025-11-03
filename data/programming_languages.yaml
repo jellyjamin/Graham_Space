@@ -30,6 +30,7 @@ languages:
         url: "/p/intro-to-python/sections/declaring-variables-naming-conventions"
         description: "Understanding Python variables and different data types"
         order: 1
+        
     sections:
       - id: "Print Functions and how they work"
         title: "Using Print Functions in python"
