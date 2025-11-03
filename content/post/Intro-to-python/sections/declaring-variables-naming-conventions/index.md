@@ -63,4 +63,4 @@ this is not a comment
 ```
 
 
-# Next section: [Print Functions and how they work]() 
+# Next section: [Print Functions and how they work](https://graham-space.pages.dev/p/intro-to-python/sections/Print-functions-and-how-they-work) 
