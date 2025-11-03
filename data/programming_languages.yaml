@@ -31,26 +31,26 @@ languages:
         description: "Understanding Python variables and different data types"
         order: 1
 
-  - id: "javascript"
-    name: "JavaScript"
-    slug: "intro-to-javascript"
-    description: "Master JavaScript for web development"
-    icon: "code"
-    color: "#f7df1e"
-    difficulty: "Beginner to Intermediate"
-    estimatedTime: "3-5 weeks"
+  # - id: "javascript"
+  #   name: "JavaScript"
+  #   slug: "intro-to-javascript"
+  #   description: "Master JavaScript for web development"
+  #   icon: "code"
+  #   color: "#f7df1e"
+  #   difficulty: "Beginner to Intermediate"
+  #   estimatedTime: "3-5 weeks"
     
-    mainNavigation:
-      url: "/p/intro-to-javascript/"
-      title: "Complete JavaScript Tutorial"
-      description: "Learn JavaScript from the ground up"
+  #   mainNavigation:
+  #     url: "/p/intro-to-javascript/"
+  #     title: "Complete JavaScript Tutorial"
+  #     description: "Learn JavaScript from the ground up"
     
-    sections:
-      - id: "basics"
-        title: "JavaScript Basics"
-        url: "/p/intro-to-javascript/#javascript-basics"
-        description: "Variables, operators, and basic syntax"
-        order: 1
+  #   sections:
+  #     - id: "basics"
+  #       title: "JavaScript Basics"
+  #       url: "/p/intro-to-javascript/#javascript-basics"
+  #       description: "Variables, operators, and basic syntax"
+  #       order: 1
 
 # Customization options
 customization:
