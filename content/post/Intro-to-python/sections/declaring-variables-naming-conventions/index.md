@@ -1,7 +1,7 @@
 ---
 title: Declaring variables and their naming conventions
 slug: intro-to-python/sections/declaring-variables-naming-conventions
-description: Learn Python programming from basics to advanced concepts
+description: Learn Pythons variables and syntax
 tags:
   - python
   - programming
