@@ -53,7 +53,7 @@ brew install python3
 
 ## Table of Contents
 
-1. [Declaring varibles]()
+1. [Declaring varibles](sections/declaring-variables-naming-conventions/)
 
 Remember: The best way to learn programming is by doing. Start with projects that interest you and challenge yourself to build something useful!
 
