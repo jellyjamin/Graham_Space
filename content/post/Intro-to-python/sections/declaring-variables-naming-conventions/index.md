@@ -1,5 +1,6 @@
 ---
-title: declaring varibes and their naming conventions
+title: Declaring variables and their naming conventions
+slug: intro-to-python/sections/declaring-variables-naming-conventions
 description: Learn Python programming from basics to advanced concepts
 tags:
   - python
@@ -13,23 +14,23 @@ lastmod: 2025-11-02
 draft: false
 ---
 
-## what are varibles?
+## What are variables?
 
-In Python, varibles simply let you label and store/refrence data. For example:
+In Python, variables simply let you label and store/reference data. For example:
 
 ### strings
 
 ```python
 name = 'sir richard'
 ```
-Strings represent text characters either qouted with `''` or `""`
+Strings represent text characters either quoted with `''` or `""`
 
-### standard varibles
+### standard variables
 
 ```python
 # in cm
 height = 65
 ```
 
-Standard varibles refrence or store numerical data: 
+Standard variables reference or store numerical data: 
 

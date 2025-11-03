@@ -133,7 +133,10 @@
   {{- $styleAttr = printf "%s;" (delimit $stylePairs "; ") -}}
 {{- end -}}
 
-{{- $dataSource := cond $config "yaml" "fallback" -}}
+{{- $dataSource := "fallback" -}}
+{{- if $config -}}
+  {{- $dataSource = "yaml" -}}
+{{- end -}}
 
 {{- if and $enabled (gt (len $languages) 0) -}}
 <section class="widget tech-guide-widget"{{ if $styleAttr }} style="{{ $styleAttr }}"{{ end }} data-widget="programming-languages" data-prefix="{{ $prefix }}" data-data-source="{{ $dataSource }}">
