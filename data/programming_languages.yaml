@@ -30,11 +30,11 @@ languages:
         url: "/p/intro-to-python/sections/declaring-variables-naming-conventions"
         description: "Understanding Python variables and different data types"
         order: 1
-      # - id: "print-functions"
-      #   title: "Using Print Functions in Python"
-      #   url: "/p/intro-to-python/sections/Print-functions-and-how-they-work"
-      #   description: "Understanding Python Print Functions and how to use them in practice"
-      #   order: 2
+      - id: "print-functions"
+        title: "Using Print Functions in Python"
+        url: "/p/intro-to-python/sections/Print-functions-and-how-they-work"
+        description: "Understanding Python Print Functions and how to use them in practice"
+        order: 2
 
   # - id: "javascript"
   #   name: "JavaScript"
