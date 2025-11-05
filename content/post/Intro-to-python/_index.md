@@ -55,6 +55,7 @@ brew install python3
 
 1. [Declaring variables](sections/declaring-variables-naming-conventions/)
 2. [Print functions and how they work](sections/Print-functions-and-how-they-work)
+<!-- 3. [Common data types and how to get the variable type](sections/Common-data-types-and-how-to-get-the-variable-type) -->
 
 Remember: The best way to learn programming is by doing. Start with projects that interest you and challenge yourself to build something useful!
 
