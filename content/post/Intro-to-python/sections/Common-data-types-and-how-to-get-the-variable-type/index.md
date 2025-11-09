@@ -1,6 +1,6 @@
 ---
 title: Common data types and how to get the variable type
-slug: intro-to-python/sections/Common-data-types-and-how-to-get-the-variable-type
+slug: intro-to-python/sections/common-data-types-and-how-to-get-the-variable-type
 description: Learn Python's common data types and how to get variable types!
 Tags:
  - python
