@@ -36,7 +36,7 @@ languages:
         description: "Understanding Python Print Functions and how to use them in practice"
         order: 2
       - id: "common-datatypes"
-        title: "Using Print Functions in Python"
+        title: "using data types and figuring out what they are"
         url: "/p/intro-to-python/sections/Common-data-types-and-how-to-get-the-variable-type"
         description: "Understanding Pythons common datatypes and variable types"
         order: 3
