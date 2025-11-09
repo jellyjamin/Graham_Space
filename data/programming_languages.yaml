@@ -35,11 +35,11 @@ languages:
         url: "/p/intro-to-python/sections/print-functions-and-how-they-work"
         description: "Understanding Python Print Functions and how to use them in practice"
         order: 2
-      # - id: "common-datatypes"
-      #   title: "Using Print Functions in Python"
-      #   url: "/p/intro-to-python/sections/Common-data-types-and-how-to-get-the-variable-type"
-      #   description: "Understanding Pythons common datatypes and variable types"
-      #   order: 3
+      - id: "common-datatypes"
+        title: "Using Print Functions in Python"
+        url: "/p/intro-to-python/sections/Common-data-types-and-how-to-get-the-variable-type"
+        description: "Understanding Pythons common datatypes and variable types"
+        order: 3
 
   # - id: "javascript"
   #   name: "JavaScript"
