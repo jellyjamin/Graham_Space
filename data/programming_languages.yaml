@@ -31,12 +31,12 @@ languages:
         description: "Understanding Python variables and different data types"
         order: 1
       - id: "print-functions"
-        title: "Using Print Functions in Python"
+        title: "Print Functions and how they work"
         url: "/p/intro-to-python/sections/print-functions-and-how-they-work"
         description: "Understanding Python Print Functions and how to use them in practice"
         order: 2
       - id: "common-datatypes"
-        title: "using data types and figuring out what they are"
+        title: "Common data types and how to get the variable type"
         url: "/p/intro-to-python/sections/common-data-types-and-how-to-get-the-variable-type"
         description: "Understanding Pythons common datatypes and variable types"
         order: 3

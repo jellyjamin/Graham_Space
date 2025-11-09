@@ -135,4 +135,4 @@ print('Done!')
 
 This code would instantly show you `processing..` thanks to flush, wait 2 seconds, then output `done!`.
 
-# Next section [Common data types and how to get the variable type](https://graham-space.pages.dev/p/intro-to-python/sections/Common-data-types-and-how-to-get-the-variable-type)
+# Next section [Common data types and how to get the variable type](https://graham-space.pages.dev/p/intro-to-python/sections/common-data-types-and-how-to-get-the-variable-type)
