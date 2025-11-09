@@ -36,7 +36,7 @@ print(*objects, sep='',  end='\n', file=sys.stdout, flush=False)
 *Notice the comma separation? This is the proper way to end their portion of the line, or else it will fail when run.*
 
 - `*objects`
- This is the data you want to print, with `*` signifying that you can print multiple objects. *numbers, variables, strong and words*
+ This is the data you want to print, with `*` signifying that you can print multiple objects. *numbers, variables, and strings*
 
 - `sep=' '`
  Represents a separator between objects, defaulting to one character space.
@@ -121,7 +121,7 @@ with open('output.txt', 'w') as f:
 ```
 This writes `Hello world!` into `output.txt`, creating the output file even if it doesn't exist. 
 
-#### `flush` or rather getting to the point
+#### `flush` or rather getting to the point.
 
 When the flush argument is set to true, it outputs the string instantly.
 

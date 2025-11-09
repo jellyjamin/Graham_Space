@@ -50,7 +50,7 @@ height = 65
 user_name = 'graham_space'
 ```
 
-- Descriptive names are the got to, you want people to be able to read your code and understand it. For example, a varible for ticker price should clearly say `ticker_price` not `tp`, `price` or `ticker`.
+- Descriptive names are the go to, you want people to be able to read your code and understand it. For example, a varible for ticker price should clearly say `ticker_price` not `tp`, `price` or `ticker`.
 
 ## Comments
 
@@ -63,4 +63,4 @@ this is not a comment
 ```
 
 
-# Next section: [Print Functions and how they work](https://graham-space.pages.dev/p/intro-to-python/sections/Print-functions-and-how-they-work) 
+# Next section: [Print Functions and how they work](https://graham-space.pages.dev/p/intro-to-python/sections/print-functions-and-how-they-work/) 
