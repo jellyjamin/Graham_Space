@@ -2,6 +2,8 @@
 title: Intro to Python
 description: Learn Python programming from basics to advanced concepts
 image: /img/python-logo.png
+slug: intro-to-python
+url: /p/intro-to-python/
 tags:
   - python
   - programming
